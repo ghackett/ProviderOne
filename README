@@ -1,0 +1,13 @@
+This is a work in progress and my first ruby app. It is not in any state to be useful yet.
+
+Concept:
+
+a new type of ORM for android, inspired by my AndroidOrmBuilder (which is a pile of crap)
+
+Build your sqlite schema by building a sqlite database with your favorite gui. Submit it to ProviderOne and get back a zip file with all your db classes already built
+
+How it will be different that AndroidOrmBuilder
+1) the app will written in ruby (and eventually rails when I get to the web interface part), im sick to death of php
+2) the app will build a ContentProvider for you using proper Google coding styles
+3) the app will still create helper objects for each table, but they will be much lighter weight and parcelable.  They will also only load the columns that have been requested, which will make them much more useful in lists
+4) the app will generate custom CursorLoaders and custom CursorAdapters for each table. The Loader portion hasn't been flushed out yet, but the cursor adapters will be abstract and provide the actual objects as well the cursor in the bind and get view methods.
