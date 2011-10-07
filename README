@@ -11,3 +11,6 @@ How it will be different that AndroidOrmBuilder
 2) the app will build a ContentProvider for you using proper Google coding styles
 3) the app will still create helper objects for each table, but they will be much lighter weight and parcelable.  They will also only load the columns that have been requested, which will make them much more useful in lists
 4) the app will generate custom CursorLoaders and custom CursorAdapters for each table. The Loader portion hasn't been flushed out yet, but the cursor adapters will be abstract and provide the actual objects as well the cursor in the bind and get view methods.
+
+
+the java folder contains a sample project for what the final project should look like
