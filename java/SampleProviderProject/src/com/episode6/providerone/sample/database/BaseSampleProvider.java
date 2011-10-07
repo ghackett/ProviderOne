@@ -2,8 +2,10 @@ package com.episode6.providerone.sample.database;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.episode6.providerone.sample.database.tables.MyTableInfo;
@@ -12,6 +14,23 @@ public abstract class BaseSampleProvider extends ContentProvider {
     
     public static final int MY_TABLE = 0xFFFF;
     public static final int MY_TABLE_ID = 0xFFFE;
+    
+    private static Uri sBaseContentUri = null;
+    private static Context sApplicationContext = null;
+    
+    public static Context getAppContext() {
+        return sApplicationContext;
+    }
+    
+    public static String getContentAuthority() {
+        return "com.episode6.providerone.sample";
+    }
+    
+    public static Uri getBaseContentUri() {
+        if (sBaseContentUri == null)
+            sBaseContentUri = Uri.parse("content://" + getContentAuthority());
+        return sBaseContentUri;
+    }
     
     private SampleDatabase mDatabase;
     private UriMatcher mUriMatcher = null;
@@ -26,20 +45,17 @@ public abstract class BaseSampleProvider extends ContentProvider {
     
     @Override
     public boolean onCreate() {
+        sApplicationContext = getContext().getApplicationContext();
         mDatabase = new SampleDatabase(getContext());
         return false;
-    }
-    
-    protected String getContentAuthority() {
-        return "com.episode6.providerone.sample";
     }
     
     protected void buildUriMatcher(UriMatcher matcher) {
         final String authority = getContentAuthority();
         buildCustomUriMatcher(matcher, authority);
         
-        matcher.addURI(authority, "my_table", MY_TABLE);
-        matcher.addURI(authority, "my_table/*", MY_TABLE_ID);
+        matcher.addURI(authority, MyTableInfo.PATH, MY_TABLE);
+        matcher.addURI(authority, MyTableInfo.PATH + "/*", MY_TABLE_ID);
     }
     
     protected UriMatcher getUriMatcher() {
@@ -74,8 +90,8 @@ public abstract class BaseSampleProvider extends ContentProvider {
         if (result != null)
             return result.intValue();
         
-        
-        return 0;
+        final SelectionBuilder builder = buildSimpleSelection(uri, match);
+        return builder.where(selection, selectionArgs).delete(mDatabase.getWritableDatabase());
     }
 
     @Override
@@ -85,11 +101,16 @@ public abstract class BaseSampleProvider extends ContentProvider {
         if (result != null)
             return result;
         
-        
-        return null;
+        PlatformDatabaseUtils db = new PlatformDatabaseUtils(mDatabase);
+        switch(match) {
+            case MY_TABLE: {
+                long id = db.insertWithOnConflict(MyTableInfo.TABLE_NAME, null, values, MyTableInfo.INSERT_ALGORITHM);
+                return MyTableInfo.buildUri(id);
+            }
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
     }
-
-
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -110,8 +131,15 @@ public abstract class BaseSampleProvider extends ContentProvider {
         if (result != null)
             return result;
         
-        
-        return 0;
+        final SelectionBuilder builder = buildSimpleSelection(uri, match);
+        int algorithm = SQLiteDatabase.CONFLICT_FAIL;
+        switch(match) {
+            case MY_TABLE:
+            case MY_TABLE_ID:
+                algorithm = MyTableInfo.UPDATE_ALGORITHM;
+                break;
+        }
+        return builder.where(selection, selectionArgs).updateWithOnConflict(mDatabase, values, algorithm);
     }
     
     private SelectionBuilder buildSimpleSelection(Uri uri, int match) {

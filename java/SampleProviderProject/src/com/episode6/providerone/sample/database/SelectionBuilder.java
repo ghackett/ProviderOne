@@ -18,6 +18,7 @@ package com.episode6.providerone.sample.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -124,6 +125,13 @@ public class SelectionBuilder {
         assertTable();
 
         return db.update(mTable, values, getSelection(), getSelectionArgs());
+    }
+    
+    public int updateWithOnConflict(SQLiteOpenHelper db, ContentValues values, int algorithm) {
+        assertTable();
+
+        PlatformDatabaseUtils pdb = new PlatformDatabaseUtils(db);
+        return pdb.updateWithOnConflict(mTable, values, getSelection(), getSelectionArgs(), algorithm);
     }
 
     public int delete(SQLiteDatabase db) {

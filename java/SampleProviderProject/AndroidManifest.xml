@@ -13,6 +13,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider android:authorities="com.episode6.providerone.sample" android:name=".database.SampleProvider"></provider>
 
     </application>
 </manifest>
