@@ -3,10 +3,12 @@ package com.episode6.providerone.sample.database.objects.base;
 import java.nio.ByteBuffer;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.episode6.providerone.sample.database.tables.MyTableInfo;
 
-public class BaseMyTable {
+public class BaseMyTable implements Parcelable {
     
     protected Long m_Id = null;
     protected Boolean mMyBoolean = null;
@@ -31,6 +33,9 @@ public class BaseMyTable {
     protected boolean mMyTimeSet = false;
     
     public BaseMyTable() {}
+    public BaseMyTable(Parcel in) {
+        readFromParcel(in);
+    }
     
     public void hydrate(Cursor c, MyTableInfo.ColumnHelper h) {
         if (h.col__id != -1) {
@@ -240,7 +245,87 @@ public class BaseMyTable {
         return mMyTimeSet;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(m_Id);
+        dest.writeInt(m_IdSet ? 1 : 0);
+
+        dest.writeValue(mMyBoolean);
+        dest.writeInt(mMyBooleanSet ? 1 : 0);
+        
+        dest.writeValue(mMyDouble);
+        dest.writeInt(mMyDoubleSet ? 1 : 0);
+
+        dest.writeValue(mMyFloat);
+        dest.writeInt(mMyFloatSet ? 1 : 0);
+
+        dest.writeValue(mMyInt);
+        dest.writeInt(mMyIntSet ? 1 : 0);
+
+        dest.writeValue(mMyLong);
+        dest.writeInt(mMyLongSet ? 1 : 0);
+
+        dest.writeString(mMyChar == null ? null : String.valueOf(mMyChar));
+        dest.writeInt(mMyCharSet ? 1 : 0);
+
+        dest.writeString(mMyString);
+        dest.writeInt(mMyStringSet ? 1 : 0);
+        
+        dest.writeValue(mMyBlob == null ? null : mMyBlob.array());
+        dest.writeInt(mMyBlobSet ? 1 : 0);
+        
+        dest.writeValue(mMyTime);
+        dest.writeInt(mMyTimeSet ? 1 : 0);
+    }
     
+    private void readFromParcel(Parcel in) {
+        m_Id = (Long) in.readValue(Long.class.getClassLoader());
+        m_IdSet = in.readInt() == 1;
+        
+        mMyBoolean = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        mMyBooleanSet = in.readInt() == 1;
+        
+        mMyDouble = (Double) in.readValue(Double.class.getClassLoader());
+        mMyDoubleSet = in.readInt() == 1;
+        
+        mMyFloat = (Float) in.readValue(Float.class.getClassLoader());
+        mMyFloatSet = in.readInt() == 1;
+        
+        mMyInt = (Integer) in.readValue(Integer.class.getClassLoader());
+        mMyIntSet = in.readInt() == 1;
+        
+        mMyLong = (Long) in.readValue(Long.class.getClassLoader());
+        mMyLongSet = in.readInt() == 1;
+        
+        String my_char_tmp = in.readString();
+        mMyChar = my_char_tmp == null || my_char_tmp.length() <= 0 ? null : my_char_tmp.charAt(0);
+        mMyCharSet = in.readInt() == 1;
+        
+        mMyString = in.readString();
+        mMyStringSet = in.readInt() == 1;
+        
+        byte[] my_blob_temp = (byte[]) in.readValue(byte[].class.getClassLoader());
+        mMyBlob = my_blob_temp == null ? null : ByteBuffer.wrap(my_blob_temp);
+        mMyBlobSet = in.readInt() == 1;
+        
+        mMyTime = (Long) in.readValue(Long.class.getClassLoader());
+        mMyTimeSet = in.readInt() == 1;
+    }
+
     
+    public static final Creator<BaseMyTable> CREATOR = new Creator<BaseMyTable>() {
+        public BaseMyTable createFromParcel(Parcel in) {
+            return new BaseMyTable(in);
+        }
+
+        public BaseMyTable[] newArray(int size) {
+            return new BaseMyTable[size];
+        }
+    };
 
 }
