@@ -118,4 +118,129 @@ public class BaseMyTable {
         }
     }
 
+    public Long get_Id() {
+        return m_Id;
+    }
+
+    public void set_Id(Long m_Id) {
+        this.m_Id = m_Id;
+    }
+
+    public Boolean getMyBoolean() {
+        return mMyBoolean;
+    }
+
+    public void setMyBoolean(Boolean mMyBoolean) {
+        this.mMyBoolean = mMyBoolean;
+    }
+
+    public Double getMyDouble() {
+        return mMyDouble;
+    }
+
+    public void setMyDouble(Double mMyDouble) {
+        this.mMyDouble = mMyDouble;
+    }
+
+    public Float getMyFloat() {
+        return mMyFloat;
+    }
+
+    public void setMyFloat(Float mMyFloat) {
+        this.mMyFloat = mMyFloat;
+    }
+
+    public Integer getMyInt() {
+        return mMyInt;
+    }
+
+    public void setMyInt(Integer mMyInt) {
+        this.mMyInt = mMyInt;
+    }
+
+    public Long getMyLong() {
+        return mMyLong;
+    }
+
+    public void setMyLong(Long mMyLong) {
+        this.mMyLong = mMyLong;
+    }
+
+    public Character getMyChar() {
+        return mMyChar;
+    }
+
+    public void setMyChar(Character mMyChar) {
+        this.mMyChar = mMyChar;
+    }
+
+    public String getMyString() {
+        return mMyString;
+    }
+
+    public void setMyString(String mMyString) {
+        this.mMyString = mMyString;
+    }
+
+    public ByteBuffer getMyBlob() {
+        return mMyBlob;
+    }
+
+    public void setMyBlob(ByteBuffer mMyBlob) {
+        this.mMyBlob = mMyBlob;
+    }
+
+    public Long getMyTime() {
+        return mMyTime;
+    }
+
+    public void setMyTime(Long mMyTime) {
+        this.mMyTime = mMyTime;
+    }
+
+    
+    
+    public boolean is_IdSet() {
+        return m_IdSet;
+    }
+
+    public boolean isMyBooleanSet() {
+        return mMyBooleanSet;
+    }
+
+    public boolean isMyDoubleSet() {
+        return mMyDoubleSet;
+    }
+
+    public boolean isMyFloatSet() {
+        return mMyFloatSet;
+    }
+
+    public boolean isMyIntSet() {
+        return mMyIntSet;
+    }
+
+    public boolean isMyLongSet() {
+        return mMyLongSet;
+    }
+
+    public boolean isMyCharSet() {
+        return mMyCharSet;
+    }
+
+    public boolean isMyStringSet() {
+        return mMyStringSet;
+    }
+
+    public boolean isMyBlobSet() {
+        return mMyBlobSet;
+    }
+
+    public boolean isMyTimeSet() {
+        return mMyTimeSet;
+    }
+
+    
+    
+
 }
