@@ -35,17 +35,19 @@ class DatabaseInfo
     end
   end
 
-  def print_detail
-    puts "\n***************\nDatabase: #{@filename}\n"
+  def to_s
+    rtr = "\n***************\nDatabase: #{@filename}\n"
     @tables.each_value do |info|
-      puts info.to_s
+      rtr += info.to_s
     end
 
     @indecies.each do |index|
-      puts index.to_s
+      rtr += index.to_s
     end
-    puts "***************\n\n"
+    rtr += "***************\n\n"
+    return rtr
   end
+
 end
 
 
