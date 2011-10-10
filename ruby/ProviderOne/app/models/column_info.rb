@@ -40,7 +40,7 @@ class ColumnInfo < ActiveRecord::Base
       when "datetime", "date", "timestamp"
         return DateTimeColumn.new(name, type)
     end
-    return ColumnInfo.new(name, type)
+    return nil
   end
 
 end
