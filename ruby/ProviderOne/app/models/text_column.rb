@@ -1,0 +1,2 @@
+class TextColumn < ColumnInfo
+end

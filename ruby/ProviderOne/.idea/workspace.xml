@@ -27,37 +27,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Gemfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="9" selection-start="393" selection-end="393" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="150" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="home_controller.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="146" selection-start="126" selection-end="126" vertical-scroll-proportion="0.27217743">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="database_info.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/database_info.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="57" selection-start="759" selection-end="759" vertical-scroll-proportion="0.0">
+            <state line="24" column="39" selection-start="628" selection-end="628" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="float_column.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/float_column.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="30" selection-start="30" selection-end="30" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="id_column.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/id_column.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="27" selection-start="27" selection-end="27" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -72,19 +63,55 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="table_info.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/table_info.rb">
+      <file leaf-file-name="int_column.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/int_column.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="32" selection-start="169" selection-end="173" vertical-scroll-proportion="0.0">
+            <state line="0" column="28" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uploadFile.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/home/uploadFile.html.erb">
+      <file leaf-file-name="long_column.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/long_column.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="33" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0">
+            <state line="0" column="29" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="text_column.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/text_column.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="145" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="table_info.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/models/table_info.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="22" selection-start="569" selection-end="569" vertical-scroll-proportion="0.63508064">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="column_info.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/column_info.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="29" selection-start="925" selection-end="925" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="char_column.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/char_column.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="16" selection-start="6" selection-end="16" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -103,13 +130,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/database_info.rb" />
-        <option value="$PROJECT_DIR$/app/models/index_info.rb" />
-        <option value="$PROJECT_DIR$/app/models/table_info.rb" />
         <option value="$PROJECT_DIR$/app/views/home/uploadFile.html.erb" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+        <option value="$PROJECT_DIR$/app/models/blob_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/bool_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/char_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/date_time_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/double_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/float_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/id_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/int_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/long_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/text_column.rb" />
+        <option value="$PROJECT_DIR$/app/models/database_info.rb" />
+        <option value="$PROJECT_DIR$/app/models/column_info.rb" />
+        <option value="$PROJECT_DIR$/app/models/table_info.rb" />
       </list>
     </option>
   </component>
@@ -146,7 +182,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -275,8 +310,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="RailsProjectView" />
       <pane id="Favorites" />
+      <pane id="Scope" />
+      <pane id="RailsProjectView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -552,7 +588,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26227304" sideWeight="0.6711823" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.266308" sideWeight="0.6711823" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32881773" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -609,24 +645,58 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.3-rc1@global/gems/railties-3.1.0/lib/rails/commands.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="0" selection-start="1296" selection-end="1296" vertical-scroll-proportion="0.33333334" />
+        <state line="9" column="146" selection-start="126" selection-end="126" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
+    <entry file="file://$PROJECT_DIR$/app/views/home/uploadFile.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="9" selection-start="393" selection-end="393" vertical-scroll-proportion="0.0" />
+        <state line="1" column="33" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/models/blob_column.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="150" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0" />
+        <state line="0" column="29" selection-start="19" selection-end="29" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/database_info.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/bool_column.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="57" selection-start="759" selection-end="759" vertical-scroll-proportion="0.0" />
+        <state line="0" column="29" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/date_time_column.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="33" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/double_column.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="31" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/float_column.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="30" selection-start="30" selection-end="30" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/id_column.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="27" selection-start="27" selection-end="27" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/index_info.rb">
@@ -634,21 +704,51 @@
         <state line="7" column="42" selection-start="222" selection-end="224" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/table_info.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/int_column.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="32" selection-start="169" selection-end="173" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/uploadFile.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="33" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0">
+        <state line="0" column="28" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/long_column.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="146" selection-start="126" selection-end="126" vertical-scroll-proportion="0.27217743">
+        <state line="0" column="29" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/text_column.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="145" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/database_info.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="39" selection-start="628" selection-end="628" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/char_column.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="16" selection-start="6" selection-end="16" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/column_info.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="29" selection-start="925" selection-end="925" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/table_info.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="22" selection-start="569" selection-end="569" vertical-scroll-proportion="0.63508064">
           <folding />
         </state>
       </provider>

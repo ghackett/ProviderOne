@@ -1,0 +1,2 @@
+class LongColumn < ColumnInfo
+end

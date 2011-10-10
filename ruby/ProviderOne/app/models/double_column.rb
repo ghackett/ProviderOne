@@ -1,0 +1,2 @@
+class DoubleColumn < ColumnInfo
+end

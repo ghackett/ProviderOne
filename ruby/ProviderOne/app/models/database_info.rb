@@ -29,6 +29,7 @@ class DatabaseInfo < ActiveRecord::Base
       end
 
     end
+
   end
 
   def to_s

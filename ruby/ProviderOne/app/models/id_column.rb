@@ -1,0 +1,2 @@
+class IdColumn < ColumnInfo
+end

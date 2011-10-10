@@ -1,0 +1,2 @@
+class BlobColumn < ColumnInfo
+end

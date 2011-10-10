@@ -1,0 +1,2 @@
+class BoolColumn < ColumnInfo
+end

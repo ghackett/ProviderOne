@@ -1,0 +1,2 @@
+class IntColumn < ColumnInfo
+end
