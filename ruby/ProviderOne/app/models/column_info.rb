@@ -1,14 +1,15 @@
 class ColumnInfo < ActiveRecord::Base
 
-  attr_accessor :name, :type, :is_lookup_key
+  attr_accessor :name, :type, :is_lookup_key, :camel_name
 
   def initialize(name, type)
     @name = name;
     @type = type;
+    @camel_name = @name.camelize
   end
 
   def to_s
-    return "COLUMN #{@name} OF TYPE #{type} - #{self.class.to_s}"
+    return "COLUMN #{@name} OF TYPE #{type} - #{self.class.to_s} - #{@camel_name}"
   end
 
   def self.get_column(col_info)
