@@ -2,13 +2,41 @@ package com.episode6.providerone.sample.database.objects.base;
 
 import java.nio.ByteBuffer;
 
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.episode6.providerone.sample.database.PersistentObject;
+import com.episode6.providerone.sample.database.SampleProvider;
+import com.episode6.providerone.sample.database.objects.MyTable;
 import com.episode6.providerone.sample.database.tables.MyTableInfo;
 
-public class BaseMyTable implements Parcelable {
+public class BaseMyTable extends PersistentObject implements Parcelable {
+    
+    public static MyTable fromCursor(Cursor cursor, MyTableInfo.ColumnHelper helper) {
+        MyTable obj = new MyTable();
+        obj.hydrate(cursor, helper);
+        return obj;
+    }
+    
+    public static MyTable findOneById(long id, String[] projection) {
+        MyTable rtr = null;
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(
+                MyTableInfo.buildUri(id), 
+                projection, 
+                null, 
+                null, 
+                null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                rtr = fromCursor(c, new MyTableInfo.ColumnHelper(projection));
+            }
+            c.close();
+        }
+        return rtr;
+    }
     
     protected Long m_Id = null;
     protected Boolean mMyBoolean = null;
@@ -32,12 +60,21 @@ public class BaseMyTable implements Parcelable {
     protected boolean mMyBlobSet = false;
     protected boolean mMyTimeSet = false;
     
-    public BaseMyTable() {}
+    public BaseMyTable() {
+        super();
+    }
     public BaseMyTable(Parcel in) {
         readFromParcel(in);
     }
     
-    public void hydrate(Cursor c, MyTableInfo.ColumnHelper h) {
+    @Override
+    protected void hydrate(Cursor c, ColumnHelper helper) {
+        if (!(helper instanceof MyTableInfo.ColumnHelper))
+            throw new IllegalArgumentException("Trying to hydrate MyTable with wrong ColumnHelper - " + helper.getClass().getName());
+        hydrate(c, (MyTableInfo.ColumnHelper)helper);
+    }
+    
+    protected void hydrate(Cursor c, MyTableInfo.ColumnHelper h) {
         if (h.col__id != -1) {
             m_Id = c.isNull(h.col__id) ? null : c.getLong(h.col__id);
             m_IdSet = true;
@@ -121,6 +158,52 @@ public class BaseMyTable implements Parcelable {
             mMyTime = null;
             mMyTimeSet = false;
         }
+        
+        mIsNew = false;
+    }
+    
+    @Override
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        if (m_IdSet)
+            values.put(MyTableInfo.Columns._ID, m_Id);
+        if (mMyBooleanSet)
+            values.put(MyTableInfo.Columns.MY_BOOLEAN, mMyBoolean);
+        if (mMyDoubleSet)
+            values.put(MyTableInfo.Columns.MY_DOUBLE, mMyDouble);
+        if (mMyFloatSet)
+            values.put(MyTableInfo.Columns.MY_FLOAT, mMyFloat);
+        if (mMyIntSet)
+            values.put(MyTableInfo.Columns.MY_INT, mMyInt);
+        if (mMyLongSet)
+            values.put(MyTableInfo.Columns.MY_LONG, mMyLong);
+        if (mMyCharSet)
+            values.put(MyTableInfo.Columns.MY_CHAR, mMyChar == null ? null : String.valueOf(mMyChar));
+        if (mMyStringSet)
+            values.put(MyTableInfo.Columns.MY_STRING, mMyString);
+        if (mMyBlobSet)
+            values.put(MyTableInfo.Columns.MY_BLOB, mMyBlob == null ? null : mMyBlob.array());
+        if (mMyTimeSet)
+            values.put(MyTableInfo.Columns.MY_TIME, mMyTime);
+        
+        return values;
+    }
+    
+    @Override
+    public void save() {
+        if (isNew()) {
+            Uri result = SampleProvider.getAppContext().getContentResolver().insert(MyTableInfo.CONTENT_URI, toContentValues());
+            if (result != null) {
+                set_Id(Long.valueOf(result.getLastPathSegment()));
+            }
+            mIsNew = false;
+        } else {
+            if (!m_IdSet) {
+                throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
+            }
+            Uri updateUri = MyTableInfo.buildUri(m_Id);
+            SampleProvider.getAppContext().getContentResolver().update(updateUri, toContentValues(), null, null);
+        }
     }
 
     public Long get_Id() {
@@ -129,6 +212,7 @@ public class BaseMyTable implements Parcelable {
 
     public void set_Id(Long m_Id) {
         this.m_Id = m_Id;
+        m_IdSet = true;
     }
 
     public Boolean getMyBoolean() {
@@ -137,6 +221,7 @@ public class BaseMyTable implements Parcelable {
 
     public void setMyBoolean(Boolean mMyBoolean) {
         this.mMyBoolean = mMyBoolean;
+        mMyBooleanSet = true;
     }
 
     public Double getMyDouble() {
@@ -145,6 +230,7 @@ public class BaseMyTable implements Parcelable {
 
     public void setMyDouble(Double mMyDouble) {
         this.mMyDouble = mMyDouble;
+        mMyDoubleSet = true;
     }
 
     public Float getMyFloat() {
@@ -153,6 +239,7 @@ public class BaseMyTable implements Parcelable {
 
     public void setMyFloat(Float mMyFloat) {
         this.mMyFloat = mMyFloat;
+        mMyFloatSet = true;
     }
 
     public Integer getMyInt() {
@@ -161,6 +248,7 @@ public class BaseMyTable implements Parcelable {
 
     public void setMyInt(Integer mMyInt) {
         this.mMyInt = mMyInt;
+        mMyIntSet = true;
     }
 
     public Long getMyLong() {
@@ -169,6 +257,7 @@ public class BaseMyTable implements Parcelable {
 
     public void setMyLong(Long mMyLong) {
         this.mMyLong = mMyLong;
+        mMyLongSet = true;
     }
 
     public Character getMyChar() {
@@ -177,6 +266,7 @@ public class BaseMyTable implements Parcelable {
 
     public void setMyChar(Character mMyChar) {
         this.mMyChar = mMyChar;
+        mMyCharSet = true;
     }
 
     public String getMyString() {
@@ -185,6 +275,7 @@ public class BaseMyTable implements Parcelable {
 
     public void setMyString(String mMyString) {
         this.mMyString = mMyString;
+        mMyStringSet = true;
     }
 
     public ByteBuffer getMyBlob() {
@@ -193,6 +284,7 @@ public class BaseMyTable implements Parcelable {
 
     public void setMyBlob(ByteBuffer mMyBlob) {
         this.mMyBlob = mMyBlob;
+        mMyBlobSet = true;
     }
 
     public Long getMyTime() {
@@ -201,6 +293,7 @@ public class BaseMyTable implements Parcelable {
 
     public void setMyTime(Long mMyTime) {
         this.mMyTime = mMyTime;
+        mMyTimeSet = true;
     }
 
     
@@ -316,7 +409,6 @@ public class BaseMyTable implements Parcelable {
         mMyTime = (Long) in.readValue(Long.class.getClassLoader());
         mMyTimeSet = in.readInt() == 1;
     }
-
     
     public static final Creator<BaseMyTable> CREATOR = new Creator<BaseMyTable>() {
         public BaseMyTable createFromParcel(Parcel in) {
@@ -327,5 +419,8 @@ public class BaseMyTable implements Parcelable {
             return new BaseMyTable[size];
         }
     };
+
+
+
 
 }

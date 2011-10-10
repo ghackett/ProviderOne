@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.episode6.providerone.sample.database.OrmHelper;
+import com.episode6.providerone.sample.database.PersistentObject;
 import com.episode6.providerone.sample.database.SampleProvider;
 
 public class MyTableInfo  {
@@ -90,7 +91,7 @@ public class MyTableInfo  {
         return Uri.withAppendedPath(CONTENT_URI, Uri.encode(String.valueOf(id)));
     }
 
-    public static class ColumnHelper {
+    public static class ColumnHelper extends PersistentObject.ColumnHelper {
         public int col__id = -1;
         public int col_my_boolean = -1;
         public int col_my_double = -1;
