@@ -1,2 +1,11 @@
 <h1>Home#index</h1>
 <p>Find me in app/views/home/index.html.erb</p>
+
+<%=form_tag '/home/uploadFile', :multipart => true do -%>
+
+        <p><label for="upload1_datafile">Base Strings File</label> :
+		<%= file_field 'upload1', 'datafile' %>
+        </p>
+
+<%= submit_tag "Upload" %>
+<% end -%>
