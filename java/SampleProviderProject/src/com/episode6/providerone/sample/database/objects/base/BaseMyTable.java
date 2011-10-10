@@ -1,6 +1,7 @@
 package com.episode6.providerone.sample.database.objects.base;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -21,8 +22,29 @@ public class BaseMyTable extends PersistentObject implements Parcelable {
         return obj;
     }
     
+    public static ArrayList<MyTable> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        if (projection == null)
+            projection = MyTableInfo.ALL_COLUMNS;
+        MyTableInfo.ColumnHelper helper = new MyTableInfo.ColumnHelper(projection);
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(MyTableInfo.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+        ArrayList<MyTable> rtr = new ArrayList<MyTable>();
+        if (c != null) {
+            while(c.moveToNext()) {
+                rtr.add(MyTable.fromCursor(c, helper));
+            }
+            c.close();
+        }
+        return rtr;
+    }
+    
+    public static void deleteWhere(String where, String[] selectionArgs) {
+        SampleProvider.getAppContext().getContentResolver().delete(MyTableInfo.CONTENT_URI, where, selectionArgs);
+    }
+    
     public static MyTable findOneById(long id, String[] projection) {
         MyTable rtr = null;
+        if (projection == null)
+            projection = MyTableInfo.ALL_COLUMNS;
         Cursor c = SampleProvider.getAppContext().getContentResolver().query(
                 MyTableInfo.buildUri(id), 
                 projection, 
@@ -36,6 +58,11 @@ public class BaseMyTable extends PersistentObject implements Parcelable {
             c.close();
         }
         return rtr;
+    }
+    
+    public static void deleteOneById(long id) {
+        Uri delUri = MyTableInfo.buildUri(id);
+        SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
     }
     
     protected Long m_Id = null;
@@ -204,6 +231,17 @@ public class BaseMyTable extends PersistentObject implements Parcelable {
             Uri updateUri = MyTableInfo.buildUri(m_Id);
             SampleProvider.getAppContext().getContentResolver().update(updateUri, toContentValues(), null, null);
         }
+    }
+    
+    @Override
+    public void delete() {
+        if (isNew())
+            throw new IllegalArgumentException("Trying to delete a MyTable record that has never been saved");
+        if (!m_IdSet)
+            throw new IllegalArgumentException("Trying to delete a MyTable record that doesnt have its ID column set");
+        
+        Uri delUri = MyTableInfo.buildUri(m_Id);
+        SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
     }
 
     public Long get_Id() {

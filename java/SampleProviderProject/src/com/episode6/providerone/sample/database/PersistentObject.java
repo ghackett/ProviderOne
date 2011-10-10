@@ -19,6 +19,7 @@ public abstract class PersistentObject {
     abstract public ContentValues toContentValues();
     abstract protected void hydrate(Cursor c, ColumnHelper helper);
     abstract public void save();
+    abstract public void delete();
     
     abstract public static class ColumnHelper {
         
