@@ -69,26 +69,28 @@ class DatabaseInfo
     data['content_authority'] = @content_authority
     data['version'] = @version
 
-    lookup_keys = []
+    tables = []
     @tables.each_value do |table|
-      lookup_keys << {'table' => table.name, 'key' => table.get_lookup_column.name}
+      tables << table.to_hash
     end
 
-    return XmlSimple.xml_out({"database" => data, "lookup_key" => lookup_keys})
+    return XmlSimple.xml_out({"database" => data, "table" => tables})
   end
 
   def from_xml(xml)
     hsh = XmlSimple.xml_in(xml)
     data = hsh['database'].first
-    lookup_keys = hsh['lookup_key']
+    tables = hsh['table']
 
     @filename = data['filename']
     @package = data['package']
     @content_authority = data['content_authority']
     @version = Integer(data['version']) +1
 
-    lookup_keys.each do |lk|
-      @tables[lk['table']].set_lookup_column(lk['key'])
+    tables.each do |xtbl|
+      table = @tables[xtbl['name']]
+      table.from_hash(xtbl)
+      #table.set_lookup_column(lk['key'])
     end
   end
 
@@ -100,6 +102,8 @@ class DatabaseInfo
 
     @tables.each_value do |table|
       table.set_lookup_column(params["lookup_key_" + table.name])
+      table.update_algorithm = params["update_algorithm_" + table.name]
+      table.insert_algorithm = params["insert_algorithm_" + table.name]
     end
   end
 
