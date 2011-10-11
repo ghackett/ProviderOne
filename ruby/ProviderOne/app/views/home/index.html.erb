@@ -1,12 +1,13 @@
 <h1>ProviderOne</h1>
+<strong>Generate a full-featured android ORM layer in seconds!</strong><br/><br/>
 
 <%=form_tag '/home/options', :multipart => true do -%>
 
-    <p><label for="upload1_datafile">SQLite database</label> :
+    <p><label for="upload1_datafile">SQLite database</label> : <br/>
 	<%= file_field 'upload1', 'datafile' %>
     </p>
 
-    <p><label for="upload2_datafile">ProviderOneConfig.xml file (optional)</label> :
+    <p><label for="upload2_datafile">ProviderOneConfig.xml file (if you've used ProviderOne previously on this database)</label> :   <br/>
     <%= file_field 'upload2', 'datafile' %>
     </p>
 
