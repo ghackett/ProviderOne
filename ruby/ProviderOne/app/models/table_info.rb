@@ -1,4 +1,4 @@
-class TableInfo < ActiveRecord::Base
+class TableInfo
 
   attr_accessor :name, :create_stmt, :columns
 
@@ -11,6 +11,12 @@ class TableInfo < ActiveRecord::Base
       @columns <<  ColumnInfo.get_column(info)
     end
 
+  end
+
+  def set_lookup_key(col_name)
+    @columns.each do |col|
+      col.is_lookup_key = (col.name == col_name)
+    end
   end
 
   def to_s

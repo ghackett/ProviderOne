@@ -1,2 +1,16 @@
-File uploaded succesfully<br/>
-<%=@dbinfo.to_s.gsub("\n", "<br/>").html_safe%>
+<%=form_tag '/home/submitForm' do -%>
+    <h2>Tables...</h2>
+    <%@dbinfo.tables.each_value do |table|%>
+        <p>
+            <strong><%=table.name%></strong>
+            Lookup key =
+            <%= select_tag "lookup_key_" + table.name, options_from_collection_for_select(table.columns, :name, :name) %>
+            <%= hidden_field(:dbinfo, :upload_id) %>
+        </p>
+    <%end%>
+    <%= submit_tag "Submit" %>
+<% end -%>
+
+
+
+<%#=@dbinfo.to_s.gsub("\n", "<br/>").html_safe%>

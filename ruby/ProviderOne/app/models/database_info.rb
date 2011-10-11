@@ -1,16 +1,17 @@
 require 'rubygems'
 require 'sqlite3'
 
-class DatabaseInfo < ActiveRecord::Base
-  attr_accessor :filepath, :filename, :tables, :indecies
+class DatabaseInfo
+  attr_accessor :filepath, :filename, :tables, :indecies, :upload_id
 
-  def initialize(fname, fpath)
-    @filepath = fpath
+  def initialize(fname, upload_id)
+    @upload_id = upload_id
+    @filepath = DatabaseInfo.get_sqlite_path(@upload_id)
     @filename = fname
     @tables = Hash.new()
     @indecies = []
 
-    db = SQLite3::Database.new(fpath)
+    db = SQLite3::Database.new(@filepath)
 
     db.results_as_hash = true
 
@@ -43,6 +44,17 @@ class DatabaseInfo < ActiveRecord::Base
     end
     rtr += "***************\n\n"
     return rtr
+  end
+
+  def self.get_sqlite_path(upload_id)
+    path = "tmp/sqltmp/"
+
+    if (!Dir.exists?(path))
+      Dir.mkdir(path)
+    end
+
+    path += upload_id + ".sqlite"
+    return path
   end
 
 end

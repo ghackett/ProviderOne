@@ -1,4 +1,4 @@
-class ColumnInfo < ActiveRecord::Base
+class ColumnInfo
 
   attr_accessor :name, :type, :is_lookup_key, :camel_name
 
@@ -6,10 +6,15 @@ class ColumnInfo < ActiveRecord::Base
     @name = name;
     @type = type;
     @camel_name = @name.camelize
+    @is_lookup_key = false
   end
 
   def to_s
-    return "COLUMN #{@name} OF TYPE #{type} - #{self.class.to_s} - #{@camel_name}"
+    rtr = "COLUMN #{@name} OF TYPE #{type} - #{self.class.to_s} - #{@camel_name}"
+    if @is_lookup_key
+      rtr += " - LOOKUPKEY"
+    end
+    return rtr
   end
 
   def self.get_column(col_info)
