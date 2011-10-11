@@ -1,13 +1,38 @@
 <%=form_tag '/home/submitForm' do -%>
-    <h2>Tables...</h2>
-    <%@dbinfo.tables.each_value do |table|%>
-        <p>
-            <strong><%=table.name%></strong>
-            Lookup key =
-            <%= select_tag "lookup_key_" + table.name, options_from_collection_for_select(table.columns, :name, :name) %>
-            <%= hidden_field(:dbinfo, :upload_id) %>
-        </p>
-    <%end%>
+    <div id="leftcolumn">
+      <h2>Application / Database Info</h2>
+
+      Database name:<br/>
+      <%= text_field(:dbinfo, :filename, {"class" => "textfield_effect"})%>
+
+      <br/><br/>
+
+      App Package name:<br/>
+      <%= text_field(:dbinfo, :package, {"class" => "textfield_effect"})%>
+
+      <br/><br/>
+
+      Content Authority: (may be a function call, use quotes if defining constant)<br/>
+      <%= text_field(:dbinfo, :content_authority, {"class" => "textfield_effect"})%>
+
+    </div>
+
+
+    <div id="rightcolumn">
+      <h2>Table Lookup Keys</h2>
+      <%@dbinfo.tables.each_value do |table|%>
+          <p>
+              <strong><%=table.name%></strong>
+              lookup Key =
+              <%= select_tag "lookup_key_" + table.name, options_from_collection_for_select(table.columns, :name, :name, table.get_lookup_column.name) %>
+              <%= hidden_field(:dbinfo, :upload_id) %>
+          </p>
+      <%end%>
+
+    </div>
+
+    <div class="clear"></div>
+
     <%= submit_tag "Submit" %>
 <% end -%>
 

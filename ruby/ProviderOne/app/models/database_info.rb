@@ -2,7 +2,7 @@ require 'rubygems'
 require 'sqlite3'
 
 class DatabaseInfo
-  attr_accessor :filepath, :filename, :tables, :indecies, :upload_id
+  attr_accessor :filepath, :filename, :tables, :indecies, :upload_id, :package, :content_authority
 
   def initialize(fname, upload_id)
     @upload_id = upload_id
@@ -34,7 +34,7 @@ class DatabaseInfo
   end
 
   def to_s
-    rtr = "\n***************\nDatabase: #{@filename} at #{@filepath}\n"
+    rtr = "\n***************\nDatabase: #{@filename} at #{@filepath}\nPackage Name: #{@package}\nContentAuthority: #{@content_authority}\n"
     @tables.each_value do |info|
       rtr += info.to_s
     end
