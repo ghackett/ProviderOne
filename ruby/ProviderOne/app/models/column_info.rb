@@ -17,15 +17,15 @@ class ColumnInfo
     return rtr
   end
 
-  def to_hash
-    return {"name" => @name, "is_lookup_key" => @is_lookup_key}
-  end
-
-  def from_hash(hash)
-    if (@name == hash['name'])
-      @is_lookup_key = (hash['is_lookup_key'] == "true")
-    end
-  end
+  #def to_hash
+  #  return {"name" => @name, "is_lookup_key" => @is_lookup_key}
+  #end
+  #
+  #def from_hash(hash)
+  #  if (@name == hash['name'])
+  #    @is_lookup_key = (hash['is_lookup_key'] == "true")
+  #  end
+  #end
 
   def self.get_column(col_info)
     name = col_info['name'].downcase

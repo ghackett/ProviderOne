@@ -52,12 +52,12 @@ class TableInfo
   end
 
   def to_hash
-    tbl = {"name" => @name, "update_algorithm" => @update_algorithm, "insert_algorithm" => @insert_algorithm}
-    columns = [];
-    @columns.each do |col|
-      columns << col.to_hash
-    end
-    tbl['column'] = columns
+    tbl = {"name" => @name, "update_algorithm" => @update_algorithm, "insert_algorithm" => @insert_algorithm, "lookup_key" => get_lookup_column.name}
+    #columns = [];
+    #@columns.each do |col|
+    #  columns << col.to_hash
+    #end
+    #tbl['column'] = columns
     return tbl
   end
 
@@ -66,14 +66,15 @@ class TableInfo
 
       @update_algorithm = hash['update_algorithm']
       @insert_algorithm = hash['insert_algorithm']
+      set_lookup_column(hash['lookup_key'])
 
-      columns = hash['column']
-      columns.each do |col|
-        mycol = get_column_by_name(col['name'])
-        if (mycol != nil)
-          mycol.from_hash(col)
-        end
-      end
+      #columns = hash['column']
+      #columns.each do |col|
+      #  mycol = get_column_by_name(col['name'])
+      #  if (mycol != nil)
+      #    mycol.from_hash(col)
+      #  end
+      #end
     end
   end
 end

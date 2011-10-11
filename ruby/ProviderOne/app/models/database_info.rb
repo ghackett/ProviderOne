@@ -11,6 +11,7 @@ class DatabaseInfo
     @filename = fname
     @tables = Hash.new()
     @indecies = []
+    @version = 1
 
     db = SQLite3::Database.new(@filepath)
 
