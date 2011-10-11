@@ -1,5 +1,7 @@
 require 'rubygems'
 require 'uuid'
+require 'zip/zip'
+require 'zip/zipfilesystem'
 
 class HomeController < ApplicationController
 
@@ -8,26 +10,44 @@ class HomeController < ApplicationController
   def index
   end
   
-  def uploadFile
+  def options
     upload = params[:upload1]
     datafile = upload['datafile']
     original_name = datafile.original_filename
 
     @dbinfo = DatabaseInfo.new(original_name, save_db_and_generate_upload_id(datafile))
+
+    upload2 = params[:upload2]
+    if (upload2 != nil)
+      xmlfile = upload2['datafile']
+      if (xmlfile != nil)
+        #hsh = XmlSimple.xml_in(xmlfile.read)
+        #render :text => hsh.to_s
+        @dbinfo.from_xml(xmlfile.read)
+      end
+    end
   end
 
 
 
 
-  def submitForm
+  def download
     dbparams = params[:dbinfo]
-    @dbinfo = DatabaseInfo.new(dbparams[:filename], dbparams[:upload_id])
-    @dbinfo.package = dbparams[:package]
-    @dbinfo.content_authority = dbparams[:content_authority]
 
-    @dbinfo.tables.each_value do |table|
-      table.set_lookup_column(params["lookup_key_" + table.name])
+    @dbinfo = DatabaseInfo.new(dbparams[:filename], dbparams[:upload_id])
+    @dbinfo.from_params(params)
+
+    t = Tempfile.new("tzip-" + @dbinfo.upload_id)
+    Zip::ZipOutputStream.open(t.path) do |z|
+      z.put_next_entry('ProviderOneConfig.xml')
+      z.write(@dbinfo.to_simple_xml)
+
+      z.put_next_entry(@dbinfo.filename)
+      z.write(File.read(@dbinfo.filepath))
     end
+
+    send_file(t.path, :type => "application/zip", :disposition => "attachment", :filename => "ProviderOnePackage.zip")
+    t.close
   end
 
 

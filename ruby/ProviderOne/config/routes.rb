@@ -1,7 +1,7 @@
 ProviderOne::Application.routes.draw do
   get "home/index"
-  post "home/uploadFile"
-  post "home/submitForm"
+  post "home/options"
+  post "home/download"
   root :to => "home#index"  
   # The priority is based upon order of creation:
   # first created -> highest priority.

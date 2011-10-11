@@ -1,11 +1,15 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<h1>ProviderOne</h1>
 
-<%=form_tag '/home/uploadFile', :multipart => true do -%>
+<%=form_tag '/home/options', :multipart => true do -%>
 
-        <p><label for="upload1_datafile">Base Strings File</label> :
-		<%= file_field 'upload1', 'datafile' %>
-        </p>
+    <p><label for="upload1_datafile">SQLite database</label> :
+	<%= file_field 'upload1', 'datafile' %>
+    </p>
+
+    <p><label for="upload2_datafile">ProviderOneConfig.xml file (optional)</label> :
+    <%= file_field 'upload2', 'datafile' %>
+    </p>
+
 
 <%= submit_tag "Upload" %>
 <% end -%>

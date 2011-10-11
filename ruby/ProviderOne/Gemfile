@@ -20,6 +20,7 @@ gem 'jquery-rails'
 gem 'sqlite3'
 gem 'uuid'
 gem 'rubyzip'
+gem 'xml-simple'
 
 # Use unicorn as the web server
 # gem 'unicorn'

@@ -1,14 +1,20 @@
-<%=form_tag '/home/submitForm' do -%>
+<%=form_tag '/home/download' do -%>
     <div id="leftcolumn">
       <h2>Application / Database Info</h2>
+
+
+      App Package name:<br/>
+      <%= text_field(:dbinfo, :package, {"class" => "textfield_effect"})%>
+
+      <br/><br/>
 
       Database name:<br/>
       <%= text_field(:dbinfo, :filename, {"class" => "textfield_effect"})%>
 
       <br/><br/>
 
-      App Package name:<br/>
-      <%= text_field(:dbinfo, :package, {"class" => "textfield_effect"})%>
+      DB Version:
+      <%= number_field(:dbinfo, :version, {"class" => "textfield_effect", "style" => "width:50px"})%>
 
       <br/><br/>
 

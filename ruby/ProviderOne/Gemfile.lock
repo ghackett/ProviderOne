@@ -113,6 +113,7 @@ GEM
       multi_json (>= 1.0.2)
     uuid (2.3.4)
       macaddr (~> 1.0)
+    xml-simple (1.1.0)
 
 PLATFORMS
   ruby
@@ -127,3 +128,4 @@ DEPENDENCIES
   turn
   uglifier
   uuid
+  xml-simple
