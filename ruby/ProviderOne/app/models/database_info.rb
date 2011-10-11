@@ -75,13 +75,15 @@ class DatabaseInfo
       tables << table.to_hash
     end
 
-    return XmlSimple.xml_out({"database" => data, "table" => tables})
+    data['table'] = tables
+
+    return XmlSimple.xml_out({"database" => data})
   end
 
   def from_xml(xml)
     hsh = XmlSimple.xml_in(xml)
     data = hsh['database'].first
-    tables = hsh['table']
+    tables = data['table']
 
     @filename = data['filename']
     @package = data['package']
