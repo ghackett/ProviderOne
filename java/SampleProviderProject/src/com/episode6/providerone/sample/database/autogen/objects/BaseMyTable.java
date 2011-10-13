@@ -17,7 +17,7 @@ import com.episode6.providerone.sample.database.autogen.PersistentObject;
 import com.episode6.providerone.sample.database.autogen.tables.MyTableInfo;
 import com.episode6.providerone.sample.database.objects.MyTable;
 
-public class BaseMyTable extends PersistentObject {
+public abstract class BaseMyTable extends PersistentObject {
     
     public static MyTable fromCursor(Cursor cursor, MyTableInfo.ColumnHelper helper) {
         MyTable obj = new MyTable();
@@ -572,13 +572,13 @@ public class BaseMyTable extends PersistentObject {
         mMyTimeSet = in.readInt() == 1;
     }
     
-    public static final Creator<BaseMyTable> CREATOR = new Creator<BaseMyTable>() {
-        public BaseMyTable createFromParcel(Parcel in) {
-            return new BaseMyTable(in);
+    public static final Creator<MyTable> CREATOR = new Creator<MyTable>() {
+        public MyTable createFromParcel(Parcel in) {
+            return new MyTable(in);
         }
 
-        public BaseMyTable[] newArray(int size) {
-            return new BaseMyTable[size];
+        public MyTable[] newArray(int size) {
+            return new MyTable[size];
         }
     };
 
