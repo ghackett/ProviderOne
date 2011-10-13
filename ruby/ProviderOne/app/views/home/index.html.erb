@@ -3,12 +3,21 @@
 
 <%=form_tag '/home/options', :multipart => true do -%>
 
-    <p><label for="upload1_datafile">SQLite database</label> : <br/>
-	<%= file_field 'upload1', 'datafile' %>
+    <p>
+      <label for="upload1_datafile">SQLite database</label> : <br/>
+
+      <%=radio_button(:upload1, "filetype", "binary")%>
+      <label for="dbinfo_filetype_binary">Binary SQLite file</label>
+
+      <%=radio_button(:upload1, "filetype", "text")%>
+      <label for="dbinfo_filetype_text">.sql text file</label><br/>
+
+	  <%= file_field :upload1, 'datafile' %><br/>
+
     </p>
 
     <p><label for="upload2_datafile">ProviderOneConfig.xml file (if you've used ProviderOne previously on this database)</label> :   <br/>
-    <%= file_field 'upload2', 'datafile' %>
+    <%= file_field :upload2, 'datafile' %>
     </p>
 
 

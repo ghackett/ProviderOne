@@ -33,6 +33,8 @@ class DatabaseInfo
 
     end
 
+    db.close
+
   end
 
   def to_s
@@ -61,6 +63,14 @@ class DatabaseInfo
 
     path += upload_id + ".sqlite"
     return path
+  end
+
+  def self.create_db_and_execute_sql(sql, upload_id)
+    path = DatabaseInfo.get_sqlite_path(upload_id)
+    db = SQLite3::Database.new(path)
+    db.execute_batch(sql)
+    db.close
+    return DatabaseInfo.new("my_database.sqlite", upload_id)
   end
 
   def to_simple_xml

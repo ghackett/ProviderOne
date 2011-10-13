@@ -15,7 +15,14 @@ class HomeController < ApplicationController
     datafile = upload['datafile']
     original_name = datafile.original_filename
 
-    @dbinfo = DatabaseInfo.new(original_name, save_db_and_generate_upload_id(datafile))
+    filetype = upload['filetype']
+
+    if (filetype == "binary")
+      @dbinfo = DatabaseInfo.new(original_name, save_db_and_generate_upload_id(datafile))
+    else
+      @dbinfo = DatabaseInfo.create_db_and_execute_sql(datafile.read, generate_upload_id)
+    end
+
 
     upload2 = params[:upload2]
     if (upload2 != nil)

@@ -34,12 +34,13 @@
 
               <br/>
 
-              update algorithm =
-              <%= select_tag "update_algorithm_" + table.name, options_from_array_for_select(insert_update_algorithms, table.update_algorithm)%>
-              <br/>
-
               insert algorithm =
               <%= select_tag "insert_algorithm_" + table.name, options_from_array_for_select(insert_update_algorithms, table.insert_algorithm)%>
+
+              <br/>
+
+              update algorithm =
+              <%= select_tag "update_algorithm_" + table.name, options_from_array_for_select(insert_update_algorithms, table.update_algorithm)%>
           </p>
       <%end%>
 

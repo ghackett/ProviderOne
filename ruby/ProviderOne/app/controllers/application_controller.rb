@@ -1,13 +1,17 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  helper_method :save_db_and_generate_upload_id, :insert_update_algorithms, :options_from_array_for_select
+  helper_method :save_db_and_generate_upload_id, :insert_update_algorithms, :options_from_array_for_select, :generate_upload_id
 
   def save_db_and_generate_upload_id(datafile)
-    upload_id = "%10.6f" % Time.new.to_f + "." + UUID.new.generate
+    upload_id = generate_upload_id
     path = DatabaseInfo.get_sqlite_path(upload_id)
     File.open(path, "wb") { |f| f.write(datafile.read) }
     return upload_id
+  end
+
+  def generate_upload_id()
+    return "%10.6f" % Time.new.to_f + "." + UUID.new.generate
   end
 
   def insert_update_algorithms
