@@ -1,4 +1,4 @@
-package com.episode6.providerone.sample.database;
+package com.episode6.providerone.sample.database.autogen.util;
 
 import android.content.ContentValues;
 import android.database.DatabaseUtils;

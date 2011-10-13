@@ -1,17 +1,21 @@
-package com.episode6.providerone.sample.database.objects.base;
+package com.episode6.providerone.sample.database.autogen.objects;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
 
-import com.episode6.providerone.sample.database.PersistentObject;
 import com.episode6.providerone.sample.database.SampleProvider;
+import com.episode6.providerone.sample.database.autogen.PersistentObject;
+import com.episode6.providerone.sample.database.autogen.tables.MyTableInfo;
+import com.episode6.providerone.sample.database.autogen.util.ArrayUtils;
 import com.episode6.providerone.sample.database.objects.MyTable;
-import com.episode6.providerone.sample.database.tables.MyTableInfo;
 
 public class BaseMyTable extends PersistentObject {
     
@@ -129,10 +133,20 @@ public class BaseMyTable extends PersistentObject {
         readFromParcel(in);
     }
     
+    private void assertColumnHelper(ColumnHelper helper, boolean allowNull) {
+        if (helper == null) {
+            if (allowNull)
+                return;
+            else
+                throw new IllegalArgumentException("Trying to use a null column helper with MyTable");
+        }
+        if (!(helper instanceof MyTableInfo.ColumnHelper))
+            throw new IllegalArgumentException("Trying to use wrong type of ColumnHelper with MyTable - " + helper.getClass().getName());
+    }
+    
     @Override
     protected void hydrate(Cursor c, ColumnHelper helper) {
-        if (!(helper instanceof MyTableInfo.ColumnHelper))
-            throw new IllegalArgumentException("Trying to hydrate MyTable with wrong ColumnHelper - " + helper.getClass().getName());
+        assertColumnHelper(helper, false);
         hydrate(c, (MyTableInfo.ColumnHelper)helper);
     }
     
@@ -249,6 +263,47 @@ public class BaseMyTable extends PersistentObject {
             values.put(MyTableInfo.Columns.MY_TIME, mMyTime);
         
         return values;
+    }
+    
+    @Override
+    public JSONObject toJson(ColumnHelper helper) throws JSONException {
+        assertColumnHelper(helper, true);
+        return toJson((MyTableInfo.ColumnHelper)helper);
+    }
+    
+    @Override
+    public JSONObject toJson(String[] projection) throws JSONException {
+        if (projection == null)
+            projection = MyTableInfo.ALL_COLUMNS;
+        return toJson(new MyTableInfo.ColumnHelper(projection));
+    }
+    
+    public JSONObject toJson(MyTableInfo.ColumnHelper h) throws JSONException {
+        if (h == null)
+            h = new MyTableInfo.ColumnHelper(MyTableInfo.ALL_COLUMNS);
+        JSONObject rtr = new JSONObject();
+        if (m_IdSet && h.col__id != -1)
+            rtr.put(MyTableInfo.Columns._ID, m_Id);
+        if (mMyBooleanSet && h.col_my_boolean != -1)
+            rtr.put(MyTableInfo.Columns.MY_BOOLEAN, mMyBoolean);
+        if (mMyDoubleSet && h.col_my_double != -1)
+            rtr.put(MyTableInfo.Columns.MY_DOUBLE, mMyDouble);
+        if (mMyFloatSet && h.col_my_float != -1)
+            rtr.put(MyTableInfo.Columns.MY_FLOAT, mMyFloat == null ? null : mMyFloat.doubleValue());
+        if (mMyIntSet && h.col_my_int != -1)
+            rtr.put(MyTableInfo.Columns.MY_INT, mMyInt);
+        if (mMyLongSet && h.col_my_long != -1)
+            rtr.put(MyTableInfo.Columns.MY_LONG, mMyLong);
+        if (mMyCharSet && h.col_my_char != -1)
+            rtr.put(MyTableInfo.Columns.MY_CHAR, mMyChar == null ? null : String.valueOf(mMyChar));
+        if (mMyStringSet && h.col_my_string != -1)
+            rtr.put(MyTableInfo.Columns.MY_STRING, mMyString);
+        //cannot put a blob into json
+//        if (mMyBlobSet && ArrayUtils.isStringInArray(MyTableInfo.Columns., projection))
+//            rtr.put(MyTableInfo.Columns.MY_BLOB, mMyBlob == null ? null : mMyBlob.array());
+        if (mMyTimeSet && h.col_my_time != -1)
+            rtr.put(MyTableInfo.Columns.MY_TIME, mMyTime);
+        return null;
     }
     
     @Override
@@ -497,6 +552,12 @@ public class BaseMyTable extends PersistentObject {
             return new BaseMyTable[size];
         }
     };
+
+
+
+
+
+
 
 
 

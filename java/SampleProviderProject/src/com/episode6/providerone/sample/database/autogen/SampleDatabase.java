@@ -1,11 +1,10 @@
-package com.episode6.providerone.sample.database;
-
-import com.episode6.providerone.sample.database.tables.MyTableInfo;
+package com.episode6.providerone.sample.database.autogen;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.episode6.providerone.sample.database.autogen.tables.MyTableInfo;
 
 public class SampleDatabase extends SQLiteOpenHelper {
     

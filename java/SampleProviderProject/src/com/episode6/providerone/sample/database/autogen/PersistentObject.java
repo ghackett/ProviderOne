@@ -1,4 +1,7 @@
-package com.episode6.providerone.sample.database;
+package com.episode6.providerone.sample.database.autogen;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -22,6 +25,8 @@ public abstract class PersistentObject implements Parcelable {
     abstract protected void hydrate(Cursor c, ColumnHelper helper);
     abstract public void save();
     abstract public void delete();
+    abstract public JSONObject toJson(ColumnHelper helper) throws JSONException;
+    abstract public JSONObject toJson(String[] projection) throws JSONException;
     
     @Override
     public void writeToParcel(Parcel dest, int flags) {

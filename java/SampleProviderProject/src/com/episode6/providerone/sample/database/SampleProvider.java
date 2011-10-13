@@ -1,5 +1,8 @@
 package com.episode6.providerone.sample.database;
 
+import com.episode6.providerone.sample.database.autogen.BaseSampleProvider;
+import com.episode6.providerone.sample.database.autogen.util.SelectionBuilder;
+
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;

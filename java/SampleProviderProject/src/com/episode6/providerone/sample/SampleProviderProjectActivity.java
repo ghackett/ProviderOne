@@ -2,8 +2,8 @@ package com.episode6.providerone.sample;
 
 import java.lang.ref.WeakReference;
 
+import com.episode6.providerone.sample.database.autogen.tables.MyTableInfo;
 import com.episode6.providerone.sample.database.objects.MyTable;
-import com.episode6.providerone.sample.database.tables.MyTableInfo;
 
 import android.app.Activity;
 import android.os.AsyncTask;

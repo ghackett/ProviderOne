@@ -1,13 +1,13 @@
-package com.episode6.providerone.sample.database.tables;
+package com.episode6.providerone.sample.database.autogen.tables;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.episode6.providerone.sample.database.BaseSampleProvider;
-import com.episode6.providerone.sample.database.OrmHelper;
-import com.episode6.providerone.sample.database.PersistentObject;
 import com.episode6.providerone.sample.database.SampleProvider;
+import com.episode6.providerone.sample.database.autogen.BaseSampleProvider;
+import com.episode6.providerone.sample.database.autogen.PersistentObject;
+import com.episode6.providerone.sample.database.autogen.util.ArrayUtils;
 
 public class MyTableInfo  {
     
@@ -113,16 +113,16 @@ public class MyTableInfo  {
         public int col_my_time = -1;
         
         public ColumnHelper(String[] projection) {
-            col__id = OrmHelper.getIndexOfStringInArray(Columns._ID, projection);
-            col_my_boolean = OrmHelper.getIndexOfStringInArray(Columns.MY_BOOLEAN, projection);
-            col_my_double = OrmHelper.getIndexOfStringInArray(Columns.MY_DOUBLE, projection);
-            col_my_float = OrmHelper.getIndexOfStringInArray(Columns.MY_FLOAT, projection);
-            col_my_int = OrmHelper.getIndexOfStringInArray(Columns.MY_INT, projection);
-            col_my_long = OrmHelper.getIndexOfStringInArray(Columns.MY_LONG, projection);
-            col_my_char = OrmHelper.getIndexOfStringInArray(Columns.MY_CHAR, projection);
-            col_my_string = OrmHelper.getIndexOfStringInArray(Columns.MY_STRING, projection);
-            col_my_blob = OrmHelper.getIndexOfStringInArray(Columns.MY_BLOB, projection);
-            col_my_time = OrmHelper.getIndexOfStringInArray(Columns.MY_TIME, projection);
+            col__id = ArrayUtils.getIndexOfStringInArray(Columns._ID, projection);
+            col_my_boolean = ArrayUtils.getIndexOfStringInArray(Columns.MY_BOOLEAN, projection);
+            col_my_double = ArrayUtils.getIndexOfStringInArray(Columns.MY_DOUBLE, projection);
+            col_my_float = ArrayUtils.getIndexOfStringInArray(Columns.MY_FLOAT, projection);
+            col_my_int = ArrayUtils.getIndexOfStringInArray(Columns.MY_INT, projection);
+            col_my_long = ArrayUtils.getIndexOfStringInArray(Columns.MY_LONG, projection);
+            col_my_char = ArrayUtils.getIndexOfStringInArray(Columns.MY_CHAR, projection);
+            col_my_string = ArrayUtils.getIndexOfStringInArray(Columns.MY_STRING, projection);
+            col_my_blob = ArrayUtils.getIndexOfStringInArray(Columns.MY_BLOB, projection);
+            col_my_time = ArrayUtils.getIndexOfStringInArray(Columns.MY_TIME, projection);
         }
     }
 }

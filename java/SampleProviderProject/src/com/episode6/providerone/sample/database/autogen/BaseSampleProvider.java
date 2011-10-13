@@ -1,4 +1,4 @@
-package com.episode6.providerone.sample.database;
+package com.episode6.providerone.sample.database.autogen;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -8,7 +8,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.episode6.providerone.sample.database.tables.MyTableInfo;
+import com.episode6.providerone.sample.database.autogen.tables.MyTableInfo;
+import com.episode6.providerone.sample.database.autogen.util.PlatformDatabaseUtils;
+import com.episode6.providerone.sample.database.autogen.util.SelectionBuilder;
 
 public abstract class BaseSampleProvider extends ContentProvider {
     
