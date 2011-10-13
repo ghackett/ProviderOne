@@ -2,6 +2,7 @@ package com.episode6.providerone.sample.database.autogen.objects;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +15,6 @@ import android.os.Parcel;
 import com.episode6.providerone.sample.database.SampleProvider;
 import com.episode6.providerone.sample.database.autogen.PersistentObject;
 import com.episode6.providerone.sample.database.autogen.tables.MyTableInfo;
-import com.episode6.providerone.sample.database.autogen.util.ArrayUtils;
 import com.episode6.providerone.sample.database.objects.MyTable;
 
 public class BaseMyTable extends PersistentObject {
@@ -415,13 +415,42 @@ public class BaseMyTable extends PersistentObject {
         mMyBlobSet = true;
     }
 
-    public Long getMyTime() {
+    public Long getMyTimeInMillis() {
         return mMyTime;
     }
+    
+    public Integer getMyTimeInSeconds() {
+        if (mMyTime == null)
+            return null;
+        return (int)(mMyTime.longValue()/1000);
+    }
+    
+    public Date getMyTimeAsDate() {
+        if (mMyTime == null)
+            return null;
+        return new Date(mMyTime);
+    }
 
-    public void setMyTime(Long mMyTime) {
+    public void setMyTimeInMillis(Long mMyTime) {
         this.mMyTime = mMyTime;
         mMyTimeSet = true;
+    }
+    
+    public void setMyTimeInSeconds(Integer mMyTime) {
+        if (mMyTime == null) {
+            this.mMyTime = null;
+            return;
+        }
+        this.mMyTime = mMyTime.longValue() * 1000;
+    }
+    
+    public void setMyTimeAsDate(Date myTime) {
+        if (myTime == null) {
+            mMyTime = null;
+            return;
+        } else {
+            mMyTime = myTime.getTime();
+        }
     }
 
     
