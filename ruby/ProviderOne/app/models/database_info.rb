@@ -73,7 +73,7 @@ class DatabaseInfo
     return DatabaseInfo.new("my_database.sqlite", upload_id)
   end
 
-  def to_simple_xml
+  def to_xml
     data = Hash.new
     data['filename'] = @filename
     data['package'] = @package

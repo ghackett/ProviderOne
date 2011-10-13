@@ -47,7 +47,7 @@ class HomeController < ApplicationController
     t = Tempfile.new("tzip-" + @dbinfo.upload_id)
     Zip::ZipOutputStream.open(t.path) do |z|
       z.put_next_entry('config/ProviderOneConfig.xml')
-      z.write(@dbinfo.to_simple_xml)
+      z.write(@dbinfo.to_xml)
 
       z.put_next_entry("config/" + @dbinfo.filename)
       z.write(File.read(@dbinfo.filepath))
