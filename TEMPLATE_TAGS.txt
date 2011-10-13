@@ -1,0 +1,17 @@
+Globals
+---------------
+PackageName
+ContentAuthority
+DbFileName
+DbVersion
+---------------
+
+
+Table-Specific
+---------------
+---------------
+
+
+Column-Specific
+---------------
+---------------

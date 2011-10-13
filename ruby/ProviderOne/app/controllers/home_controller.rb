@@ -51,6 +51,15 @@ class HomeController < ApplicationController
 
       z.put_next_entry("config/" + @dbinfo.filename)
       z.write(File.read(@dbinfo.filepath))
+
+      z.put_next_entry("java/database/autogen/ArrayUtils.java")
+      z.write(@dbinfo.process_file_content(File.read("public/templates/utils/ArrayUtils.java")))
+
+      z.put_next_entry("java/database/autogen/PlatformDatabaseUtils.java")
+      z.write(@dbinfo.process_file_content(File.read("public/templates/utils/PlatformDatabaseUtils.java")))
+
+      z.put_next_entry("java/database/autogen/SelectionBuilder.java")
+      z.write(@dbinfo.process_file_content(File.read("public/templates/utils/SelectionBuilder.java")))
     end
 
     send_file(t.path, :type => "application/zip", :disposition => "attachment", :filename => "ProviderOnePackage.zip")

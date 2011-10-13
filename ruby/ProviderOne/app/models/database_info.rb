@@ -37,6 +37,15 @@ class DatabaseInfo
 
   end
 
+
+  def process_file_content(file_content)
+    file_content = file_content.gsub("{PackageName}", @package);
+    file_content = file_content.gsub("{DbFileName}", @filename);
+    file_content = file_content.gsub("{ContentAuthority}", @content_authority);
+    file_content = file_content.gsub("{DbVersion}", @version.to_s);
+    return file_content
+  end
+
   def to_s
     rtr = "\n***************\nDatabase: #{@filename} at #{@filepath}\nPackage Name: #{@package}\nContentAuthority: #{@content_authority}\n"
     @tables.each_value do |info|
