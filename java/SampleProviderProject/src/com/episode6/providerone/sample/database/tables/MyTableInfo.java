@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import com.episode6.providerone.sample.database.BaseSampleProvider;
 import com.episode6.providerone.sample.database.OrmHelper;
 import com.episode6.providerone.sample.database.PersistentObject;
 import com.episode6.providerone.sample.database.SampleProvider;
@@ -40,11 +41,15 @@ public class MyTableInfo  {
         Columns.MY_TIME
     };
     
-    public static final String ID_COLUMN = Columns._ID;
+//    public static final String LOOKUP_COLUMN = Columns.MY_STRING;
     public static final String PATH = "my_table";
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.episode6.providerone.sample.my_table";
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.episode6.providerone.sample.my_table";
     public static final Uri CONTENT_URI = Uri.withAppendedPath(SampleProvider.getBaseContentUri(), PATH);
+    public static final Uri COUNT_URI = Uri.withAppendedPath(CONTENT_URI, BaseSampleProvider.RAW_PATH_COUNT);
+    public static final Uri LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, BaseSampleProvider.RAW_PATH_LOOKUP);
+    public static final Uri ID_LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, BaseSampleProvider.RAW_PATH_ID);
+    
     public static final int INSERT_ALGORITHM = SQLiteDatabase.CONFLICT_IGNORE;
     public static final int UPDATE_ALGORITHM = SQLiteDatabase.CONFLICT_IGNORE;
     
@@ -87,8 +92,12 @@ public class MyTableInfo  {
         }
     }
     
-    public static Uri buildUri(long id) {
-        return Uri.withAppendedPath(CONTENT_URI, Uri.encode(String.valueOf(id)));
+    public static Uri buildIdLookupUri(long _id) {
+        return Uri.withAppendedPath(ID_LOOKUP_URI, Uri.encode(String.valueOf(_id)));
+    }
+    
+    public static Uri buildMyStringLookupUri(String myString) {
+        return Uri.withAppendedPath(LOOKUP_URI, Uri.encode(myString));
     }
 
     public static class ColumnHelper extends PersistentObject.ColumnHelper {

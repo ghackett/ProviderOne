@@ -4,9 +4,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    android:id="@+id/textview"/>
+<ScrollView android:layout_height="wrap_content" android:id="@+id/scrollView1" android:layout_width="match_parent">
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="match_parent">
+        <TextView android:id="@+id/textview" android:layout_width="fill_parent" android:text="@string/hello" android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>

@@ -12,8 +12,18 @@ import com.episode6.providerone.sample.database.tables.MyTableInfo;
 
 public abstract class BaseSampleProvider extends ContentProvider {
     
+    public static final String PATH_COUNT = "/count";
+    public static final String PATH_LOOKUP = "/lookup/*";
+    public static final String PATH_ID = "/id/*";
+    
+    public static final String RAW_PATH_COUNT = "count";
+    public static final String RAW_PATH_LOOKUP = "lookup";
+    public static final String RAW_PATH_ID = "id";
+    
     public static final int MY_TABLE = 0xFFFF;
-    public static final int MY_TABLE_ID = 0xFFFE;
+    public static final int MY_TABLE_COUNT = 0xFFFE;
+    public static final int MY_TABLE_ID = 0xFFFD;
+    public static final int MY_TABLE_LOOKUP = 0xFFFC;
     
     private static Uri sBaseContentUri = null;
     private static Context sApplicationContext = null;
@@ -55,7 +65,9 @@ public abstract class BaseSampleProvider extends ContentProvider {
         buildCustomUriMatcher(matcher, authority);
         
         matcher.addURI(authority, MyTableInfo.PATH, MY_TABLE);
-        matcher.addURI(authority, MyTableInfo.PATH + "/*", MY_TABLE_ID);
+        matcher.addURI(authority, MyTableInfo.PATH + PATH_COUNT, MY_TABLE_COUNT);
+        matcher.addURI(authority, MyTableInfo.PATH + PATH_LOOKUP, MY_TABLE_LOOKUP);
+        matcher.addURI(authority, MyTableInfo.PATH + PATH_ID, MY_TABLE_ID);
     }
     
     protected UriMatcher getUriMatcher() {
@@ -75,8 +87,10 @@ public abstract class BaseSampleProvider extends ContentProvider {
         
         switch(match) {
             case MY_TABLE:
+            case MY_TABLE_COUNT:
                 return MyTableInfo.CONTENT_TYPE;
             case MY_TABLE_ID:
+            case MY_TABLE_LOOKUP:
                 return MyTableInfo.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -105,7 +119,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
         switch(match) {
             case MY_TABLE: {
                 long id = db.insertWithOnConflict(MyTableInfo.TABLE_NAME, null, values, MyTableInfo.INSERT_ALGORITHM);
-                return MyTableInfo.buildUri(id);
+                return MyTableInfo.buildIdLookupUri(id);
             }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -120,8 +134,14 @@ public abstract class BaseSampleProvider extends ContentProvider {
             return result;
         
         
-        final SelectionBuilder builder = buildSimpleSelection(uri, match);
-        return builder.where(selection, selectionArgs).query(mDatabase.getReadableDatabase(), projection, sortOrder);
+        final SelectionBuilder builder = buildSimpleSelection(uri, match).where(selection, selectionArgs);
+        switch(match) {
+            case MY_TABLE_COUNT:
+                return builder.query(mDatabase.getReadableDatabase(), new String[] {"count(*) as count"}, null);
+            default:
+                return builder.query(mDatabase.getReadableDatabase(), projection, sortOrder);
+        }
+        
     }
 
     @Override
@@ -136,6 +156,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
         switch(match) {
             case MY_TABLE:
             case MY_TABLE_ID:
+            case MY_TABLE_LOOKUP:
                 algorithm = MyTableInfo.UPDATE_ALGORITHM;
                 break;
         }
@@ -150,9 +171,13 @@ public abstract class BaseSampleProvider extends ContentProvider {
         
         switch(match) {
             case MY_TABLE:
+            case MY_TABLE_COUNT:
                 return builder.table(MyTableInfo.TABLE_NAME);
             case MY_TABLE_ID:
-                builder.where(MyTableInfo.ID_COLUMN + "=?", uri.getLastPathSegment());
+                builder.where(MyTableInfo.Columns._ID + "=?", uri.getLastPathSegment());
+                return builder.table(MyTableInfo.TABLE_NAME);
+            case MY_TABLE_LOOKUP:
+                builder.where(MyTableInfo.Columns.MY_STRING + "=?", uri.getLastPathSegment());
                 return builder.table(MyTableInfo.TABLE_NAME);
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

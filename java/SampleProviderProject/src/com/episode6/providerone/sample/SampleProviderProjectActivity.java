@@ -26,6 +26,7 @@ public class SampleProviderProjectActivity extends Activity {
     
     private static class TesterTask extends AsyncTask<Void, String, String> {
         private WeakReference<SampleProviderProjectActivity> mActivity;
+        int count = -1;
         
         public TesterTask(SampleProviderProjectActivity activity) {
             mActivity = new WeakReference<SampleProviderProjectActivity>(activity);
@@ -33,15 +34,27 @@ public class SampleProviderProjectActivity extends Activity {
 
         @Override
         protected String doInBackground(Void... params) {
-            MyTable table = new MyTable();
-            table.setMyString("So this is a test String");
-            table.save();
-            long newId = table.get_Id();
-            publishProgress("Saved a record and got id " + table.get_Id());
+            int count = MyTable.getCount(null, null);
+            publishProgress("\nCurrent count = " + count);
+            if (count > 0) {
+                publishProgress("deleting all records");
+                MyTable.deleteWhere(null, null);
+                publishProgress("Current count = " + MyTable.getCount(null, null) + "\n");                
+            } else {
+                publishProgress("");
+            }
+            for (int i = 0; i<10; i++) {
+                MyTable table = new MyTable();
+                table.setMyString("test_lookup_" + i);
+                table.setMyInt(i);
+                table.save();
+                publishProgress("Saved record with MyString = " + table.getMyString() + " and got id " + table.get_Id());
+                
+                MyTable table2 = MyTable.findOneByMyString("test_lookup_" + i, null);
+                publishProgress("Loaded record with myString = " + table2.getMyString() + " and got id " + table2.get_Id() + " and int value " + table2.getMyInt() + "\n");
+            }
             
-            MyTable table2 = MyTable.findOneById(newId, new String[] {MyTableInfo.Columns._ID, MyTableInfo.Columns.MY_STRING});
-            
-            return "loaded record back and got string of " + table2.getMyString();
+            return "final table count = " + MyTable.getCount(null, null);
         }
 
         @Override

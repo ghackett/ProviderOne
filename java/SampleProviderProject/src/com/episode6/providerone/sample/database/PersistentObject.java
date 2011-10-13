@@ -2,8 +2,10 @@ package com.episode6.providerone.sample.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public abstract class PersistentObject {
+public abstract class PersistentObject implements Parcelable {
     
     protected boolean mIsNew;
     
@@ -20,6 +22,15 @@ public abstract class PersistentObject {
     abstract protected void hydrate(Cursor c, ColumnHelper helper);
     abstract public void save();
     abstract public void delete();
+    
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mIsNew ? 1 : 0);
+    }
+    
+    public void readFromParcel(Parcel in) {
+        mIsNew = in.readInt() == 1;
+    }
     
     abstract public static class ColumnHelper {
         

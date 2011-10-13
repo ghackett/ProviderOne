@@ -7,19 +7,30 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.episode6.providerone.sample.database.PersistentObject;
 import com.episode6.providerone.sample.database.SampleProvider;
 import com.episode6.providerone.sample.database.objects.MyTable;
 import com.episode6.providerone.sample.database.tables.MyTableInfo;
 
-public class BaseMyTable extends PersistentObject implements Parcelable {
+public class BaseMyTable extends PersistentObject {
     
     public static MyTable fromCursor(Cursor cursor, MyTableInfo.ColumnHelper helper) {
         MyTable obj = new MyTable();
         obj.hydrate(cursor, helper);
         return obj;
+    }
+    
+    public static int getCount(String selection, String[] selectionArgs) {
+        int count = -1;
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(MyTableInfo.COUNT_URI, null, selection, selectionArgs, null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                count = c.getInt(0);
+            }
+            c.close();
+        }
+        return count;
     }
     
     public static ArrayList<MyTable> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -46,7 +57,7 @@ public class BaseMyTable extends PersistentObject implements Parcelable {
         if (projection == null)
             projection = MyTableInfo.ALL_COLUMNS;
         Cursor c = SampleProvider.getAppContext().getContentResolver().query(
-                MyTableInfo.buildUri(id), 
+                MyTableInfo.buildIdLookupUri(id), 
                 projection, 
                 null, 
                 null, 
@@ -61,7 +72,31 @@ public class BaseMyTable extends PersistentObject implements Parcelable {
     }
     
     public static void deleteOneById(long id) {
-        Uri delUri = MyTableInfo.buildUri(id);
+        Uri delUri = MyTableInfo.buildIdLookupUri(id);
+        SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
+    }
+    
+    public static MyTable findOneByMyString(String myString, String[] projection) {
+        MyTable rtr = null;
+        if (projection == null)
+            projection = MyTableInfo.ALL_COLUMNS;
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(
+                MyTableInfo.buildMyStringLookupUri(myString), 
+                projection, 
+                null, 
+                null, 
+                null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                rtr = fromCursor(c, new MyTableInfo.ColumnHelper(projection));
+            }
+            c.close();
+        }
+        return rtr;
+    }
+    
+    public static void deleteOneByMyString(String myString) {
+        Uri delUri = MyTableInfo.buildMyStringLookupUri(myString);
         SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
     }
     
@@ -228,7 +263,7 @@ public class BaseMyTable extends PersistentObject implements Parcelable {
             if (!m_IdSet) {
                 throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
             }
-            Uri updateUri = MyTableInfo.buildUri(m_Id);
+            Uri updateUri = MyTableInfo.buildIdLookupUri(m_Id);
             SampleProvider.getAppContext().getContentResolver().update(updateUri, toContentValues(), null, null);
         }
     }
@@ -240,7 +275,7 @@ public class BaseMyTable extends PersistentObject implements Parcelable {
         if (!m_IdSet)
             throw new IllegalArgumentException("Trying to delete a MyTable record that doesnt have its ID column set");
         
-        Uri delUri = MyTableInfo.buildUri(m_Id);
+        Uri delUri = MyTableInfo.buildIdLookupUri(m_Id);
         SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
     }
 
@@ -383,6 +418,8 @@ public class BaseMyTable extends PersistentObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        
         dest.writeValue(m_Id);
         dest.writeInt(m_IdSet ? 1 : 0);
 
@@ -414,7 +451,10 @@ public class BaseMyTable extends PersistentObject implements Parcelable {
         dest.writeInt(mMyTimeSet ? 1 : 0);
     }
     
-    private void readFromParcel(Parcel in) {
+    @Override
+    public void readFromParcel(Parcel in) {
+        super.readFromParcel(in);
+        
         m_Id = (Long) in.readValue(Long.class.getClassLoader());
         m_IdSet = in.readInt() == 1;
         
