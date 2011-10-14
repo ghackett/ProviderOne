@@ -1,16 +1,18 @@
 class ColumnInfo
 
-  attr_accessor :name, :type, :is_lookup_key, :camel_name
+  attr_accessor :name, :type, :is_lookup_key, :camel_name, :cap_camel_name
 
   def initialize(name, type)
     @name = name;
     @type = type;
     @camel_name = @name.camelize
+    @camel_name[0] = @camel_name.first.downcase
+    @cap_camel_name = @name.camelize
     @is_lookup_key = false
   end
 
   def to_s
-    rtr = "COLUMN #{@name} OF TYPE #{type} - #{self.class.to_s} - #{@camel_name}"
+    rtr = "COLUMN #{@name} OF TYPE #{type} - #{self.class.to_s} - #{@camel_name} - #{@cap_camel_name}"
     if @is_lookup_key
       rtr += " - LOOKUPKEY"
     end

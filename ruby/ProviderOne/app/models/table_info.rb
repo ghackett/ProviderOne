@@ -1,12 +1,15 @@
 class TableInfo
 
-  attr_accessor :name, :create_stmt, :columns, :camel_name, :update_algorithm, :insert_algorithm
+  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm
 
   def initialize(tablename, sql, tableinfo)
     @name = tablename
     @create_stmt = sql.to_s.gsub("\r\n", " ").gsub("\n", " ")
     @columns = [];
     @camel_name = @name.camelize
+    @camel_name[0] = @camel_name.first.downcase
+    @cap_camel_name = @name.camelize
+
     @update_algorithm = "CONFLICT_NONE"
     @insert_algorithm = "CONFLICT_NONE"
 
@@ -44,7 +47,7 @@ class TableInfo
   end
 
   def to_s
-    rtr = "\nTable named #{self.name}\n"
+    rtr = "\nTable named #{self.name} - camel name #{self.camel_name} - cap camel #{self.cap_camel_name}\n"
     @columns.each do |col|
       rtr += col.to_s + "\n"
     end
