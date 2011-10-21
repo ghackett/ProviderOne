@@ -4,6 +4,7 @@ PackageName
 ContentAuthority
 DbFileName
 DbVersion
+ProjectName
 ---------------
 
 
