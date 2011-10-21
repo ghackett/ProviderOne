@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.episode6.providerone.sample.database.autogen.tables.MyTableInfo;
+import com.episode6.providerone.sample.database.tables.MyTableInfo;
 
 public class SampleDatabase extends SQLiteOpenHelper {
     

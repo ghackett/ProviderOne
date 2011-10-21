@@ -9,7 +9,7 @@ import com.episode6.providerone.sample.database.autogen.BaseSampleProvider;
 import com.episode6.providerone.sample.database.autogen.PersistentObject;
 import com.episode6.providerone.sample.database.autogen.util.ArrayUtils;
 
-public class MyTableInfo  {
+public class BaseMyTableInfo  {
     
     public interface Columns {
         String _ID = "_id";

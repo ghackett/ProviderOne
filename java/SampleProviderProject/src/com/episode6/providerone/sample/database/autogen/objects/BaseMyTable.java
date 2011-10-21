@@ -14,8 +14,8 @@ import android.os.Parcel;
 
 import com.episode6.providerone.sample.database.SampleProvider;
 import com.episode6.providerone.sample.database.autogen.PersistentObject;
-import com.episode6.providerone.sample.database.autogen.tables.MyTableInfo;
 import com.episode6.providerone.sample.database.objects.MyTable;
+import com.episode6.providerone.sample.database.tables.MyTableInfo;
 
 public abstract class BaseMyTable extends PersistentObject {
     
