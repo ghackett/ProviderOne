@@ -7,7 +7,6 @@ import android.net.Uri;
 import com.episode6.providerone.sample.database.SampleProvider;
 import com.episode6.providerone.sample.database.autogen.BaseSampleProvider;
 import com.episode6.providerone.sample.database.autogen.PersistentObject;
-import com.episode6.providerone.sample.database.autogen.util.ArrayUtils;
 
 public class BaseMyTableInfo  {
     
@@ -113,16 +112,17 @@ public class BaseMyTableInfo  {
         public int col_my_time = -1;
         
         public ColumnHelper(String[] projection) {
-            col__id = ArrayUtils.getIndexOfStringInArray(Columns._ID, projection);
-            col_my_boolean = ArrayUtils.getIndexOfStringInArray(Columns.MY_BOOLEAN, projection);
-            col_my_double = ArrayUtils.getIndexOfStringInArray(Columns.MY_DOUBLE, projection);
-            col_my_float = ArrayUtils.getIndexOfStringInArray(Columns.MY_FLOAT, projection);
-            col_my_int = ArrayUtils.getIndexOfStringInArray(Columns.MY_INT, projection);
-            col_my_long = ArrayUtils.getIndexOfStringInArray(Columns.MY_LONG, projection);
-            col_my_char = ArrayUtils.getIndexOfStringInArray(Columns.MY_CHAR, projection);
-            col_my_string = ArrayUtils.getIndexOfStringInArray(Columns.MY_STRING, projection);
-            col_my_blob = ArrayUtils.getIndexOfStringInArray(Columns.MY_BLOB, projection);
-            col_my_time = ArrayUtils.getIndexOfStringInArray(Columns.MY_TIME, projection);
+            super(projection);
+            col__id = getColumnIndex(Columns._ID);
+            col_my_boolean = getColumnIndex(Columns.MY_BOOLEAN);
+            col_my_double = getColumnIndex(Columns.MY_DOUBLE);
+            col_my_float = getColumnIndex(Columns.MY_FLOAT);
+            col_my_int = getColumnIndex(Columns.MY_INT);
+            col_my_long = getColumnIndex(Columns.MY_LONG);
+            col_my_char = getColumnIndex(Columns.MY_CHAR);
+            col_my_string = getColumnIndex(Columns.MY_STRING);
+            col_my_blob = getColumnIndex(Columns.MY_BLOB);
+            col_my_time = getColumnIndex(Columns.MY_TIME);
         }
     }
 }

@@ -52,8 +52,9 @@ class HomeController < ApplicationController
       z.put_next_entry("config/" + @dbinfo.filename)
       z.write(File.read(@dbinfo.filepath))
 
-      z.put_next_entry("java/database/autogen/util/ArrayUtils.java")
-      z.write(@dbinfo.process_file_content(File.read("public/templates/utils/ArrayUtils.java")))
+      #removed ArrayUtils from sample project
+      #z.put_next_entry("java/database/autogen/util/ArrayUtils.java")
+      #z.write(@dbinfo.process_file_content(File.read("public/templates/utils/ArrayUtils.java")))
 
       z.put_next_entry("java/database/autogen/util/PlatformDatabaseUtils.java")
       z.write(@dbinfo.process_file_content(File.read("public/templates/utils/PlatformDatabaseUtils.java")))

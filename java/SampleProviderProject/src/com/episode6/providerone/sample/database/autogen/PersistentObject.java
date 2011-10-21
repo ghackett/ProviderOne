@@ -39,6 +39,22 @@ public abstract class PersistentObject implements Parcelable {
     
     abstract public static class ColumnHelper {
         
+        public String[] projection;
+        
+        public ColumnHelper(String[] projection) {
+            this.projection = projection;
+        }
+        
+        protected int getColumnIndex(String columnName) {
+            if (columnName == null || projection == null)
+                return -1;
+            for (int i = 0; i<projection.length; i++) {
+                if (columnName.equals(projection[i]))
+                    return i;
+            }
+            return -1;
+        }
+        
     }
 
 }
