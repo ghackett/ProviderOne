@@ -3,6 +3,7 @@ package {PackageName}.database.autogen;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Parcel;
@@ -27,6 +28,7 @@ public abstract class PersistentObject implements Parcelable {
     abstract public void delete();
     abstract public JSONObject toJson(ColumnHelper helper) throws JSONException;
     abstract public JSONObject toJson(String[] projection) throws JSONException;
+    abstract public ContentProviderOperation getSaveProviderOperation();
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -38,6 +40,22 @@ public abstract class PersistentObject implements Parcelable {
     }
 
     abstract public static class ColumnHelper {
+
+        public String[] projection;
+
+        public ColumnHelper(String[] projection) {
+            this.projection = projection;
+        }
+
+        protected int getColumnIndex(String columnName) {
+            if (columnName == null || projection == null)
+                return -1;
+            for (int i = 0; i<projection.length; i++) {
+                if (columnName.equals(projection[i]))
+                    return i;
+            }
+            return -1;
+        }
 
     }
 

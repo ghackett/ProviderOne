@@ -7,6 +7,7 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import com.episode6.providerone.sample.database.tables.MyTableInfo;
 
 public abstract class BaseMyTable extends PersistentObject {
     
+
     public static MyTable fromCursor(Cursor cursor, MyTableInfo.ColumnHelper helper) {
         MyTable obj = new MyTable();
         obj.hydrate(cursor, helper);
@@ -324,6 +326,21 @@ public abstract class BaseMyTable extends PersistentObject {
     }
     
     @Override
+    public ContentProviderOperation getSaveProviderOperation() {
+        ContentProviderOperation op = null;
+        if (isNew()) {
+            op = ContentProviderOperation.newInsert(MyTableInfo.CONTENT_URI).withValues(toContentValues()).build();
+        } else {
+            if (!m_IdSet) {
+                throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
+            }
+            Uri updateUri = MyTableInfo.buildIdLookupUri(m_Id);
+            op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
+        }
+        return op;
+    }
+    
+    @Override
     public void delete() {
         if (isNew())
             throw new IllegalArgumentException("Trying to delete a MyTable record that has never been saved");
@@ -572,15 +589,7 @@ public abstract class BaseMyTable extends PersistentObject {
         mMyTimeSet = in.readInt() == 1;
     }
     
-    public static final Creator<MyTable> CREATOR = new Creator<MyTable>() {
-        public MyTable createFromParcel(Parcel in) {
-            return new MyTable(in);
-        }
 
-        public MyTable[] newArray(int size) {
-            return new MyTable[size];
-        }
-    };
 
 
 

@@ -13,5 +13,16 @@ public class MyTable extends BaseMyTable {
     public MyTable(Parcel in) {
         super(in);
     }
+    
+    
+    public static final Creator<MyTable> CREATOR = new Creator<MyTable>() {
+        public MyTable createFromParcel(Parcel in) {
+            return new MyTable(in);
+        }
+
+        public MyTable[] newArray(int size) {
+            return new MyTable[size];
+        }
+    };
 
 }

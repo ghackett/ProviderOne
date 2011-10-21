@@ -29,10 +29,19 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf>
-          <file leaf-file-name="home_controller.rb" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="54" column="45" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.66334164">
+                <state line="54" column="45" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="PersistentObject.java" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/public/templates/autogen/PersistentObject.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="61" column="1" selection-start="1667" selection-end="1667" vertical-scroll-proportion="0.7524671">
                   <folding />
                 </state>
               </provider>
@@ -192,13 +201,13 @@
         <option value="$PROJECT_DIR$/public/templates/utils/PlatformDatabaseUtils.java" />
         <option value="$PROJECT_DIR$/public/templates/utils/SelectionBuilder.java" />
         <option value="$PROJECT_DIR$/app/models/database_info.rb" />
-        <option value="$PROJECT_DIR$/public/templates/autogen/PersistentObject.java" />
         <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/home/options.html.erb" />
         <option value="$PROJECT_DIR$/app/models/table_info.rb" />
         <option value="$PROJECT_DIR$/app/models/column_info.rb" />
         <option value="$PROJECT_DIR$/app/models/id_column.rb" />
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+        <option value="$PROJECT_DIR$/public/templates/autogen/PersistentObject.java" />
       </list>
     </option>
   </component>
@@ -906,11 +915,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/home.css.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="14" selection-start="926" selection-end="926" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="25" selection-start="443" selection-end="443" vertical-scroll-proportion="0.0">
@@ -991,7 +995,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="45" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.66334164">
+        <state line="54" column="45" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/autogen/PersistentObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="1" selection-start="1667" selection-end="1667" vertical-scroll-proportion="0.7524671">
           <folding />
         </state>
       </provider>
