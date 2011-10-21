@@ -2,6 +2,10 @@
     <div id="leftcolumn">
       <h2>Application / Database Info</h2>
 
+      Project Name (no spaces or special characters, this will be a prefix for several class names):<br/>
+      <%= text_field(:dbinfo, :project_name, {"class" => "textfield_effect"})%>
+
+      <br/><br/>
 
       App Package name:<br/>
       <%= text_field(:dbinfo, :package, {"class" => "textfield_effect"})%>
@@ -25,7 +29,7 @@
 
 
     <div id="rightcolumn">
-      <h2>Table Lookup Keys</h2>
+      <h2>Table Options</h2>
       <%@dbinfo.tables.each_value do |table|%>
           <p>
               <strong><%=table.name%></strong><br/>

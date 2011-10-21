@@ -3,7 +3,7 @@ require 'sqlite3'
 require 'xmlsimple'
 
 class DatabaseInfo
-  attr_accessor :filepath, :filename, :tables, :indecies, :upload_id, :package, :content_authority, :version
+  attr_accessor :filepath, :filename, :tables, :indecies, :upload_id, :package, :content_authority, :version, :project_name
 
   def initialize(fname, upload_id)
     @upload_id = upload_id
@@ -12,6 +12,7 @@ class DatabaseInfo
     @tables = Hash.new()
     @indecies = []
     @version = 1
+    @project_name = "SampleProject"
 
     db = SQLite3::Database.new(@filepath)
 
@@ -43,6 +44,7 @@ class DatabaseInfo
     file_content = file_content.gsub("{DbFileName}", @filename);
     file_content = file_content.gsub("{ContentAuthority}", @content_authority);
     file_content = file_content.gsub("{DbVersion}", @version.to_s);
+    file_content = file_content.gsub("{ProjectName}", @project_name);
     return file_content
   end
 
@@ -88,6 +90,7 @@ class DatabaseInfo
     data['package'] = @package
     data['content_authority'] = @content_authority
     data['version'] = @version
+    data['project_name'] = @project_name
 
     tables = []
     @tables.each_value do |table|
@@ -108,6 +111,7 @@ class DatabaseInfo
     @package = data['package']
     @content_authority = data['content_authority']
     @version = Integer(data['version']) +1
+    @project_name = data['project_name']
 
     tables.each do |xtbl|
       table = @tables[xtbl['name']]
@@ -121,6 +125,7 @@ class DatabaseInfo
     @package = dbparams[:package]
     @content_authority = dbparams[:content_authority]
     @version = dbparams[:version]
+    @project_name = dbparams[:project_name]
 
     @tables.each_value do |table|
       table.set_lookup_column(params["lookup_key_" + table.name])
