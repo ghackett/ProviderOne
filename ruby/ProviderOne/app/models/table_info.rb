@@ -1,10 +1,12 @@
 class TableInfo
 
-  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm
+  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm, :lower_name, :drop_stmt
 
   def initialize(tablename, sql, tableinfo)
     @name = tablename
-    @create_stmt = sql.to_s.gsub("\r\n", " ").gsub("\n", " ")
+    @lower_name = @name.downcase
+    @create_stmt = sql.to_s.gsub("\r\n", " ").gsub("\n", " ").gsub("\"", "\\\"")
+    @drop_stmt = "DROP TABLE IF EXISTS \\\"" + @name + "\\\""
     @columns = [];
     @camel_name = @name.camelize
     @camel_name[0] = @camel_name.first.downcase
@@ -45,6 +47,77 @@ class TableInfo
       end
     end
   end
+
+
+
+
+
+  def process_file_content(file_content)
+    file_content = file_content.gsub("{SqlTableName}", @name);
+    file_content = file_content.gsub("{LowerTableName}", @lower_name);
+    file_content = file_content.gsub("{CamelTableName}", @camel_name);
+    file_content = file_content.gsub("{CapCamelTableName}", @cap_camel_name);
+    file_content = file_content.gsub("{CreateStatement}", @create_stmt);
+    file_content = file_content.gsub("{DropStatement}", @drop_stmt);
+    file_content = file_content.gsub("{InsertAlgorithm}", @insert_algorithm);
+    file_content = file_content.gsub("{UpdateAlgorithm}", @update_algorithm);
+    return file_content
+  end
+
+  def get_base_table_info_content(dbinfo)
+    content = File.read("public/templates/tables/BaseTableInfo.java")
+    lookup_col = get_lookup_column
+    if (lookup_col.name == "_id")
+      idxStart = content.index("{LookupStart}")-1
+      idxEnd = content.index("{LookupEnd}") + 11
+      content = content[0..idxStart] + content[idxEnd...content.length]
+    else
+      content = content.gsub("{LookupStart}", "")
+      content = content.gsub("{LookupEnd}", "")
+
+      content = content.gsub("{LookupCapCamelName}", lookup_col.cap_camel_name)
+      content = content.gsub("{LookupCamelName}", lookup_col.camel_name)
+    end
+
+    col_defs = ""
+    col_list = ""
+    col_helper_defs = ""
+    col_helper_init = ""
+    @columns.each do |col|
+      col_defs += "\t\tString #{col.cap_name} = \"#{col.name}\";\n"
+      col_list += "\t\tColumns.#{col.cap_name},\n"
+      col_helper_defs += "\t\tpublic int col_#{col.lower_name} = -1;\n"
+      col_helper_init += "\t\t\tcol_#{col.lower_name} = getColumnIndex(Columns.#{col.cap_name});\n"
+    end
+
+    col_helper = "#{col_helper_defs}\n\n\t\tpublic ColumnHelper(String[] projection) {\n\t\t\tsuper(projection);\n#{col_helper_init}\t\t}"
+
+    content = content.gsub("{ColumnDefs}", col_defs);
+    content = content.gsub("{ColumnList}", col_list);
+    content = content.gsub("{ColumnHelperContent}", col_helper);
+
+    content = process_file_content(content)
+    content = dbinfo.process_file_content(content)
+    return content
+  end
+
+  def get_base_table_info_file_name()
+    return "Base" + @cap_camel_name + "Info.java"
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   def to_s
     rtr = "\nTable named #{self.name} - camel name #{self.camel_name} - cap camel #{self.cap_camel_name}\n"

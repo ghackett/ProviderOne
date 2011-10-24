@@ -1,6 +1,6 @@
 class ColumnInfo
 
-  attr_accessor :name, :type, :is_lookup_key, :camel_name, :cap_camel_name
+  attr_accessor :name, :type, :is_lookup_key, :camel_name, :cap_camel_name, :cap_name, :lower_name
 
   def initialize(name, type)
     @name = name;
@@ -8,6 +8,8 @@ class ColumnInfo
     @camel_name = @name.camelize
     @camel_name[0] = @camel_name.first.downcase
     @cap_camel_name = @name.camelize
+    @cap_name = @name.upcase
+    @lower_name = @name.downcase
     @is_lookup_key = false
   end
 

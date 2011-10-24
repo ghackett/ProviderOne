@@ -64,6 +64,11 @@ class HomeController < ApplicationController
 
       z.put_next_entry("java/database/autogen/PersistentObject.java")
       z.write(@dbinfo.process_file_content(File.read("public/templates/autogen/PersistentObject.java")))
+
+      @dbinfo.tables.each_value do |tbl|
+        z.put_next_entry("java/database/autogen/tables/" + tbl.get_base_table_info_file_name)
+        z.write(tbl.get_base_table_info_content(@dbinfo))
+      end
     end
 
     send_file(t.path, :type => "application/zip", :disposition => "attachment", :filename => "ProviderOnePackage.zip")

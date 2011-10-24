@@ -1,4 +1,4 @@
-package com.episode6.providerone.sample.database.autogen.adapter;
+package com.episode6.providerone.sample.database.autogen.adapters;
 
 import android.content.Context;
 import android.database.Cursor;

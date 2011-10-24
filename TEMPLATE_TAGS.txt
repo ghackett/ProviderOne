@@ -10,9 +10,24 @@ ProjectName
 
 Table-Specific
 ---------------
+SqlTableName
+CamelTableName
+CapCamelTableName
+CreateStatement
+DropStatement
+ColumnDefs
+ColumnList
+InsertAlgorithm
+UpdateAlgorithm
+ColumnHelperContent
 ---------------
 
 
 Column-Specific
 ---------------
+JavaType
+SqlName
+LowerName
+CamelName
+CapCamelName
 ---------------

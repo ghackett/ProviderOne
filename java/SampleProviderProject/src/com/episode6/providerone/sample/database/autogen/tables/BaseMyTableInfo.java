@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.episode6.providerone.sample.database.SampleProvider;
-import com.episode6.providerone.sample.database.autogen.BaseSampleProvider;
 import com.episode6.providerone.sample.database.autogen.PersistentObject;
 
 public class BaseMyTableInfo  {
@@ -45,9 +44,9 @@ public class BaseMyTableInfo  {
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.episode6.providerone.sample.my_table";
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.episode6.providerone.sample.my_table";
     public static final Uri CONTENT_URI = Uri.withAppendedPath(SampleProvider.getBaseContentUri(), PATH);
-    public static final Uri COUNT_URI = Uri.withAppendedPath(CONTENT_URI, BaseSampleProvider.RAW_PATH_COUNT);
-    public static final Uri LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, BaseSampleProvider.RAW_PATH_LOOKUP);
-    public static final Uri ID_LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, BaseSampleProvider.RAW_PATH_ID);
+    public static final Uri COUNT_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_COUNT);
+    public static final Uri LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_LOOKUP);
+    public static final Uri ID_LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_ID);
     
     public static final int INSERT_ALGORITHM = SQLiteDatabase.CONFLICT_IGNORE;
     public static final int UPDATE_ALGORITHM = SQLiteDatabase.CONFLICT_IGNORE;
@@ -82,10 +81,10 @@ public class BaseMyTableInfo  {
             if (sBuilder != null) {
                 String colList = sBuilder.toString();
                 db.execSQL(String.format("INSERT INTO \"%s\" (%s) SELECT %s FROM \"%s_old\";", TABLE_NAME, colList, colList, TABLE_NAME));
-                db.execSQL(String.format("DROP TABLE IF EXISTS \"%s_old\";" , TABLE_NAME));
             }
+            db.execSQL(String.format("DROP TABLE IF EXISTS \"%s_old\";" , TABLE_NAME));
 
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
             createTable(db);
         }
