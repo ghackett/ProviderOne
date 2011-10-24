@@ -1,0 +1,161 @@
+package {PackageName}.database.autogen;
+
+import android.content.ContentProvider;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+
+import {PackageName}.database.autogen.util.PlatformDatabaseUtils;
+import {PackageName}.database.autogen.util.SelectionBuilder;
+{TableInfoImports}
+
+public abstract class Base{ProjectName}Provider extends ContentProvider {
+
+    public static final String PATH_COUNT = "/count";
+    public static final String PATH_LOOKUP = "/lookup/*";
+    public static final String PATH_ID = "/id/*";
+
+    public static final String RAW_PATH_COUNT = "count";
+    public static final String RAW_PATH_LOOKUP = "lookup";
+    public static final String RAW_PATH_ID = "id";
+
+{TableProviderMatchDefs}
+    private static Uri sBaseContentUri = null;
+    private static Context sApplicationContext = null;
+
+    public static Context getAppContext() {
+        return sApplicationContext;
+    }
+
+    public static String getContentAuthority() {
+        return {ContentAuthority};
+    }
+
+    public static Uri getBaseContentUri() {
+        if (sBaseContentUri == null)
+            sBaseContentUri = Uri.parse("content://" + getContentAuthority());
+        return sBaseContentUri;
+    }
+
+    private {ProjectName}Database mDatabase;
+    private UriMatcher mUriMatcher = null;
+
+    protected abstract void buildCustomUriMatcher(UriMatcher matcher, String authority);
+    protected abstract String getCustomType(Uri uri, int match);
+    protected abstract Integer delete(Uri uri, String selection, String[] selectionArgs, int match);
+    protected abstract Uri insert(Uri uri, ContentValues values, int match);
+    protected abstract Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder, int match);
+    protected abstract Integer update(Uri uri, ContentValues values, String selection, String[] selectionArgs, int match);
+    protected abstract boolean buildSimpleSelection(Uri uri, int match, SelectionBuilder builder);
+
+    @Override
+    public boolean onCreate() {
+        sApplicationContext = getContext().getApplicationContext();
+        mDatabase = new {ProjectName}Database(getContext());
+        return false;
+    }
+
+    protected void buildUriMatcher(UriMatcher matcher) {
+        final String authority = getContentAuthority();
+        buildCustomUriMatcher(matcher, authority);
+
+{UriMatcherBuildProc}
+    }
+
+    protected UriMatcher getUriMatcher() {
+        if (mUriMatcher == null) {
+            mUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+            buildUriMatcher(mUriMatcher);
+        }
+        return mUriMatcher;
+    }
+
+    @Override
+    public String getType(Uri uri) {
+        final int match = getUriMatcher().match(uri);
+        String result = getCustomType(uri, match);
+        if (result != null)
+            return result;
+
+        switch(match) {
+{UriMatchTypeCases}
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+    }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        final int match = getUriMatcher().match(uri);
+        Integer result = delete(uri, selection, selectionArgs, match);
+        if (result != null)
+            return result.intValue();
+
+        final SelectionBuilder builder = buildSimpleSelection(uri, match);
+        return builder.where(selection, selectionArgs).delete(mDatabase.getWritableDatabase());
+    }
+
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        final int match = getUriMatcher().match(uri);
+        Uri result = insert(uri, values, match);
+        if (result != null)
+            return result;
+
+        PlatformDatabaseUtils db = new PlatformDatabaseUtils(mDatabase);
+        switch(match) {
+{UriInsertMatches}
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+    }
+
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        final int match = getUriMatcher().match(uri);
+        Cursor result = query(uri, projection, selection, selectionArgs, sortOrder, match);
+        if (result != null)
+            return result;
+
+
+        final SelectionBuilder builder = buildSimpleSelection(uri, match).where(selection, selectionArgs);
+        switch(match) {
+{UriCountMatches}
+            default:
+                return builder.query(mDatabase.getReadableDatabase(), projection, sortOrder);
+        }
+
+    }
+
+    @Override
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        final int match = getUriMatcher().match(uri);
+        Integer result = update(uri, values, selection, selectionArgs, match);
+        if (result != null)
+            return result;
+
+        final SelectionBuilder builder = buildSimpleSelection(uri, match);
+        int algorithm = SQLiteDatabase.CONFLICT_FAIL;
+        switch(match) {
+{UriUpdateAlgorithmMatches}
+        }
+        return builder.where(selection, selectionArgs).updateWithOnConflict(mDatabase, values, algorithm);
+    }
+
+    private SelectionBuilder buildSimpleSelection(Uri uri, int match) {
+        final SelectionBuilder builder = new SelectionBuilder();
+
+        if (buildSimpleSelection(uri, match, builder))
+            return builder;
+
+        switch(match) {
+{UriSimpleSelectionMatches}
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+    }
+
+}

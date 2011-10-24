@@ -5,12 +5,25 @@ ContentAuthority
 DbFileName
 DbVersion
 ProjectName
+TableInfoImports
+IndexDefs
+TableCreates
+TableUpgrades
+IndexExecutes
+TableProviderMatchDefs
+UriMatcherBuildProc
+UriMatchTypeCases
+UriInsertMatches
+UriCountMatches
+UriUpdateAlgorithmMatches
+UriSimpleSelectionMatches
 ---------------
 
 
 Table-Specific
 ---------------
 SqlTableName
+LowerTableName
 CamelTableName
 CapCamelTableName
 CreateStatement
@@ -20,6 +33,12 @@ ColumnList
 InsertAlgorithm
 UpdateAlgorithm
 ColumnHelperContent
+LookupStart
+LookupEnd
+LookupCapCamelName
+LookupCamelName
+
+
 ---------------
 
 

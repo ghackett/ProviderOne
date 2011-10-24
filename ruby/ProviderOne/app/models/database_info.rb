@@ -79,6 +79,55 @@ class DatabaseInfo
     return process_file_content(file_content)
   end
 
+  def get_base_provider()
+    file_content = File.read("public/templates/autogen/BaseProvider.java")
+
+    table_info_imports = ""
+    table_provider_match_defs = ""
+    table_provider_matcher_defs = ""
+    table_provider_type_cases = ""
+    table_provider_insert_matches = ""
+    table_provider_count_matches = ""
+    table_provider_update_alg_matches = ""
+    table_provider_simple_selection_matches = ""
+
+    match_count = 65535
+    @tables.each_value do |tbl|
+      table_info_imports += "import #{@package}.database.tables.#{tbl.cap_camel_name}Info;\n"
+      table_provider_match_defs += tbl.get_provider_match_defs(match_count)
+      if (tbl.has_lookup_column)
+        match_count -= 4
+      else
+        match_count -= 3
+      end
+      table_provider_matcher_defs += tbl.get_provider_uri_matcher_def
+      table_provider_type_cases += tbl.get_provider_type_match_cases
+      table_provider_insert_matches += tbl.get_provider_insert_match
+      table_provider_count_matches += "\t\t\tcase #{tbl.cap_name}_COUNT:\n"
+      table_provider_update_alg_matches += tbl.get_provider_update_algorithm_match
+      table_provider_simple_selection_matches += tbl.get_provider_simple_selection_matches
+    end
+
+    table_provider_count_matches += "\t\t\t\treturn builder.query(mDatabase.getReadableDatabase(), new String[] {\"count(*) as count\"}, null);\n"
+
+    file_content = file_content.gsub("{TableInfoImports}", table_info_imports);
+    file_content = file_content.gsub("{TableProviderMatchDefs}", table_provider_match_defs);
+    file_content = file_content.gsub("{UriMatcherBuildProc}", table_provider_matcher_defs);
+    file_content = file_content.gsub("{UriMatchTypeCases}", table_provider_type_cases);
+    file_content = file_content.gsub("{UriInsertMatches}", table_provider_insert_matches);
+    file_content = file_content.gsub("{UriCountMatches}", table_provider_count_matches);
+    file_content = file_content.gsub("{UriUpdateAlgorithmMatches}", table_provider_update_alg_matches);
+    file_content = file_content.gsub("{UriSimpleSelectionMatches}", table_provider_simple_selection_matches);
+
+    return process_file_content(file_content)
+  end
+
+
+
+
+
+
+
   def to_s
     rtr = "\n***************\nDatabase: #{@filename} at #{@filepath}\nPackage Name: #{@package}\nContentAuthority: #{@content_authority}\n"
     @tables.each_value do |info|

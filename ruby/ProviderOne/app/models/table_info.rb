@@ -1,6 +1,6 @@
 class TableInfo
 
-  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm, :lower_name, :drop_stmt
+  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm, :lower_name, :drop_stmt, :cap_name
 
   def initialize(tablename, sql, tableinfo)
     @name = tablename
@@ -11,6 +11,7 @@ class TableInfo
     @camel_name = @name.camelize
     @camel_name[0] = @camel_name.first.downcase
     @cap_camel_name = @name.camelize
+    @cap_name = @name.upcase
 
     @update_algorithm = "CONFLICT_NONE"
     @insert_algorithm = "CONFLICT_NONE"
@@ -50,7 +51,10 @@ class TableInfo
 
 
 
-
+  def has_lookup_column
+    lookup_col = get_lookup_column
+    return lookup_col.name != "_id"
+  end
 
   def process_file_content(file_content, dbinfo)
     file_content = file_content.gsub("{SqlTableName}", @name);
@@ -98,6 +102,87 @@ class TableInfo
 
     content = process_file_content(content, dbinfo)
     return content
+  end
+
+  def get_provider_match_defs(match_count)
+    defs = ""
+    defs += "\tpublic static final int #{@cap_name} = 0x#{match_count.to_s(16)};\n";
+    match_count-=1;
+    defs += "\tpublic static final int #{@cap_name}_COUNT = 0x#{match_count.to_s(16)};\n";
+    match_count-=1;
+    defs += "\tpublic static final int #{@cap_name}_ID = 0x#{match_count.to_s(16)};\n";
+    match_count-=1;
+
+
+    if (has_lookup_column)
+      defs += "\tpublic static final int #{@cap_name}_LOOKUP = 0x#{match_count.to_s(16)};\n";
+      match_count-=1;
+    end
+
+    return defs
+
+  end
+
+  def get_provider_uri_matcher_def
+    defs = ""
+    defs += "\t\tmatcher.addURI(authority, #{@cap_camel_name}Info.PATH, #{@cap_name});\n"
+    defs += "\t\tmatcher.addURI(authority, #{@cap_camel_name}Info.PATH + PATH_COUNT, #{@cap_name}_COUNT);\n"
+    defs += "\t\tmatcher.addURI(authority, #{@cap_camel_name}Info.PATH + PATH_ID, #{@cap_name}_ID);\n"
+    if (has_lookup_column)
+      defs += "\t\tmatcher.addURI(authority, #{@cap_camel_name}Info.PATH + PATH_LOOKUP, #{@cap_name}_LOOKUP);\n"
+    end
+    return defs
+  end
+
+  def get_provider_type_match_cases
+    defs = ""
+    defs += "\t\t\tcase #{@cap_name}:\n"
+    defs += "\t\t\tcase #{@cap_name}_COUNT:\n"
+    defs += "\t\t\t\treturn #{@cap_camel_name}Info.CONTENT_TYPE;\n"
+    defs += "\t\t\tcase #{@cap_name}_ID:\n"
+    if (has_lookup_column)
+      defs += "\t\t\tcase #{@cap_name}_LOOKUP:\n"
+    end
+    defs += "\t\t\t\treturn #{@cap_camel_name}Info.CONTENT_ITEM_TYPE;\n"
+    return defs
+  end
+
+
+  def get_provider_insert_match
+    defs = ""
+    defs += "\t\t\tcase #{@cap_name}: {\n"
+    defs += "\t\t\t\tlong id = db.insertWithOnConflict(#{@cap_camel_name}Info.TABLE_NAME, null, values, #{@cap_camel_name}Info.INSERT_ALGORITHM);\n"
+    defs += "\t\t\t\treturn #{@cap_camel_name}Info.buildIdLookupUri(id);\n"
+    defs += "\t\t\t}\n"
+    return defs
+  end
+
+  def get_provider_update_algorithm_match
+    defs = ""
+    defs += "\t\t\tcase #{@cap_name}:\n"
+    defs += "\t\t\tcase #{@cap_name}_ID:\n"
+    if (has_lookup_column)
+      defs += "\t\t\tcase #{@cap_name}_LOOKUP:\n"
+    end
+    defs += "\t\t\t\talgorithm = #{@cap_camel_name}Info.UPDATE_ALGORITHM;\n"
+    defs += "\t\t\t\tbreak;\n"
+  end
+
+  def get_provider_simple_selection_matches
+    defs = ""
+    defs += "\t\t\tcase #{@cap_name}:\n"
+    defs += "\t\t\tcase #{@cap_name}_COUNT:\n"
+    defs += "\t\t\t\treturn builder.table(#{@cap_camel_name}Info.TABLE_NAME);\n"
+    defs += "\t\t\tcase #{@cap_name}_ID:\n"
+    defs += "\t\t\t\tbuilder.where(#{@cap_camel_name}Info.Columns._ID + \"=?\", uri.getLastPathSegment());\n"
+    defs += "\t\t\t\treturn builder.table(#{@cap_camel_name}Info.TABLE_NAME);\n"
+    lookup_col = get_lookup_column
+    if (lookup_col.name != "_id")
+      defs += "\t\t\tcase #{@cap_name}_LOOKUP:\n"
+      defs += "\t\t\t\tbuilder.where(#{@cap_camel_name}Info.Columns.#{lookup_col.cap_name} + \"=?\", uri.getLastPathSegment());\n"
+      defs += "\t\t\t\treturn builder.table(#{@cap_camel_name}Info.TABLE_NAME);\n"
+    end
+    return defs
   end
 
 

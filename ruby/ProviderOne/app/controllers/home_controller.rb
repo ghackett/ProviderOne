@@ -68,6 +68,9 @@ class HomeController < ApplicationController
       z.put_next_entry("java/database/autogen/#{@dbinfo.project_name}Database.java")
       z.write(@dbinfo.get_database_java)
 
+      z.put_next_entry("java/database/autogen/Base#{@dbinfo.project_name}Provider.java")
+      z.write(@dbinfo.get_base_provider)
+
       @dbinfo.tables.each_value do |tbl|
         z.put_next_entry("java/database/autogen/tables/Base#{tbl.cap_camel_name}Info.java")
         z.write(tbl.get_base_table_info_content(@dbinfo))
