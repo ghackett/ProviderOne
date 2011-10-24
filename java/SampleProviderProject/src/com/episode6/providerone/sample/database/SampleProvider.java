@@ -31,8 +31,7 @@ public class SampleProvider extends BaseSampleProvider {
      * handle deletes for your custom uri matchings, return null if un-matched
      */
     @Override
-    protected Integer delete(Uri uri, String selection, String[] selectionArgs,
-            int match) {
+    protected Integer delete(Uri uri, String selection, String[] selectionArgs, int match) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -50,8 +49,7 @@ public class SampleProvider extends BaseSampleProvider {
      * handle queries for your custom uri matchings, return null if un-matched
      */
     @Override
-    protected Cursor query(Uri uri, String[] projection, String selection,
-            String[] selectionArgs, String sortOrder, int match) {
+    protected Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder, int match) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -60,8 +58,7 @@ public class SampleProvider extends BaseSampleProvider {
      * handle updates for your custom uri matchings, return null if un-matched
      */
     @Override
-    protected Integer update(Uri uri, ContentValues values, String selection,
-            String[] selectionArgs, int match) {
+    protected Integer update(Uri uri, ContentValues values, String selection, String[] selectionArgs, int match) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -71,11 +68,11 @@ public class SampleProvider extends BaseSampleProvider {
      * build a selection here using the SelectionBuilder that is passed to you. This
      * avoids the need to fill in the query, update and delete methods
      * 
-     * return true if you matched and modified the builder, false otherwise
+     * return true if you matched and modified the builder, false otherwise (to let 
+     * the base provider do its thing)
      */
     @Override
-    protected boolean buildSimpleSelection(Uri uri, int match,
-            SelectionBuilder builder) {
+    protected boolean buildSimpleSelection(Uri uri, int match, SelectionBuilder builder) {
         // TODO Auto-generated method stub
         return false;
     }
