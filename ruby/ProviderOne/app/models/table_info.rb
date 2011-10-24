@@ -196,6 +196,33 @@ class TableInfo
 
     file_content = process_lookup_content(file_content)
 
+    imports = []
+    col_defs = ""
+    hydrate_proc = ""
+    @columns.each do |col|
+      imps = col.get_imports
+      if (imps != nil)
+        imps.each do |imp|
+          imports << imp
+        end
+      end
+      col_defs += col.get_java_def
+      hydrate_proc += col.get_hydrate_proc
+    end
+
+    if (!imports.empty?)
+      import_string = ""
+      imports.uniq.each do |imp|
+        import_string += "import #{imp};\n"
+      end
+      file_content = file_content.gsub("{Imports}", import_string);
+    else
+      file_content = file_content.gsub("{Imports}", "");
+    end
+
+    file_content = file_content.gsub("{JavaDefs}", col_defs);
+    file_content = file_content.gsub("{HydrateProc}", hydrate_proc);
+
     file_content = process_file_content(file_content, dbinfo)
     return file_content
   end

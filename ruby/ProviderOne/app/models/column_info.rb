@@ -1,6 +1,6 @@
 class ColumnInfo
 
-  attr_accessor :name, :type, :is_lookup_key, :camel_name, :cap_camel_name, :cap_name, :lower_name
+  attr_accessor :name, :type, :is_lookup_key, :camel_name, :cap_camel_name, :cap_name, :lower_name, :java_type
 
   def initialize(name, type)
     @name = name;
@@ -12,6 +12,36 @@ class ColumnInfo
     @lower_name = @name.downcase
     @is_lookup_key = false
   end
+
+  def process_file_content(file_content)
+    file_content = file_content.gsub("{JavaType}", @java_type);
+    file_content = file_content.gsub("{SqlName}", @name);
+    file_content = file_content.gsub("{LowerName}", @lower_name);
+    file_content = file_content.gsub("{CamelName}", @camel_name);
+    file_content = file_content.gsub("{CapCamelName}", @cap_camel_name);
+    return file_content
+  end
+
+  def get_java_def
+    defs = "\tprotected #{@java_type} m#{@cap_camel_name} = null;\n"
+    defs += "\tprotected boolean m#{@cap_camel_name}Set = false;\n"
+    return defs
+  end
+
+  def get_hydrate_proc
+    proc = File.read("public/templates/columns/generic/HydrateProcedure.java")
+    return process_file_content(proc)
+  end
+
+  def get_imports
+    return nil
+  end
+
+
+
+
+
+
 
   def to_s
     rtr = "COLUMN #{@name} OF TYPE #{type} - #{self.class.to_s} - #{@camel_name} - #{@cap_camel_name}"

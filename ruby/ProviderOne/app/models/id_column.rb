@@ -1,4 +1,4 @@
-class IdColumn < ColumnInfo
+class IdColumn < LongColumn
 
   def initialize(name, type)
     super(name, type)

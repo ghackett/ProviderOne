@@ -38,6 +38,8 @@ LookupEnd
 LookupCapCamelName
 LookupCamelName
 
+JavaDefs
+HydrateProc
 
 ---------------
 
