@@ -52,7 +52,7 @@ class TableInfo
 
 
 
-  def process_file_content(file_content)
+  def process_file_content(file_content, dbinfo)
     file_content = file_content.gsub("{SqlTableName}", @name);
     file_content = file_content.gsub("{LowerTableName}", @lower_name);
     file_content = file_content.gsub("{CamelTableName}", @camel_name);
@@ -61,7 +61,7 @@ class TableInfo
     file_content = file_content.gsub("{DropStatement}", @drop_stmt);
     file_content = file_content.gsub("{InsertAlgorithm}", @insert_algorithm);
     file_content = file_content.gsub("{UpdateAlgorithm}", @update_algorithm);
-    return file_content
+    return dbinfo.process_file_content(file_content)
   end
 
   def get_base_table_info_content(dbinfo)
@@ -96,13 +96,8 @@ class TableInfo
     content = content.gsub("{ColumnList}", col_list);
     content = content.gsub("{ColumnHelperContent}", col_helper);
 
-    content = process_file_content(content)
-    content = dbinfo.process_file_content(content)
+    content = process_file_content(content, dbinfo)
     return content
-  end
-
-  def get_base_table_info_file_name()
-    return "Base" + @cap_camel_name + "Info.java"
   end
 
 

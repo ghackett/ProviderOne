@@ -66,8 +66,12 @@ class HomeController < ApplicationController
       z.write(@dbinfo.process_file_content(File.read("public/templates/autogen/PersistentObject.java")))
 
       @dbinfo.tables.each_value do |tbl|
-        z.put_next_entry("java/database/autogen/tables/" + tbl.get_base_table_info_file_name)
+        z.put_next_entry("java/database/autogen/tables/Base#{tbl.cap_camel_name}Info.java")
         z.write(tbl.get_base_table_info_content(@dbinfo))
+
+        z.put_next_entry("java/database/tables/#{tbl.cap_camel_name}Info.java")
+        z.write(tbl.process_file_content(File.read("public/templates/tables/TableInfo.java"), @dbinfo))
+
       end
     end
 
