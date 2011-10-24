@@ -40,6 +40,11 @@ LookupCamelName
 
 JavaDefs
 HydrateProc
+Imports
+ToContentValues
+ToJson
+WriteToParcel
+ReadFromParcel
 
 ---------------
 

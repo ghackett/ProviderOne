@@ -37,6 +37,33 @@ class ColumnInfo
     return nil
   end
 
+  def get_add_to_content_values(table)
+    defs = "\t\tif (m#{@cap_camel_name}Set)\n\t\t\tvalues.put(#{table.cap_camel_name}Info.Columns.#{@cap_name}, m#{@cap_camel_name});\n"
+    return defs
+  end
+
+  def get_add_to_json_values(table)
+    defs = "\t\tif (m#{@cap_camel_name}Set && h.col_#{@lower_name} != -1)\n\t\t\trtr.put(#{table.cap_camel_name}Info.Columns.#{@cap_name}, m#{@cap_camel_name});\n"
+    return defs
+  end
+
+  def get_write_isset_to_parcel()
+    return "\t\tdest.writeInt(m#{@cap_camel_name}Set ? 1 : 0);\n\n"
+  end
+
+  def get_read_isset_to_parcel()
+    return "\t\tm#{@cap_camel_name}Set = in.readInt() == 1;\n\n"
+  end
+
+  def get_write_to_parcel()
+    defs = "\t\tdest.writeValue(m#{@cap_camel_name});\n"
+    return defs + get_write_isset_to_parcel
+  end
+
+  def get_read_from_parcel()
+    defs = "\t\tm#{@cap_camel_name} = (#{@java_type}) in.readValue(#{@java_type}.class.getClassLoader());\n"
+    return defs + get_read_isset_to_parcel
+  end
 
 
 

@@ -319,7 +319,7 @@ public abstract class BaseMyTable extends PersistentObject {
 //            rtr.put(MyTableInfo.Columns.MY_BLOB, mMyBlob == null ? null : mMyBlob.array());
         if (mMyTimeSet && h.col_my_time != -1)
             rtr.put(MyTableInfo.Columns.MY_TIME, mMyTime);
-        return null;
+        return rtr;
     }
     
     @Override

@@ -157,27 +157,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     @Override
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        if (m_IdSet)
-            values.put({CapCamelTableName}Info.Columns._ID, m_Id);
-        if (mMyBooleanSet)
-            values.put({CapCamelTableName}Info.Columns.MY_BOOLEAN, mMyBoolean);
-        if (mMyDoubleSet)
-            values.put({CapCamelTableName}Info.Columns.MY_DOUBLE, mMyDouble);
-        if (mMyFloatSet)
-            values.put({CapCamelTableName}Info.Columns.MY_FLOAT, mMyFloat);
-        if (mMyIntSet)
-            values.put({CapCamelTableName}Info.Columns.MY_INT, mMyInt);
-        if (mMyLongSet)
-            values.put({CapCamelTableName}Info.Columns.MY_LONG, mMyLong);
-        if (mMyCharSet)
-            values.put({CapCamelTableName}Info.Columns.MY_CHAR, mMyChar == null ? null : String.valueOf(mMyChar));
-        if (mMyStringSet)
-            values.put({CapCamelTableName}Info.Columns.MY_STRING, mMyString);
-        if (mMyBlobSet)
-            values.put({CapCamelTableName}Info.Columns.MY_BLOB, mMyBlob == null ? null : mMyBlob.array());
-        if (mMyTimeSet)
-            values.put({CapCamelTableName}Info.Columns.MY_TIME, mMyTime);
-
+{ToContentValues}
         return values;
     }
 
@@ -198,28 +178,8 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         if (h == null)
             h = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
         JSONObject rtr = new JSONObject();
-        if (m_IdSet && h.col__id != -1)
-            rtr.put(MyTableInfo.Columns._ID, m_Id);
-        if (mMyBooleanSet && h.col_my_boolean != -1)
-            rtr.put(MyTableInfo.Columns.MY_BOOLEAN, mMyBoolean);
-        if (mMyDoubleSet && h.col_my_double != -1)
-            rtr.put(MyTableInfo.Columns.MY_DOUBLE, mMyDouble);
-        if (mMyFloatSet && h.col_my_float != -1)
-            rtr.put(MyTableInfo.Columns.MY_FLOAT, mMyFloat == null ? null : mMyFloat.doubleValue());
-        if (mMyIntSet && h.col_my_int != -1)
-            rtr.put(MyTableInfo.Columns.MY_INT, mMyInt);
-        if (mMyLongSet && h.col_my_long != -1)
-            rtr.put(MyTableInfo.Columns.MY_LONG, mMyLong);
-        if (mMyCharSet && h.col_my_char != -1)
-            rtr.put(MyTableInfo.Columns.MY_CHAR, mMyChar == null ? null : String.valueOf(mMyChar));
-        if (mMyStringSet && h.col_my_string != -1)
-            rtr.put(MyTableInfo.Columns.MY_STRING, mMyString);
-        //cannot put a blob into json
-//        if (mMyBlobSet && ArrayUtils.isStringInArray(MyTableInfo.Columns., projection))
-//            rtr.put(MyTableInfo.Columns.MY_BLOB, mMyBlob == null ? null : mMyBlob.array());
-        if (mMyTimeSet && h.col_my_time != -1)
-            rtr.put(MyTableInfo.Columns.MY_TIME, mMyTime);
-        return null;
+{ToJson}
+        return rtr;
     }
 
     @Override
@@ -435,72 +395,14 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
 
-        dest.writeValue(m_Id);
-        dest.writeInt(m_IdSet ? 1 : 0);
-
-        dest.writeValue(mMyBoolean);
-        dest.writeInt(mMyBooleanSet ? 1 : 0);
-
-        dest.writeValue(mMyDouble);
-        dest.writeInt(mMyDoubleSet ? 1 : 0);
-
-        dest.writeValue(mMyFloat);
-        dest.writeInt(mMyFloatSet ? 1 : 0);
-
-        dest.writeValue(mMyInt);
-        dest.writeInt(mMyIntSet ? 1 : 0);
-
-        dest.writeValue(mMyLong);
-        dest.writeInt(mMyLongSet ? 1 : 0);
-
-        dest.writeString(mMyChar == null ? null : String.valueOf(mMyChar));
-        dest.writeInt(mMyCharSet ? 1 : 0);
-
-        dest.writeString(mMyString);
-        dest.writeInt(mMyStringSet ? 1 : 0);
-
-        dest.writeValue(mMyBlob == null ? null : mMyBlob.array());
-        dest.writeInt(mMyBlobSet ? 1 : 0);
-
-        dest.writeValue(mMyTime);
-        dest.writeInt(mMyTimeSet ? 1 : 0);
+{WriteToParcel}
     }
 
     @Override
     public void readFromParcel(Parcel in) {
         super.readFromParcel(in);
 
-        m_Id = (Long) in.readValue(Long.class.getClassLoader());
-        m_IdSet = in.readInt() == 1;
-
-        mMyBoolean = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        mMyBooleanSet = in.readInt() == 1;
-
-        mMyDouble = (Double) in.readValue(Double.class.getClassLoader());
-        mMyDoubleSet = in.readInt() == 1;
-
-        mMyFloat = (Float) in.readValue(Float.class.getClassLoader());
-        mMyFloatSet = in.readInt() == 1;
-
-        mMyInt = (Integer) in.readValue(Integer.class.getClassLoader());
-        mMyIntSet = in.readInt() == 1;
-
-        mMyLong = (Long) in.readValue(Long.class.getClassLoader());
-        mMyLongSet = in.readInt() == 1;
-
-        String my_char_tmp = in.readString();
-        mMyChar = my_char_tmp == null || my_char_tmp.length() <= 0 ? null : my_char_tmp.charAt(0);
-        mMyCharSet = in.readInt() == 1;
-
-        mMyString = in.readString();
-        mMyStringSet = in.readInt() == 1;
-
-        byte[] my_blob_temp = (byte[]) in.readValue(byte[].class.getClassLoader());
-        mMyBlob = my_blob_temp == null ? null : ByteBuffer.wrap(my_blob_temp);
-        mMyBlobSet = in.readInt() == 1;
-
-        mMyTime = (Long) in.readValue(Long.class.getClassLoader());
-        mMyTimeSet = in.readInt() == 1;
+{ReadFromParcel}
     }
 
 }

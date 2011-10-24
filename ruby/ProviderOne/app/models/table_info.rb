@@ -199,6 +199,10 @@ class TableInfo
     imports = []
     col_defs = ""
     hydrate_proc = ""
+    content_values = ""
+    json_val = ""
+    write_to_parcel = ""
+    read_from_parcel = ""
     @columns.each do |col|
       imps = col.get_imports
       if (imps != nil)
@@ -208,6 +212,10 @@ class TableInfo
       end
       col_defs += col.get_java_def
       hydrate_proc += col.get_hydrate_proc
+      content_values += col.get_add_to_content_values(self)
+      json_val += col.get_add_to_json_values(self)
+      write_to_parcel += col.get_write_to_parcel
+      read_from_parcel += col.get_read_from_parcel
     end
 
     if (!imports.empty?)
@@ -222,6 +230,10 @@ class TableInfo
 
     file_content = file_content.gsub("{JavaDefs}", col_defs);
     file_content = file_content.gsub("{HydrateProc}", hydrate_proc);
+    file_content = file_content.gsub("{ToContentValues}", content_values);
+    file_content = file_content.gsub("{ToJson}", json_val);
+    file_content = file_content.gsub("{WriteToParcel}", write_to_parcel);
+    file_content = file_content.gsub("{ReadFromParcel}", read_from_parcel);
 
     file_content = process_file_content(file_content, dbinfo)
     return file_content
