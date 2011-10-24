@@ -81,6 +81,9 @@ class HomeController < ApplicationController
         z.put_next_entry("java/database/tables/#{tbl.cap_camel_name}Info.java")
         z.write(tbl.process_file_content(File.read("public/templates/tables/TableInfo.java"), @dbinfo))
 
+        z.put_next_entry("java/database/objects/#{tbl.cap_camel_name}.java")
+        z.write(tbl.process_file_content(File.read("public/templates/tables/Table.java"), @dbinfo))
+
       end
     end
 
