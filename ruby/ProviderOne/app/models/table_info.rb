@@ -68,8 +68,7 @@ class TableInfo
     return dbinfo.process_file_content(file_content)
   end
 
-  def get_base_table_info_content(dbinfo)
-    content = File.read("public/templates/tables/BaseTableInfo.java")
+  def process_lookup_content(content)
     lookup_col = get_lookup_column
     if (lookup_col.name == "_id")
       idxStart = content.index("{LookupStart}")-1
@@ -82,6 +81,12 @@ class TableInfo
       content = content.gsub("{LookupCapCamelName}", lookup_col.cap_camel_name)
       content = content.gsub("{LookupCamelName}", lookup_col.camel_name)
     end
+    return content
+  end
+
+  def get_base_table_info_content(dbinfo)
+    content = File.read("public/templates/tables/BaseTableInfo.java")
+    content = process_lookup_content(content)
 
     col_defs = ""
     col_list = ""
@@ -186,7 +191,14 @@ class TableInfo
   end
 
 
+  def get_base_table_object(dbinfo)
+    file_content = File.read("public/templates/tables/BaseTable.java")
 
+    file_content = process_lookup_content(file_content)
+
+    file_content = process_file_content(file_content, dbinfo)
+    return file_content
+  end
 
 
 
