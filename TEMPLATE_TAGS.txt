@@ -45,6 +45,8 @@ ToContentValues
 ToJson
 WriteToParcel
 ReadFromParcel
+BaseTableMethods
+IsSetMethods
 
 ---------------
 

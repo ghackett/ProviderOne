@@ -65,6 +65,14 @@ class ColumnInfo
     return defs + get_read_isset_to_parcel
   end
 
+  def get_base_table_methods()
+    return process_file_content(File.read("public/templates/columns/generic/BaseTableMethods.java"))
+  end
+
+  def get_is_set_method()
+    return process_file_content(File.read("public/templates/columns/generic/IsSetMethod.java"))
+  end
+
 
 
 

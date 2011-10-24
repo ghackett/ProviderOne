@@ -203,6 +203,8 @@ class TableInfo
     json_val = ""
     write_to_parcel = ""
     read_from_parcel = ""
+    methods = ""
+    is_set_methods = ""
     @columns.each do |col|
       imps = col.get_imports
       if (imps != nil)
@@ -216,6 +218,8 @@ class TableInfo
       json_val += col.get_add_to_json_values(self)
       write_to_parcel += col.get_write_to_parcel
       read_from_parcel += col.get_read_from_parcel
+      methods += col.get_base_table_methods
+      is_set_methods += col.get_is_set_method
     end
 
     if (!imports.empty?)
@@ -234,6 +238,8 @@ class TableInfo
     file_content = file_content.gsub("{ToJson}", json_val);
     file_content = file_content.gsub("{WriteToParcel}", write_to_parcel);
     file_content = file_content.gsub("{ReadFromParcel}", read_from_parcel);
+    file_content = file_content.gsub("{BaseTableMethods}", methods);
+    file_content = file_content.gsub("{IsSetMethods}", is_set_methods);
 
     file_content = process_file_content(file_content, dbinfo)
     return file_content
