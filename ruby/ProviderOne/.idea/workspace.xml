@@ -29,10 +29,10 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf>
-          <file leaf-file-name="home_controller.rb" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="85" column="83" selection-start="2559" selection-end="2559" vertical-scroll-proportion="0.90516335">
+                <state line="68" column="39" selection-start="2142" selection-end="2142" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -56,10 +56,19 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="database_info.rb" pinned="false" current="false" current-in-tab="false">
+          <file leaf-file-name="database_info.rb" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/models/database_info.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="44" column="79" selection-start="1205" selection-end="1253" vertical-scroll-proportion="0.0">
+                <state line="79" column="97" selection-start="2735" selection-end="2735" vertical-scroll-proportion="0.88141024">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index_info.rb" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/models/index_info.rb">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="8" column="55" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -68,7 +77,7 @@
           <file leaf-file-name="options.html.erb" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/views/home/options.html.erb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="59" column="31" selection-start="1824" selection-end="1824" vertical-scroll-proportion="-36.875">
+                <state line="59" column="31" selection-start="1824" selection-end="1824" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -77,7 +86,7 @@
           <file leaf-file-name="table_info.rb" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/models/table_info.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="63" column="51" selection-start="1899" selection-end="1899" vertical-scroll-proportion="0.0">
+                <state line="7" column="80" selection-start="317" selection-end="336" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -96,19 +105,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="TableInfo.java" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/public/templates/tables/TableInfo.java">
+          <file leaf-file-name="Database.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/autogen/Database.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="17" column="107" selection-start="384" selection-end="384" vertical-scroll-proportion="0.2687039">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Table.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/templates/tables/Table.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+                <state line="35" column="86" selection-start="723" selection-end="723" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -180,7 +180,16 @@
           <file leaf-file-name="BaseTableInfo.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/templates/tables/BaseTableInfo.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="9" column="17" selection-start="279" selection-end="298" vertical-scroll-proportion="0.0">
+                <state line="56" column="58" selection-start="2376" selection-end="2376" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="TableInfo.java" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/public/templates/tables/TableInfo.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="19" column="72" selection-start="556" selection-end="556" vertical-scroll-proportion="0.30031613">
                   <folding />
                 </state>
               </provider>
@@ -201,8 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app/views/home/download.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
         <option value="$PROJECT_DIR$/public/templates/utils/ArrayUtils.java" />
         <option value="$PROJECT_DIR$/public/templates/utils/PlatformDatabaseUtils.java" />
@@ -210,13 +217,15 @@
         <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
         <option value="$PROJECT_DIR$/app/models/id_column.rb" />
         <option value="$PROJECT_DIR$/public/templates/autogen/PersistentObject.java" />
-        <option value="$PROJECT_DIR$/app/models/database_info.rb" />
         <option value="$PROJECT_DIR$/app/views/home/options.html.erb" />
         <option value="$PROJECT_DIR$/app/models/column_info.rb" />
+        <option value="$PROJECT_DIR$/app/models/table_info.rb" />
+        <option value="$PROJECT_DIR$/app/models/index_info.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+        <option value="$PROJECT_DIR$/public/templates/autogen/Database.java" />
+        <option value="$PROJECT_DIR$/app/models/database_info.rb" />
         <option value="$PROJECT_DIR$/public/templates/tables/BaseTableInfo.java" />
         <option value="$PROJECT_DIR$/public/templates/tables/TableInfo.java" />
-        <option value="$PROJECT_DIR$/app/models/table_info.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
       </list>
     </option>
   </component>
@@ -253,9 +262,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
-      <pane id="RailsProjectView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -566,6 +572,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Favorites" />
+      <pane id="RailsProjectView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -665,6 +674,13 @@
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="" />
@@ -696,13 +712,6 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
-      <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSRemoteDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda">
@@ -867,7 +876,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17642373" sideWeight="0.7889328" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17801672" sideWeight="0.7889328" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2110672" sideWeight="0.90601355" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -924,20 +933,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/home/download.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/database_info.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="79" selection-start="1205" selection-end="1253" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/templates/utils/PlatformDatabaseUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="8" selection-start="8" selection-end="21" vertical-scroll-proportion="0.0">
@@ -987,11 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/column_info.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="32" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/id_column.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="25" selection-start="128" selection-end="128" vertical-scroll-proportion="0.0">
@@ -999,37 +989,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/tables/BaseTableInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="17" selection-start="279" selection-end="298" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/options.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="31" selection-start="1824" selection-end="1824" vertical-scroll-proportion="-36.875">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/table_info.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="51" selection-start="1899" selection-end="1899" vertical-scroll-proportion="0.0">
+        <state line="7" column="80" selection-start="317" selection-end="336" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/tables/TableInfo.java">
+    <entry file="file://$PROJECT_DIR$/app/models/column_info.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="107" selection-start="384" selection-end="384" vertical-scroll-proportion="0.2687039">
+        <state line="11" column="32" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/index_info.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="55" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="83" selection-start="2559" selection-end="2559" vertical-scroll-proportion="0.90516335">
+        <state line="68" column="39" selection-start="2142" selection-end="2142" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/autogen/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="86" selection-start="723" selection-end="723" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/tables/BaseTableInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="58" selection-start="2376" selection-end="2376" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/tables/TableInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="72" selection-start="556" selection-end="556" vertical-scroll-proportion="0.30031613">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/database_info.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="97" selection-start="2735" selection-end="2735" vertical-scroll-proportion="0.88141024">
           <folding />
         </state>
       </provider>

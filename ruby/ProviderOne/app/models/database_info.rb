@@ -48,6 +48,37 @@ class DatabaseInfo
     return file_content
   end
 
+  def get_database_java()
+    file_content = File.read("public/templates/autogen/Database.java")
+
+    table_info_imports = ""
+    table_creates = ""
+    table_upgrades = ""
+    index_defs = ""
+    index_exes = ""
+
+    @tables.each_value do |tbl|
+      table_info_imports += "import #{@package}.database.tables.#{tbl.cap_camel_name}Info;\n"
+      table_creates += "\t\t#{tbl.cap_camel_name}Info.createTable(db);\n"
+      table_upgrades += "\t\t#{tbl.cap_camel_name}Info.upgradeTable(db, oldVersion, newVersion);\n"
+    end
+
+    @indecies.each do |idx|
+      index_defs += "\tpublic static final String IDX_CREATE_#{idx.cap_name} = \"#{idx.create_stmt}\";\n"
+      index_defs += "\tpublic static final String IDX_DROP_#{idx.cap_name} = \"#{idx.drop_stmt}\";\n"
+      index_exes += "\t\tdb.execSQL(IDX_DROP_#{idx.cap_name});\n"
+      index_exes += "\t\tdb.execSQL(IDX_CREATE_#{idx.cap_name});\n"
+    end
+
+    file_content = file_content.gsub("{TableInfoImports}", table_info_imports);
+    file_content = file_content.gsub("{IndexDefs}", index_defs);
+    file_content = file_content.gsub("{TableCreates}", table_creates);
+    file_content = file_content.gsub("{TableUpgrades}", table_upgrades);
+    file_content = file_content.gsub("{IndexExecutes}", index_exes);
+
+    return process_file_content(file_content)
+  end
+
   def to_s
     rtr = "\n***************\nDatabase: #{@filename} at #{@filepath}\nPackage Name: #{@package}\nContentAuthority: #{@content_authority}\n"
     @tables.each_value do |info|

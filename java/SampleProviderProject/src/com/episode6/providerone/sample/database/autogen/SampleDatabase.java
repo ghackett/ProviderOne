@@ -31,7 +31,7 @@ public class SampleDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        MyTableInfo.upgradeTable(db);
+        MyTableInfo.upgradeTable(db, oldVersion, newVersion);
         db.execSQL(IDX_DROP_SAMPLE_IDX);
         db.execSQL(IDX_CREATE_SAMPLE_IDX);
     }

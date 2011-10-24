@@ -54,6 +54,20 @@ public abstract class BaseMyTable extends PersistentObject {
         return rtr;
     }
     
+    public static MyTable findOneWhere(String[] projection, String selection, String[] selectionArgs) {
+        if (projection == null)
+            projection = MyTableInfo.ALL_COLUMNS;
+        MyTableInfo.ColumnHelper helper = new MyTableInfo.ColumnHelper(projection);
+        MyTable rtr = null;
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(MyTableInfo.CONTENT_URI, projection, selection, selectionArgs, MyTableInfo.Columns._ID + " LIMIT 1");
+        if (c != null) {
+            if (c.moveToFirst())
+                rtr = MyTable.fromCursor(c, helper);
+            c.close();
+        }
+        return rtr;
+    }
+    
     public static void deleteWhere(String where, String[] selectionArgs) {
         SampleProvider.getAppContext().getContentResolver().delete(MyTableInfo.CONTENT_URI, where, selectionArgs);
     }

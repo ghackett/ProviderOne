@@ -56,7 +56,7 @@ public class BaseMyTableInfo  {
         db.execSQL(SQL_CREATE);
     }
     
-    public static void upgradeTable(SQLiteDatabase db) {
+    public static void upgradeTable(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
             db.execSQL(String.format("ALTER TABLE \"%s\" RENAME TO \"%s_old\";", TABLE_NAME, TABLE_NAME));
             StringBuilder sBuilder = null;
