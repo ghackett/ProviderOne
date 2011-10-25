@@ -3,7 +3,7 @@ require 'sqlite3'
 require 'xmlsimple'
 
 class DatabaseInfo
-  attr_accessor :filepath, :filename, :tables, :indecies, :upload_id, :package, :content_authority, :version, :project_name
+  attr_accessor :filepath, :filename, :tables, :indecies, :upload_id, :package, :content_authority, :version, :project_name, :copyright_msg, :gen_copyright, :autogen_copyright, :android_copyright
 
   def initialize(fname, upload_id)
     @upload_id = upload_id
@@ -13,6 +13,7 @@ class DatabaseInfo
     @indecies = []
     @version = 1
     @project_name = "SampleProject"
+    @copyright_msg = "Copyright (C) 2011 GroupMe, Inc."
 
     db = SQLite3::Database.new(@filepath)
 
@@ -38,8 +39,24 @@ class DatabaseInfo
 
   end
 
+  def load_copyrights_if_needed
+    if (@gen_copyright == nil)
+      @gen_copyright = File.read("public/templates/copyright/GenericCopyright.java").gsub("{CopyrightMessage}", @copyright_msg.gsub("\n", "\n * "))
+    end
+    if (@autogen_copyright == nil)
+      @autogen_copyright = File.read("public/templates/copyright/AutogenCopyright.java").gsub("{CopyrightMessage}", @copyright_msg.gsub("\n", "\n * "))
+    end
+    if (@android_copyright == nil)
+      @android_copyright = File.read("public/templates/copyright/AndroidCopyright.java").gsub("{CopyrightMessage}", @copyright_msg.gsub("\n", "\n * "))
+    end
+  end
 
   def process_file_content(file_content)
+    load_copyrights_if_needed()
+    file_content = file_content.gsub("{CopyrightMessage}", @gen_copyright);
+    file_content = file_content.gsub("{AutoGenCopyrightMessage}", @autogen_copyright);
+    file_content = file_content.gsub("{AndroidCopyrightMessage}", @android_copyright);
+
     file_content = file_content.gsub("{PackageName}", @package);
     file_content = file_content.gsub("{DbFileName}", @filename);
     file_content = file_content.gsub("{ContentAuthority}", @content_authority);
@@ -194,6 +211,7 @@ class DatabaseInfo
     data['content_authority'] = @content_authority
     data['version'] = @version
     data['project_name'] = @project_name
+    data['copyright_msg'] = @copyright_msg
 
     tables = []
     @tables.each_value do |table|
@@ -215,6 +233,7 @@ class DatabaseInfo
     @content_authority = data['content_authority']
     @version = Integer(data['version']) +1
     @project_name = data['project_name']
+    @copyright_msg = data['copyright_msg']
 
     tables.each do |xtbl|
       table = @tables[xtbl['name']]
@@ -229,6 +248,7 @@ class DatabaseInfo
     @content_authority = dbparams[:content_authority]
     @version = dbparams[:version]
     @project_name = dbparams[:project_name]
+    @copyright_msg = dbparams[:copyright_msg]
 
     @tables.each_value do |table|
       table.set_lookup_column(params["lookup_key_" + table.name])

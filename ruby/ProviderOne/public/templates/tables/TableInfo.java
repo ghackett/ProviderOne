@@ -1,3 +1,4 @@
+{CopyrightMessage}
 package {PackageName}.database.tables;
 
 import {PackageName}.database.autogen.tables.Base{CapCamelTableName}Info;

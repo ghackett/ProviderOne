@@ -29,46 +29,37 @@
     <splitter split-orientation="horizontal" split-proportion="0.41188216">
       <split-first>
         <leaf>
-          <file leaf-file-name="column_info.rb" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/models/column_info.rb">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="71" column="23" selection-start="2279" selection-end="2296" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BaseTableMethods.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/templates/columns/generic/BaseTableMethods.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="5" column="8" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BaseTableMethods.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/templates/columns/datetime/BaseTableMethods.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="17" column="66" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="77" column="33" selection-start="2520" selection-end="2520" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="database_info.rb" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/models/database_info.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="65" column="54" selection-start="2054" selection-end="2054" vertical-scroll-proportion="0.9661572">
+                <state line="49" column="72" selection-start="1651" selection-end="1651" vertical-scroll-proportion="0.012679628">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="BaseProvider.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/autogen/BaseProvider.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="0" column="0" selection-start="0" selection-end="25" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Database.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/autogen/Database.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="options.html.erb" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/views/home/options.html.erb">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="30" column="67" selection-start="983" selection-end="983" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -77,7 +68,16 @@
           <file leaf-file-name="PersistentObject.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/templates/autogen/PersistentObject.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+                <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Provider.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/autogen/Provider.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="0" column="1" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -123,82 +123,91 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="HydrateProcedure.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/templates/columns/char/HydrateProcedure.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="12" column="89" selection-start="455" selection-end="455" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="date_time_column.rb" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/models/date_time_column.rb">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="11" column="78" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="HydrateProcedure.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/templates/columns/bool/HydrateProcedure.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="18" selection-start="18" selection-end="29" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="text_column.rb" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/models/text_column.rb">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="5" column="0" selection-start="121" selection-end="273" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="BaseTable.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/templates/tables/BaseTable.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="155" column="144" selection-start="6622" selection-end="6622" vertical-scroll-proportion="0.0">
+                <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="TableAdapter.java" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="BaseTableInfo.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/tables/BaseTableInfo.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Table.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/tables/Table.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="0" column="1" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="TableAdapter.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/templates/tables/TableAdapter.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="45" column="102" selection-start="2097" selection-end="2097" vertical-scroll-proportion="0.72115386">
+                <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="HydrateProcedure.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/templates/columns/blob/HydrateProcedure.java">
+          <file leaf-file-name="TableInfo.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/tables/TableInfo.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="4" column="26" selection-start="223" selection-end="235" vertical-scroll-proportion="0.0">
+                <state line="0" column="1" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="HydrateProcedure.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/templates/columns/generic/HydrateProcedure.java">
+          <file leaf-file-name="PlatformDatabaseUtils.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/utils/PlatformDatabaseUtils.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="7" column="0" selection-start="284" selection-end="284" vertical-scroll-proportion="0.0">
+                <state line="11" column="83" selection-start="449" selection-end="449" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ReadFromParcel.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/templates/columns/char/ReadFromParcel.java">
+          <file leaf-file-name="SelectionBuilder.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/utils/SelectionBuilder.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="1" column="9" selection-start="59" selection-end="73" vertical-scroll-proportion="0.0">
+                <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="GenericCopyright.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/copyright/GenericCopyright.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="1" column="3" selection-start="6" selection-end="6" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="AutogenCopyright.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/templates/copyright/AutogenCopyright.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="2" column="2" selection-start="57" selection-end="57" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="AndroidCopyright.java" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/public/templates/copyright/AndroidCopyright.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="15" column="70" selection-start="641" selection-end="641" vertical-scroll-proportion="0.18503289">
                   <folding />
                 </state>
               </provider>
@@ -219,22 +228,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/public/templates/columns/blob/HydrateProcedure.java" />
-        <option value="$PROJECT_DIR$/app/models/float_column.rb" />
-        <option value="$PROJECT_DIR$/public/templates/columns/char/ReadFromParcel.java" />
-        <option value="$PROJECT_DIR$/public/templates/columns/blob/ReadFromParcel.java" />
-        <option value="$PROJECT_DIR$/app/models/char_column.rb" />
-        <option value="$PROJECT_DIR$/app/models/blob_column.rb" />
-        <option value="$PROJECT_DIR$/public/templates/columns/generic/IsSetMethod.java" />
-        <option value="$PROJECT_DIR$/app/models/column_info.rb" />
-        <option value="$PROJECT_DIR$/app/models/date_time_column.rb" />
-        <option value="$PROJECT_DIR$/app/models/table_info.rb" />
-        <option value="$PROJECT_DIR$/public/templates/columns/generic/BaseTableMethods.java" />
-        <option value="$PROJECT_DIR$/public/templates/columns/datetime/BaseTableMethods.java" />
+        <option value="$PROJECT_DIR$/app/views/home/options.html.erb" />
+        <option value="$PROJECT_DIR$/public/templates/autogen/BaseProvider.java" />
+        <option value="$PROJECT_DIR$/public/templates/autogen/Database.java" />
+        <option value="$PROJECT_DIR$/public/templates/autogen/PersistentObject.java" />
+        <option value="$PROJECT_DIR$/public/templates/autogen/Provider.java" />
         <option value="$PROJECT_DIR$/public/templates/tables/BaseTable.java" />
+        <option value="$PROJECT_DIR$/public/templates/tables/BaseTableInfo.java" />
+        <option value="$PROJECT_DIR$/public/templates/tables/Table.java" />
         <option value="$PROJECT_DIR$/public/templates/tables/TableAdapter.java" />
-        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+        <option value="$PROJECT_DIR$/public/templates/tables/TableInfo.java" />
+        <option value="$PROJECT_DIR$/public/templates/utils/PlatformDatabaseUtils.java" />
+        <option value="$PROJECT_DIR$/public/templates/utils/SelectionBuilder.java" />
+        <option value="$PROJECT_DIR$/public/templates/copyright/GenericCopyright.java" />
+        <option value="$PROJECT_DIR$/public/templates/copyright/AndroidCopyright.java" />
         <option value="$PROJECT_DIR$/app/models/database_info.rb" />
+        <option value="$PROJECT_DIR$/public/templates/copyright/AutogenCopyright.java" />
       </list>
     </option>
   </component>
@@ -273,6 +282,7 @@
     <panes>
       <pane id="Favorites" />
       <pane id="RailsProjectView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -364,6 +374,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="tables" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ProviderOne" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ProviderOne" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="copyright" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -731,7 +763,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -840,6 +871,13 @@
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="" />
@@ -871,13 +909,6 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
-      <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSRemoteDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda">
@@ -1035,16 +1066,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="2560" height="1357" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20629232" sideWeight="0.7889328" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20828356" sideWeight="0.7889328" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2110672" sideWeight="0.90601355" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2110672" sideWeight="0.90601355" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1099,14 +1130,16 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="33" selection-start="2520" selection-end="2520" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/templates/autogen/PersistentObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/autogen/Provider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="1" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1139,72 +1172,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/columns/char/HydrateProcedure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="89" selection-start="455" selection-end="455" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/date_time_column.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="78" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/columns/bool/HydrateProcedure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="18" selection-start="18" selection-end="29" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/text_column.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="121" selection-end="273" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/templates/tables/BaseTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="155" column="144" selection-start="6622" selection-end="6622" vertical-scroll-proportion="0.0">
+        <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/columns/blob/HydrateProcedure.java">
+    <entry file="file://$PROJECT_DIR$/public/templates/tables/BaseTableInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="26" selection-start="223" selection-end="235" vertical-scroll-proportion="0.0">
+        <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/columns/generic/HydrateProcedure.java">
+    <entry file="file://$PROJECT_DIR$/public/templates/tables/Table.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="284" selection-end="284" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/columns/char/ReadFromParcel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="9" selection-start="59" selection-end="73" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/database_info.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="54" selection-start="2054" selection-end="2054" vertical-scroll-proportion="0.9661572">
+        <state line="0" column="1" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/templates/tables/TableAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="102" selection-start="2097" selection-end="2097" vertical-scroll-proportion="0.72115386">
+        <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/tables/TableInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="1" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/utils/PlatformDatabaseUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="83" selection-start="449" selection-end="449" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/utils/SelectionBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/copyright/GenericCopyright.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="3" selection-start="6" selection-end="6" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/copyright/AutogenCopyright.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="2" selection-start="57" selection-end="57" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/copyright/AndroidCopyright.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="70" selection-start="641" selection-end="641" vertical-scroll-proportion="0.18503289">
           <folding />
         </state>
       </provider>

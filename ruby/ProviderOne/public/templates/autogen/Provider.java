@@ -1,3 +1,4 @@
+{CopyrightMessage}
 package {PackageName}.sample.database;
 
 import {PackageName}.database.autogen.Base{ProjectName}Provider;

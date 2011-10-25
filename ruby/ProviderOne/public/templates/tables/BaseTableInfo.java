@@ -1,3 +1,4 @@
+{AutoGenCopyrightMessage}
 package {PackageName}.database.autogen.tables;
 
 import android.database.Cursor;

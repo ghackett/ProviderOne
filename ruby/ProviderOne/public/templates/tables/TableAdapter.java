@@ -1,3 +1,4 @@
+{AutoGenCopyrightMessage}
 package {PackageName}.database.autogen.adapters;
 
 import android.content.Context;

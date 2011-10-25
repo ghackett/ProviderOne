@@ -1,3 +1,4 @@
+{CopyrightMessage}
 package {PackageName}.database.objects;
 
 import android.os.Parcel;
