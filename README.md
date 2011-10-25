@@ -19,7 +19,7 @@ Take the pain out of dealing with databases in Android by generating fully funct
 
 4) Download all your generated Android code and copy it into your project, saving you hours (possibly days) of tedious database work. 
 
-	-if updating your schema (as opposed to generating a brand new one) you should only copy the autogen folder into your project to avoid overwriting any of your custom subclasses.
+	--if updating your schema (as opposed to generating a brand new one) you should only copy the autogen folder into your project to avoid overwriting any of your custom subclasses.
 
 IT's JUST THAT EASY!
 

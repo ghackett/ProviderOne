@@ -74,6 +74,9 @@ class HomeController < ApplicationController
       z.put_next_entry("java/database/#{@dbinfo.project_name}Provider.java")
       z.write(@dbinfo.process_file_content(File.read("public/templates/autogen/Provider.java")))
 
+      z.put_next_entry("README.md")
+      z.write(@dbinfo.get_readme)
+
       @dbinfo.tables.each_value do |tbl|
         z.put_next_entry("java/database/autogen/tables/Base#{tbl.cap_camel_name}Info.java")
         z.write(tbl.get_base_table_info_content(@dbinfo))
@@ -86,6 +89,9 @@ class HomeController < ApplicationController
 
         z.put_next_entry("java/database/objects/#{tbl.cap_camel_name}.java")
         z.write(tbl.process_file_content(File.read("public/templates/tables/Table.java"), @dbinfo))
+
+        z.put_next_entry("java/database/autogen/adapters/#{tbl.cap_camel_name}Adapter.java")
+        z.write(tbl.process_file_content(File.read("public/templates/tables/TableAdapter.java"), @dbinfo))
 
       end
     end

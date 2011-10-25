@@ -1,6 +1,8 @@
 Globals
 ---------------
 PackageName
+PackageNameFolder
+ObjectList
 ContentAuthority
 DbFileName
 DbVersion

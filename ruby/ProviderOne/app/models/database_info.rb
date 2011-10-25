@@ -48,6 +48,29 @@ class DatabaseInfo
     return file_content
   end
 
+  def get_readme()
+    file_content = File.read("public/templates/Readme.md")
+    file_content = file_content.gsub("{PackageNameFolder}", @package.gsub(".", "/"));
+    file_content = file_content.gsub("{ProjectName}", @project_name);
+
+    ca = @content_authority
+    if ca[0] != "\"" || ca[ca.length-1] != "\""
+      ca = "<your content authority>"
+    end
+    file_content = file_content.gsub("{ContentAuthority}", ca);
+
+    object_list = ""
+    @tables.each_value do |tbl|
+      object_list += "- #{tbl.cap_camel_name}\n"
+      object_list += "- #{tbl.cap_camel_name}Info\n"
+      object_list += "- #{tbl.cap_camel_name}Adapter\n\n"
+    end
+
+    file_content = file_content.gsub("{ObjectList}", object_list);
+
+    return file_content
+  end
+
   def get_database_java()
     file_content = File.read("public/templates/autogen/Database.java")
 
