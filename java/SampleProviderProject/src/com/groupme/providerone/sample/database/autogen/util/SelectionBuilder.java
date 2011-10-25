@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2011 GroupMe, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.episode6.providerone.sample.database.autogen.util;
+package com.groupme.providerone.sample.database.autogen.util;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -126,7 +127,7 @@ public class SelectionBuilder {
 
         return db.update(mTable, values, getSelection(), getSelectionArgs());
     }
-    
+
     public int updateWithOnConflict(SQLiteOpenHelper db, ContentValues values, int algorithm) {
         assertTable();
 
@@ -136,7 +137,7 @@ public class SelectionBuilder {
 
     public int delete(SQLiteDatabase db) {
         assertTable();
-        
+
         return db.delete(mTable, getSelection(), getSelectionArgs());
     }
 }

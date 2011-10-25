@@ -1,15 +1,13 @@
-package com.episode6.providerone.sample;
+package com.groupme.providerone.sample;
 
 import java.lang.ref.WeakReference;
-
-import com.episode6.providerone.sample.database.autogen.tables.BaseMyTableInfo;
-import com.episode6.providerone.sample.database.objects.MyTable;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.TextView;
+
+import com.groupme.providerone.sample.database.objects.MyTable;
 
 public class SampleProviderProjectActivity extends Activity {
     
@@ -48,10 +46,10 @@ public class SampleProviderProjectActivity extends Activity {
                 table.setMyString("test_lookup_" + i);
                 table.setMyInt(i);
                 table.save();
-                publishProgress("Saved record with MyString = " + table.getMyString() + " and got id " + table.get_Id());
+                publishProgress("Saved record with MyString = " + table.getMyString() + " and got id " + table.getId());
                 
                 MyTable table2 = MyTable.findOneByMyString("test_lookup_" + i);
-                publishProgress("Loaded record with myString = " + table2.getMyString() + " and got id " + table2.get_Id() + " and int value " + table2.getMyInt() + "\n");
+                publishProgress("Loaded record with myString = " + table2.getMyString() + " and got id " + table2.getId() + " and int value " + table2.getMyInt() + "\n");
             }
             
             return "final table count = " + MyTable.getCount(null, null);

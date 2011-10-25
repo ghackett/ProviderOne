@@ -1,7 +1,10 @@
-package com.episode6.providerone.sample.database;
+/*
+ * Copyright (C) 2011 GroupMe, Inc.
+ */
+package com.groupme.providerone.sample.database;
 
-import com.episode6.providerone.sample.database.autogen.BaseSampleProvider;
-import com.episode6.providerone.sample.database.autogen.util.SelectionBuilder;
+import com.groupme.providerone.sample.database.autogen.BaseSampleProvider;
+import com.groupme.providerone.sample.database.autogen.util.SelectionBuilder;
 
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -67,8 +70,8 @@ public class SampleProvider extends BaseSampleProvider {
      * if your custom uri matching corresponds directly to a table or view, you can
      * build a selection here using the SelectionBuilder that is passed to you. This
      * avoids the need to fill in the query, update and delete methods
-     * 
-     * return true if you matched and modified the builder, false otherwise (to let 
+     *
+     * return true if you matched and modified the builder, false otherwise (to let
      * the base provider do its thing)
      */
     @Override

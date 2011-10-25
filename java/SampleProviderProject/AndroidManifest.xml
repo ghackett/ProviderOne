@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.episode6.providerone.sample"
+      package="com.groupme.providerone.sample"
       android:versionCode="1"
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="8" />
@@ -13,7 +13,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <provider android:authorities="com.episode6.providerone.sample" android:name=".database.SampleProvider"></provider>
+        <provider android:name=".database.SampleProvider" android:exported="false" android:authorities="com.groupme.providerone.sample"></provider>
+
 
     </application>
 </manifest>

@@ -1,6 +1,8 @@
 {CopyrightMessage}
 package {PackageName}.database.tables;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import {PackageName}.database.autogen.tables.Base{CapCamelTableName}Info;
 
 public class {CapCamelTableName}Info extends Base{CapCamelTableName}Info {

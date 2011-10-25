@@ -3,4 +3,8 @@ class IntColumn < ColumnInfo
       super(name, type)
       @java_type = "Integer"
     end
+    def get_hydrate_proc
+      proc = File.read("public/templates/columns/int/HydrateProcedure.java")
+      return process_file_content(proc)
+    end
 end

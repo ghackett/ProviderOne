@@ -1,5 +1,5 @@
 {CopyrightMessage}
-package {PackageName}.sample.database;
+package {PackageName}.database;
 
 import {PackageName}.database.autogen.Base{ProjectName}Provider;
 import {PackageName}.database.autogen.util.SelectionBuilder;

@@ -234,14 +234,14 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         if (isNew()) {
             Uri result = {ProjectName}Provider.getAppContext().getContentResolver().insert({CapCamelTableName}Info.CONTENT_URI, toContentValues());
             if (result != null) {
-                set_Id(Long.valueOf(result.getLastPathSegment()));
+                setId(Long.valueOf(result.getLastPathSegment()));
             }
             mIsNew = false;
         } else {
-            if (!m_IdSet) {
+            if (!mIdSet) {
                 throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
             }
-            Uri updateUri = {CapCamelTableName}Info.buildIdLookupUri(m_Id);
+            Uri updateUri = {CapCamelTableName}Info.buildIdLookupUri(mId);
             {ProjectName}Provider.getAppContext().getContentResolver().update(updateUri, toContentValues(), null, null);
         }
     }
@@ -252,10 +252,10 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         if (isNew()) {
             op = ContentProviderOperation.newInsert({CapCamelTableName}Info.CONTENT_URI).withValues(toContentValues()).build();
         } else {
-            if (!m_IdSet) {
+            if (!mIdSet) {
                 throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
             }
-            Uri updateUri = {CapCamelTableName}Info.buildIdLookupUri(m_Id);
+            Uri updateUri = {CapCamelTableName}Info.buildIdLookupUri(mId);
             op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
         }
         return op;
@@ -265,10 +265,10 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     public void delete() {
         if (isNew())
             throw new IllegalArgumentException("Trying to delete a {CapCamelTableName} record that has never been saved");
-        if (!m_IdSet)
+        if (!mIdSet)
             throw new IllegalArgumentException("Trying to delete a {CapCamelTableName} record that doesnt have its ID column set");
 
-        Uri delUri = {CapCamelTableName}Info.buildIdLookupUri(m_Id);
+        Uri delUri = {CapCamelTableName}Info.buildIdLookupUri(mId);
         {ProjectName}Provider.getAppContext().getContentResolver().delete(delUri, null, null);
     }
 
