@@ -38,11 +38,22 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         return count;
     }
 
+    public static ArrayList<{CapCamelTableName}> findAllWhere(String selection, String[] selectionArgs, String sortOrder) {
+        return findAllWhere({CapCamelTableName}Info.ALL_COLUMNS, selection, selectionArgs, sortOrder);
+    }
+
     public static ArrayList<{CapCamelTableName}> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         if (projection == null)
             projection = {CapCamelTableName}Info.ALL_COLUMNS;
-        {CapCamelTableName}Info.ColumnHelper helper = new {CapCamelTableName}Info.ColumnHelper(projection);
-        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+
+        return findAllWhere(new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs, sortOrder);
+    }
+
+    public static ArrayList<{CapCamelTableName}> findAllWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
+        if (helper == null)
+            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
+
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, helper.projection, selection, selectionArgs, sortOrder);
         ArrayList<{CapCamelTableName}> rtr = new ArrayList<{CapCamelTableName}>();
         if (c != null) {
             while(c.moveToNext()) {
@@ -53,12 +64,23 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         return rtr;
     }
 
+    public static {CapCamelTableName} findOneWhere(String selection, String[] selectionArgs) {
+        return findOneWhere({CapCamelTableName}Info.ALL_COLUMNS, selection, selectionArgs);
+    }
+
     public static {CapCamelTableName} findOneWhere(String[] projection, String selection, String[] selectionArgs) {
         if (projection == null)
             projection = {CapCamelTableName}Info.ALL_COLUMNS;
-        {CapCamelTableName}Info.ColumnHelper helper = new {CapCamelTableName}Info.ColumnHelper(projection);
+
+        return findOneWhere(new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs);
+    }
+
+    public static {CapCamelTableName} findOneWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs) {
+        if (helper == null)
+            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
+
         {CapCamelTableName} rtr = null;
-        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, projection, selection, selectionArgs, {CapCamelTableName}Info.Columns._ID + " LIMIT 1");
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, helper.projection, selection, selectionArgs, {CapCamelTableName}Info.Columns._ID + " LIMIT 1");
         if (c != null) {
             if (c.moveToFirst())
                 rtr = {CapCamelTableName}.fromCursor(c, helper);
@@ -71,19 +93,31 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         {ProjectName}Provider.getAppContext().getContentResolver().delete({CapCamelTableName}Info.CONTENT_URI, where, selectionArgs);
     }
 
+    public static {CapCamelTableName} findOneById(long id) {
+        return findOneById(id, {CapCamelTableName}Info.ALL_COLUMNS);
+    }
+
     public static {CapCamelTableName} findOneById(long id, String[] projection) {
-        {CapCamelTableName} rtr = null;
         if (projection == null)
             projection = {CapCamelTableName}Info.ALL_COLUMNS;
-        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(
+        return findOneById(id, new {CapCamelTableName}Info.ColumnHelper(projection));
+    }
+
+    public static {CapCamelTableName} findOneById(long id, {CapCamelTableName}Info.ColumnHelper helper) {
+        {CapCamelTableName} rtr = null;
+
+        if (helper == null)
+            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
+
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(
                 {CapCamelTableName}Info.buildIdLookupUri(id),
-                projection,
+                helper.projection,
                 null,
                 null,
                 null);
         if (c != null) {
             if (c.moveToFirst()) {
-                rtr = fromCursor(c, new {CapCamelTableName}Info.ColumnHelper(projection));
+                rtr = fromCursor(c, helper);
             }
             c.close();
         }
@@ -97,19 +131,31 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
 
 
 {LookupStart}
-    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCamelName}, String[] projection) {
-        {CapCamelTableName} rtr = null;
+    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCapCamelName}) {
+        return findOneBy{LookupCapCamelName}({LookupCapCamelName}, {CapCamelTableName}Info.ALL_COLUMNS);
+    }
+            
+    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCapCamelName}, String[] projection) {
         if (projection == null)
             projection = {CapCamelTableName}Info.ALL_COLUMNS;
-        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(
-                {CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName}),
-                projection,
-                null,
-                null,
+        return findOneBy{LookupCapCamelName}({LookupCapCamelName}, new {CapCamelTableName}Info.ColumnHelper(projection));
+    }
+    
+    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCapCamelName}, {CapCamelTableName}Info.ColumnHelper helper) {
+        {CapCamelTableName} rtr = null;
+        
+        if (helper == null)
+            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
+        
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(
+                {CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCapCamelName}), 
+                helper.projection, 
+                null, 
+                null, 
                 null);
         if (c != null) {
             if (c.moveToFirst()) {
-                rtr = fromCursor(c, new {CapCamelTableName}Info.ColumnHelper(projection));
+                rtr = fromCursor(c, helper);
             }
             c.close();
         }

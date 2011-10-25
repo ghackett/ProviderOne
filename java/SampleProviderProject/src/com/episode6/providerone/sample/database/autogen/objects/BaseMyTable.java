@@ -39,11 +39,22 @@ public abstract class BaseMyTable extends PersistentObject {
         return count;
     }
     
+    public static ArrayList<MyTable> findAllWhere(String selection, String[] selectionArgs, String sortOrder) {
+        return findAllWhere(MyTableInfo.ALL_COLUMNS, selection, selectionArgs, sortOrder);
+    }
+    
     public static ArrayList<MyTable> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         if (projection == null)
             projection = MyTableInfo.ALL_COLUMNS;
-        MyTableInfo.ColumnHelper helper = new MyTableInfo.ColumnHelper(projection);
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query(MyTableInfo.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+        
+        return findAllWhere(new MyTableInfo.ColumnHelper(projection), selection, selectionArgs, sortOrder);
+    }
+    
+    public static ArrayList<MyTable> findAllWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
+        if (helper == null)
+            helper = new MyTableInfo.ColumnHelper(MyTableInfo.ALL_COLUMNS);
+
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(MyTableInfo.CONTENT_URI, helper.projection, selection, selectionArgs, sortOrder);
         ArrayList<MyTable> rtr = new ArrayList<MyTable>();
         if (c != null) {
             while(c.moveToNext()) {
@@ -54,12 +65,23 @@ public abstract class BaseMyTable extends PersistentObject {
         return rtr;
     }
     
+    public static MyTable findOneWhere(String selection, String[] selectionArgs) {
+        return findOneWhere(MyTableInfo.ALL_COLUMNS, selection, selectionArgs);
+    }
+    
     public static MyTable findOneWhere(String[] projection, String selection, String[] selectionArgs) {
         if (projection == null)
             projection = MyTableInfo.ALL_COLUMNS;
-        MyTableInfo.ColumnHelper helper = new MyTableInfo.ColumnHelper(projection);
+        
+        return findOneWhere(new MyTableInfo.ColumnHelper(projection), selection, selectionArgs);
+    }
+    
+    public static MyTable findOneWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs) {
+        if (helper == null)
+            helper = new MyTableInfo.ColumnHelper(MyTableInfo.ALL_COLUMNS);
+        
         MyTable rtr = null;
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query(MyTableInfo.CONTENT_URI, projection, selection, selectionArgs, MyTableInfo.Columns._ID + " LIMIT 1");
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(MyTableInfo.CONTENT_URI, helper.projection, selection, selectionArgs, MyTableInfo.Columns._ID + " LIMIT 1");
         if (c != null) {
             if (c.moveToFirst())
                 rtr = MyTable.fromCursor(c, helper);
@@ -72,19 +94,31 @@ public abstract class BaseMyTable extends PersistentObject {
         SampleProvider.getAppContext().getContentResolver().delete(MyTableInfo.CONTENT_URI, where, selectionArgs);
     }
     
+    public static MyTable findOneById(long id) {
+        return findOneById(id, MyTableInfo.ALL_COLUMNS);
+    }
+    
     public static MyTable findOneById(long id, String[] projection) {
-        MyTable rtr = null;
         if (projection == null)
             projection = MyTableInfo.ALL_COLUMNS;
+        return findOneById(id, new MyTableInfo.ColumnHelper(projection));
+    }
+    
+    public static MyTable findOneById(long id, MyTableInfo.ColumnHelper helper) {
+        MyTable rtr = null;
+        
+        if (helper == null)
+            helper = new MyTableInfo.ColumnHelper(MyTableInfo.ALL_COLUMNS);
+        
         Cursor c = SampleProvider.getAppContext().getContentResolver().query(
                 MyTableInfo.buildIdLookupUri(id), 
-                projection, 
+                helper.projection, 
                 null, 
                 null, 
                 null);
         if (c != null) {
             if (c.moveToFirst()) {
-                rtr = fromCursor(c, new MyTableInfo.ColumnHelper(projection));
+                rtr = fromCursor(c, helper);
             }
             c.close();
         }
@@ -96,19 +130,31 @@ public abstract class BaseMyTable extends PersistentObject {
         SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
     }
     
+    public static MyTable findOneByMyString(String myString) {
+        return findOneByMyString(myString, MyTableInfo.ALL_COLUMNS);
+    }
+            
     public static MyTable findOneByMyString(String myString, String[] projection) {
-        MyTable rtr = null;
         if (projection == null)
             projection = MyTableInfo.ALL_COLUMNS;
+        return findOneByMyString(myString, new MyTableInfo.ColumnHelper(projection));
+    }
+    
+    public static MyTable findOneByMyString(String myString, MyTableInfo.ColumnHelper helper) {
+        MyTable rtr = null;
+        
+        if (helper == null)
+            helper = new MyTableInfo.ColumnHelper(MyTableInfo.ALL_COLUMNS);
+        
         Cursor c = SampleProvider.getAppContext().getContentResolver().query(
                 MyTableInfo.buildMyStringLookupUri(myString), 
-                projection, 
+                helper.projection, 
                 null, 
                 null, 
                 null);
         if (c != null) {
             if (c.moveToFirst()) {
-                rtr = fromCursor(c, new MyTableInfo.ColumnHelper(projection));
+                rtr = fromCursor(c, helper);
             }
             c.close();
         }
@@ -149,7 +195,7 @@ public abstract class BaseMyTable extends PersistentObject {
         readFromParcel(in);
     }
     
-    private void assertColumnHelper(ColumnHelper helper, boolean allowNull) {
+    private static void assertColumnHelper(ColumnHelper helper, boolean allowNull) {
         if (helper == null) {
             if (allowNull)
                 return;
