@@ -46,18 +46,38 @@ public abstract class {CapCamelTableName}Adapter extends CursorAdapter {
     public String[] getProjection() {
         return mColumnHelper.projection;
     }
-
+    
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (!mDataValid) {
+            throw new IllegalStateException("this should only be called when the cursor is valid");
+        }
+        if (!mCursor.moveToPosition(position)) {
+            throw new IllegalStateException("couldn't move cursor to position " + position);
+        }
+        View v;
+        {CapCamelTableName} {CamelTableName} = {CapCamelTableName}.fromCursor(mCursor, mColumnHelper);
+        if (convertView == null) {
+            v = newView(mContext, {CamelTableName}, parent);
+        } else {
+            v = convertView;
+        }
+        bindView(v, mContext, {CamelTableName});
+        return v;
+    }
+    
     @Override
     public void bindView(View view, Context ctx, Cursor cursor) {
-        bindView(view, ctx, {CapCamelTableName}.fromCursor(cursor, mColumnHelper));
+        //empty
     }
 
     @Override
     public View newView(Context ctx, Cursor cursor, ViewGroup parent) {
-        return newView(ctx, {CapCamelTableName}.fromCursor(cursor, mColumnHelper), parent);
+        //empty
+        return null;
     }
 
-    abstract public View newView(Context ctx, {CapCamelTableName} myTable, ViewGroup parent);
-    abstract public void bindView(View view, Context ctx, {CapCamelTableName} myTable);
+    abstract public View newView(Context ctx, {CapCamelTableName} {CamelTableName}, ViewGroup parent);
+    abstract public void bindView(View view, Context ctx, {CapCamelTableName} {CamelTableName});
 
 }
