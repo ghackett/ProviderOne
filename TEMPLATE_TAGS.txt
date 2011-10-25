@@ -3,6 +3,9 @@ Globals
 PackageName
 PackageNameFolder
 ObjectList
+AutoGenCopyrightMessage
+AndroidCopyrightMessage
+CopyrightMessage
 ContentAuthority
 DbFileName
 DbVersion
