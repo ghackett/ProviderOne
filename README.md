@@ -11,7 +11,8 @@ Take the pain out of dealing with databases in Android by generating fully funct
 
 1) Build your database in your favorite sqlite editor (make sure every table has an auto-incrementing primary key called _id).
 	
-	-you can also use a .sql text file which is more git-friendly. 
+	--you can also use a .sql text file which is more git-friendly. 
+	
 2) Upload that database file to the ProviderOne web project
 
 3) Answer a few simple questions about your project and database (you can pick a 2nd lookup key besides _id for each)
@@ -41,7 +42,7 @@ Not anymore. Most ORM objects force you to fetch and load every column in a tabl
 
 Because ProviderOne is still in the early stages of development, there are a few rules that your database must abide by in order to get properly generated java files…
 
--Every table MUST contain a primary, auto-incrementing key called _id. If you've used android cursor adapters before, then you should be familiar with this design pattern.
--No Views, Provider one currently does not support SQL Views. View support may be added in the future, but as of now, they will just be ignored and will not be created on the device.
--All sqlite column names should be lowercase and underscored, i.e. my_column_name. In java, you would call getMyColumnName() to fetch the value of that column, or isMyColumnNameSet() to find out if that column is current loaded in that object.
+- Every table MUST contain a primary, auto-incrementing key called _id. If you've used android cursor adapters before, then you should be familiar with this design pattern.
+- No Views, Provider one currently does not support SQL Views. View support may be added in the future, but as of now, they will just be ignored and will not be created on the device.
+- All sqlite column names should be lowercase and underscored, i.e. my_column_name. In java, you would call getMyColumnName() to fetch the value of that column, or isMyColumnNameSet() to find out if that column is current loaded in that object.
 
