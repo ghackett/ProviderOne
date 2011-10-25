@@ -50,7 +50,7 @@ public class SampleProviderProjectActivity extends Activity {
                 table.save();
                 publishProgress("Saved record with MyString = " + table.getMyString() + " and got id " + table.get_Id());
                 
-                MyTable table2 = MyTable.findOneByMyString("test_lookup_" + i, null);
+                MyTable table2 = MyTable.findOneByMyString("test_lookup_" + i);
                 publishProgress("Loaded record with myString = " + table2.getMyString() + " and got id " + table2.get_Id() + " and int value " + table2.getMyInt() + "\n");
             }
             
