@@ -54,7 +54,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         if (helper == null)
             helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
 
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, helper.projection, selection, selectionArgs, sortOrder);
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, helper.projection, selection, selectionArgs, sortOrder);
         ArrayList<{CapCamelTableName}> rtr = new ArrayList<{CapCamelTableName}>();
         if (c != null) {
             while(c.moveToNext()) {
@@ -81,7 +81,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
             helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
 
         {CapCamelTableName} rtr = null;
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, helper.projection, selection, selectionArgs, {CapCamelTableName}Info.Columns._ID + " LIMIT 1");
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, helper.projection, selection, selectionArgs, {CapCamelTableName}Info.Columns._ID + " LIMIT 1");
         if (c != null) {
             if (c.moveToFirst())
                 rtr = {CapCamelTableName}.fromCursor(c, helper);
@@ -110,7 +110,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         if (helper == null)
             helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
 
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query(
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(
                 {CapCamelTableName}Info.buildIdLookupUri(id),
                 helper.projection,
                 null,
@@ -148,7 +148,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         if (helper == null)
             helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
         
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query(
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(
                 {CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCapCamelName}), 
                 helper.projection, 
                 null, 
