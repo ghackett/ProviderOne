@@ -96,11 +96,13 @@ class DatabaseInfo
     table_upgrades = ""
     index_defs = ""
     index_exes = ""
+    batch_delete_ops = ""
 
     @tables.each_value do |tbl|
       table_info_imports += "import #{@package}.database.tables.#{tbl.cap_camel_name}Info;\n"
       table_creates += "\t\t#{tbl.cap_camel_name}Info.createTable(db);\n"
       table_upgrades += "\t\t#{tbl.cap_camel_name}Info.upgradeTable(db, oldVersion, newVersion);\n"
+      batch_delete_ops += "\t\tops.add(ContentProviderOperation.newDelete(#{tbl.cap_camel_name}Info.CONTENT_URI).build());\n"
     end
 
     @indecies.each do |idx|
@@ -111,6 +113,7 @@ class DatabaseInfo
     end
 
     file_content = file_content.gsub("{TableInfoImports}", table_info_imports);
+    file_content = file_content.gsub("{BatchDeleteOps}", batch_delete_ops);
     file_content = file_content.gsub("{IndexDefs}", index_defs);
     file_content = file_content.gsub("{TableCreates}", table_creates);
     file_content = file_content.gsub("{TableUpgrades}", table_upgrades);
