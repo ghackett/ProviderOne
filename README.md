@@ -10,10 +10,14 @@ Take the pain out of dealing with databases in Android by generating fully funct
 ## How it works
 
 1) Build your database in your favorite sqlite editor (make sure every table has an auto-incrementing primary key called _id).
+	
 	-you can also use a .sql text file which is more git-friendly. 
 2) Upload that database file to the ProviderOne web project
+
 3) Answer a few simple questions about your project and database (you can pick a 2nd lookup key besides _id for each)
+
 4) Download all your generated Android code and copy it into your project, saving you hours (possibly days) of tedious database work. 
+
 	-if updating your schema (as opposed to generating a brand new one) you should only copy the autogen folder into your project to avoid overwriting any of your custom subclasses.
 
 IT's JUST THAT EASY!
