@@ -3,8 +3,10 @@ package com.groupme.providerone.sample;
 import java.lang.ref.WeakReference;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.groupme.providerone.sample.database.objects.MyTable;
@@ -19,6 +21,14 @@ public class SampleProviderProjectActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         mTextView = (TextView) findViewById(R.id.textview);
+        findViewById(R.id.btn_list).setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SampleProviderProjectActivity.this, SampleListActivity.class);
+                startActivity(i);
+            }
+        });
         new TesterTask(this).execute((Void)null);
     }
     
@@ -34,22 +44,25 @@ public class SampleProviderProjectActivity extends Activity {
         protected String doInBackground(Void... params) {
             int count = MyTable.getCount(null, null);
             publishProgress("\nCurrent count = " + count);
-            if (count > 0) {
+            if (count > 0 && count < 500) {
                 publishProgress("deleting all records");
                 MyTable.deleteWhere(null, null);
                 publishProgress("Current count = " + MyTable.getCount(null, null) + "\n");                
             } else {
                 publishProgress("");
             }
-            for (int i = 0; i<10; i++) {
-                MyTable table = new MyTable();
-                table.setMyString("test_lookup_" + i);
-                table.setMyInt(i);
-                table.save();
-                publishProgress("Saved record with MyString = " + table.getMyString() + " and got id " + table.getId());
-                
-                MyTable table2 = MyTable.findOneByMyString("test_lookup_" + i);
-                publishProgress("Loaded record with myString = " + table2.getMyString() + " and got id " + table2.getId() + " and int value " + table2.getMyInt() + "\n");
+            if (count < 500) {
+                for (int i = 0; i<500; i++) {
+                    MyTable table = new MyTable();
+                    table.setMyString("test_lookup_" + i);
+                    table.setMyInt(i);
+                    table.setMyDouble(i*Math.PI);
+                    table.save();
+                    publishProgress("Saved record with MyString = " + table.getMyString() + " and got id " + table.getId());
+                    
+                    MyTable table2 = MyTable.findOneByMyString("test_lookup_" + i);
+                    publishProgress("Loaded record with myString = " + table2.getMyString() + " and got id " + table2.getId() + " and int value " + table2.getMyInt() + "\n");
+                }
             }
             
             return "final table count = " + MyTable.getCount(null, null);
