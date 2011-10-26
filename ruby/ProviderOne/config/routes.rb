@@ -2,6 +2,7 @@ ProviderOne::Application.routes.draw do
   get "home/index"
   post "home/options"
   post "home/download"
+  post "home/finish_up"
   root :to => "home#index"  
   # The priority is based upon order of creation:
   # first created -> highest priority.

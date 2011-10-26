@@ -35,11 +35,26 @@ class HomeController < ApplicationController
     end
   end
 
+  def finish_up
+    dbparams = params[:dbinfo]
 
+    if (!File.exist?(DatabaseInfo.get_sqlite_path(dbparams[:upload_id])))
+      render :template => "home/error_file_deleted"
+      return
+    end
+
+    @dbinfo = DatabaseInfo.new(dbparams[:filename], dbparams[:upload_id])
+    @dbinfo.from_params(params)
+  end
 
 
   def download
     dbparams = params[:dbinfo]
+
+    if (!File.exist?(DatabaseInfo.get_sqlite_path(dbparams[:upload_id])))
+      render :template => "home/error_file_deleted"
+      return
+    end
 
     @dbinfo = DatabaseInfo.new(dbparams[:filename], dbparams[:upload_id])
     @dbinfo.from_params(params)
@@ -98,6 +113,9 @@ class HomeController < ApplicationController
 
     send_file(t.path, :type => "application/zip", :disposition => "attachment", :filename => "ProviderOnePackage.zip")
     t.close
+
+    File.delete(@dbinfo.filepath)
+
   end
 
 

@@ -1,0 +1,15 @@
+<%=form_tag '/home/download' do -%>
+    <%= hidden_field(:dbinfo, :upload_id) %>
+    <%= hidden_field(:dbinfo, :project_name)%>
+    <%= hidden_field(:dbinfo, :package)%>
+    <%= hidden_field(:dbinfo, :filename)%>
+    <%= hidden_field(:dbinfo, :version)%>
+    <%= hidden_field(:dbinfo, :content_authority)%>
+    <%= hidden_field(:dbinfo, :copyright_msg) %>
+    <%@dbinfo.tables.each_value do |table|%>
+        <input type="hidden" name="lookup_key_<%=table.name%>" value="<%=table.get_lookup_column.name%>"/>
+        <input type="hidden" name="insert_algorithm_<%=table.name%>" value="<%=table.insert_algorithm%>"/>
+        <input type="hidden" name="update_algorithm_<%=table.name%>" value="<%=table.update_algorithm%>"/>
+    <%end%>
+    <%= submit_tag "Download ProviderOne Package", :disable_with => "Done" %>
+<% end -%>
