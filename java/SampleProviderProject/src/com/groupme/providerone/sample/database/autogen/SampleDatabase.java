@@ -5,15 +5,31 @@
  */
 package com.groupme.providerone.sample.database.autogen;
 
+import java.util.ArrayList;
+
+import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.groupme.providerone.sample.database.SampleProvider;
 import com.groupme.providerone.sample.database.tables.MyTableInfo;
 
 
 public class SampleDatabase extends SQLiteOpenHelper {
 
+    public static boolean deleteAllDatabaseRecords() {
+        ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+		ops.add(ContentProviderOperation.newDelete(MyTableInfo.CONTENT_URI).build());
+
+        try {
+            SampleProvider.getAppContext().getContentResolver().applyBatch(SampleProvider.getContentAuthority(), ops);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     public static final String DB_NAME = "my_database.sqlite";
     public static final int DB_VERSION = 2;

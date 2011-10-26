@@ -13,6 +13,7 @@ import android.content.ContentProviderResult;
 import android.content.ContentValues;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
@@ -28,6 +29,10 @@ public abstract class PersistentObject implements Parcelable {
         for (PersistentObject obj : objects)
             ops.add(obj.getSaveProviderOperation());
         return ops;
+    }
+
+    public static void deleteByUri(Uri uri, String where, String[] selectionArgs) {
+        {ProjectName}Provider.getAppContext().getContentResolver().delete(uri, where, selectionArgs);
     }
 
     protected boolean mIsNew;

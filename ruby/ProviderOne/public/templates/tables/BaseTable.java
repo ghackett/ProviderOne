@@ -12,6 +12,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
+import android.text.TextUtils;
 
 import {PackageName}.database.{ProjectName}Provider;
 import {PackageName}.database.autogen.PersistentObject;
@@ -51,18 +52,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     public static ArrayList<{CapCamelTableName}> findAllWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
-        if (helper == null)
-            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
-
-        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, helper.projection, selection, selectionArgs, sortOrder);
-        ArrayList<{CapCamelTableName}> rtr = new ArrayList<{CapCamelTableName}>();
-        if (c != null) {
-            while(c.moveToNext()) {
-                rtr.add({CapCamelTableName}.fromCursor(c, helper));
-            }
-            c.close();
-        }
-        return rtr;
+        return findAllByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, sortOrder);
     }
 
     public static {CapCamelTableName} findOneWhere(String selection, String[] selectionArgs) {
@@ -77,21 +67,11 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     public static {CapCamelTableName} findOneWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs) {
-        if (helper == null)
-            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
-
-        {CapCamelTableName} rtr = null;
-        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query({CapCamelTableName}Info.CONTENT_URI, helper.projection, selection, selectionArgs, {CapCamelTableName}Info.Columns._ID + " LIMIT 1");
-        if (c != null) {
-            if (c.moveToFirst())
-                rtr = {CapCamelTableName}.fromCursor(c, helper);
-            c.close();
-        }
-        return rtr;
+        return findOneByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, null);
     }
 
     public static void deleteWhere(String where, String[] selectionArgs) {
-        {ProjectName}Provider.getAppContext().getContentResolver().delete({CapCamelTableName}Info.CONTENT_URI, where, selectionArgs);
+        deleteByUri({CapCamelTableName}Info.CONTENT_URI, where, selectionArgs);
     }
 
     public static {CapCamelTableName} findOneById(long id) {
@@ -105,55 +85,48 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     public static {CapCamelTableName} findOneById(long id, {CapCamelTableName}Info.ColumnHelper helper) {
-        {CapCamelTableName} rtr = null;
-
-        if (helper == null)
-            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
-
-        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(
-                {CapCamelTableName}Info.buildIdLookupUri(id),
-                helper.projection,
-                null,
-                null,
-                null);
-        if (c != null) {
-            if (c.moveToFirst()) {
-                rtr = fromCursor(c, helper);
-            }
-            c.close();
-        }
-        return rtr;
+        return findOneByUri({CapCamelTableName}Info.buildIdLookupUri(id), helper, null, null, null);
     }
 
     public static void deleteOneById(long id) {
-        Uri delUri = {CapCamelTableName}Info.buildIdLookupUri(id);
-        {ProjectName}Provider.getAppContext().getContentResolver().delete(delUri, null, null);
+        deleteByUri({CapCamelTableName}Info.buildIdLookupUri(id), null, null);
     }
-
 
 {LookupStart}
-    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCapCamelName}) {
-        return findOneBy{LookupCapCamelName}({LookupCapCamelName}, {CapCamelTableName}Info.ALL_COLUMNS);
+    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCamelName}) {
+        return findOneBy{LookupCapCamelName}({LookupCamelName}, {CapCamelTableName}Info.ALL_COLUMNS);
     }
             
-    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCapCamelName}, String[] projection) {
+    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCamelName}, String[] projection) {
         if (projection == null)
             projection = {CapCamelTableName}Info.ALL_COLUMNS;
-        return findOneBy{LookupCapCamelName}({LookupCapCamelName}, new {CapCamelTableName}Info.ColumnHelper(projection));
+        return findOneBy{LookupCapCamelName}({LookupCamelName}, new {CapCamelTableName}Info.ColumnHelper(projection));
     }
     
-    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCapCamelName}, {CapCamelTableName}Info.ColumnHelper helper) {
+    public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCamelName}, {CapCamelTableName}Info.ColumnHelper helper) {
+        return findOneByUri({CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName}), helper, null, null, null);
+    }
+
+    public static void deleteOneBy{LookupCapCamelName}(String {LookupCamelName}) {
+        deleteByUri({CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName}), null, null);
+    }
+{LookupEnd}
+
+    public static {CapCamelTableName} findOneByUri(Uri uri, {CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
         {CapCamelTableName} rtr = null;
-        
+
         if (helper == null)
             helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
         
+        if (TextUtils.isEmpty(sortOrder))
+            sortOrder = {CapCamelTableName}Info.Columns._ID;
+
         Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(
-                {CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCapCamelName}), 
-                helper.projection, 
-                null, 
-                null, 
-                null);
+                uri,
+                helper.projection,
+                selection,
+                selectionArgs,
+                sortOrder + " LIMIT 1");
         if (c != null) {
             if (c.moveToFirst()) {
                 rtr = fromCursor(c, helper);
@@ -163,12 +136,20 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         return rtr;
     }
 
-    public static void deleteOneBy{LookupCapCamelName}(String {LookupCamelName}) {
-        Uri delUri = {CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName});
-        {ProjectName}Provider.getAppContext().getContentResolver().delete(delUri, null, null);
-    }
-{LookupEnd}
+    public static ArrayList<{CapCamelTableName}> findAllByUri(Uri uri, {CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
+        if (helper == null)
+            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
 
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(uri, helper.projection, selection, selectionArgs, sortOrder);
+        ArrayList<{CapCamelTableName}> rtr = new ArrayList<{CapCamelTableName}>();
+        if (c != null) {
+            while(c.moveToNext()) {
+                rtr.add({CapCamelTableName}.fromCursor(c, helper));
+            }
+            c.close();
+        }
+        return rtr;
+    }
 
 {JavaDefs}
 
