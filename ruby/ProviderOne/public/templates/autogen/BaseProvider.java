@@ -44,7 +44,8 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
     private {ProjectName}Database mDatabase;
     private UriMatcher mUriMatcher = null;
 
-    protected abstract void buildCustomUriMatcher(UriMatcher matcher, String authority);
+    protected abstract void buildPriorityCustomUriMatcher(UriMatcher matcher, String authority);
+    protected abstract void buildSecondaryCustomUriMatcher(UriMatcher matcher, String authority);
     protected abstract String getCustomType(Uri uri, int match);
     protected abstract Integer delete(Uri uri, String selection, String[] selectionArgs, int match);
     protected abstract Uri insert(Uri uri, ContentValues values, int match);
@@ -61,9 +62,11 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
 
     protected void buildUriMatcher(UriMatcher matcher) {
         final String authority = getContentAuthority();
-        buildCustomUriMatcher(matcher, authority);
+
+        buildPriorityCustomUriMatcher(matcher, authority);
 
 {UriMatcherBuildProc}
+        buildSecondaryCustomUriMatcher(matcher, authority);
     }
 
     protected UriMatcher getUriMatcher() {

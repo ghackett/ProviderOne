@@ -15,9 +15,21 @@ public class SampleProvider extends BaseSampleProvider {
 
     /**
      * Add your own custom uri paths to the matcher here
+     * These priority patterns will take precedence to the
+     * default patterns added by the base provider
      */
     @Override
-    protected void buildCustomUriMatcher(UriMatcher matcher, String authority) {
+    protected void buildPriorityCustomUriMatcher(UriMatcher matcher, String authority) {
+        // TODO Auto-generated method stub
+    }
+
+    /**
+     * Add your own custom uri paths to the matcher here
+     * These secondary patterns will only be matched if
+     * none of the priority or default uri patterns are matched
+     */
+    @Override
+    protected void buildSecondaryCustomUriMatcher(UriMatcher matcher, String authority) {
         // TODO Auto-generated method stub
     }
 
