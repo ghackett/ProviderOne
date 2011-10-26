@@ -124,7 +124,7 @@ class ColumnInfo
       when "datetime", "date", "timestamp"
         return DateTimeColumn.new(name, type)
     end
-    return nil
+    return TextColumn.new(name, type)
   end
 
 end
