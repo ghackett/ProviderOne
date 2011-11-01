@@ -43,7 +43,7 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
         return sBaseContentUri;
     }
 
-    private {ProjectName}Database mDatabase;
+    protected {ProjectName}Database mDatabase;
     private UriMatcher mUriMatcher = null;
 
     protected abstract void buildPriorityCustomUriMatcher(UriMatcher matcher, String authority);
