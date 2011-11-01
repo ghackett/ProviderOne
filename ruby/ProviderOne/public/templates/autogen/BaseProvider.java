@@ -16,10 +16,12 @@ import {PackageName}.database.autogen.util.SelectionBuilder;
 public abstract class Base{ProjectName}Provider extends ContentProvider {
 
     public static final String PATH_COUNT = "/count";
+    public static final String PATH_SUM = "/sum";
     public static final String PATH_LOOKUP = "/lookup/*";
     public static final String PATH_ID = "/id/*";
 
     public static final String RAW_PATH_COUNT = "count";
+    public static final String RAW_PATH_SUM = "sum";
     public static final String RAW_PATH_LOOKUP = "lookup";
     public static final String RAW_PATH_ID = "id";
 
@@ -128,6 +130,7 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
         final SelectionBuilder builder = buildSimpleSelection(uri, match).where(selection, selectionArgs);
         switch(match) {
 {UriCountMatches}
+{UriSumMatches}
             default:
                 return builder.query(mDatabase.getReadableDatabase(), projection, sortOrder);
         }

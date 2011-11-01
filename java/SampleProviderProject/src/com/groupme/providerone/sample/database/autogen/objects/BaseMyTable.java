@@ -35,15 +35,23 @@ public abstract class BaseMyTable extends PersistentObject {
     }
 
     public static int getCount(String selection, String[] selectionArgs) {
-        int count = -1;
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query(MyTableInfo.COUNT_URI, null, selection, selectionArgs, null);
-        if (c != null) {
-            if (c.moveToFirst()) {
-                count = c.getInt(0);
-            }
-            c.close();
-        }
-        return count;
+        return getSingleIntResult(MyTableInfo.COUNT_URI, null, selection, selectionArgs, null);
+    }
+
+    public static int getIntSum(String columnName, String selection, String[] selectionArgs) {
+        return getSingleIntResult(MyTableInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+    }
+
+    public static long getLongSum(String columnName, String selection, String[] selectionArgs) {
+        return getSingleLongResult(MyTableInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+    }
+
+    public static double getDoubleSum(String columnName, String selection, String[] selectionArgs) {
+        return getSingleDoubleResult(MyTableInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+    }
+
+    public static float getFloatSum(String columnName, String selection, String[] selectionArgs) {
+        return getSingleFloatResult(MyTableInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
     }
 
     public static ArrayList<MyTable> findAllWhere(String selection, String[] selectionArgs, String sortOrder) {

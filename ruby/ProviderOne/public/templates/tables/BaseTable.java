@@ -29,15 +29,23 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     public static int getCount(String selection, String[] selectionArgs) {
-        int count = -1;
-        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query({CapCamelTableName}Info.COUNT_URI, null, selection, selectionArgs, null);
-        if (c != null) {
-            if (c.moveToFirst()) {
-                count = c.getInt(0);
-            }
-            c.close();
-        }
-        return count;
+        return getSingleIntResult({CapCamelTableName}Info.COUNT_URI, null, selection, selectionArgs, null);
+    }
+
+    public static int getIntSum(String columnName, String selection, String[] selectionArgs) {
+        return getSingleIntResult({CapCamelTableName}Info.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+    }
+
+    public static long getLongSum(String columnName, String selection, String[] selectionArgs) {
+        return getSingleLongResult({CapCamelTableName}Info.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+    }
+
+    public static double getDoubleSum(String columnName, String selection, String[] selectionArgs) {
+        return getSingleDoubleResult({CapCamelTableName}Info.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+    }
+
+    public static float getFloatSum(String columnName, String selection, String[] selectionArgs) {
+        return getSingleFloatResult({CapCamelTableName}Info.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
     }
 
     public static ArrayList<{CapCamelTableName}> findAllWhere(String selection, String[] selectionArgs, String sortOrder) {

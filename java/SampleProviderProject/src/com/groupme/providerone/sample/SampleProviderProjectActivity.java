@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.groupme.providerone.sample.database.objects.MyTable;
+import com.groupme.providerone.sample.database.tables.MyTableInfo;
 
 public class SampleProviderProjectActivity extends Activity {
     
@@ -64,6 +65,8 @@ public class SampleProviderProjectActivity extends Activity {
                     publishProgress("Loaded record with myString = " + table2.getMyString() + " and got id " + table2.getId() + " and int value " + table2.getMyInt() + "\n");
                 }
             }
+            
+            publishProgress("Total int sum is " + MyTable.getIntSum(MyTableInfo.Columns.MY_INT, null, null) +", total double sum is " + MyTable.getDoubleSum(MyTableInfo.Columns.MY_DOUBLE, null, null));
             
             return "final table count = " + MyTable.getCount(null, null);
         }

@@ -28,6 +28,7 @@ public class Base{CapCamelTableName}Info  {
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/{PackageName}.{LowerTableName}";
     public static final Uri CONTENT_URI = Uri.withAppendedPath({ProjectName}Provider.getBaseContentUri(), PATH);
     public static final Uri COUNT_URI = Uri.withAppendedPath(CONTENT_URI, {ProjectName}Provider.RAW_PATH_COUNT);
+    public static final Uri SUM_URI = Uri.withAppendedPath(CONTENT_URI, {ProjectName}Provider.RAW_PATH_SUM);
     public static final Uri ID_LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, {ProjectName}Provider.RAW_PATH_ID);
 
 

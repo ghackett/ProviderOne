@@ -21,17 +21,20 @@ import com.groupme.providerone.sample.database.tables.MyTableInfo;
 public abstract class BaseSampleProvider extends ContentProvider {
 
     public static final String PATH_COUNT = "/count";
+    public static final String PATH_SUM = "/sum";
     public static final String PATH_LOOKUP = "/lookup/*";
     public static final String PATH_ID = "/id/*";
 
     public static final String RAW_PATH_COUNT = "count";
+    public static final String RAW_PATH_SUM = "sum";
     public static final String RAW_PATH_LOOKUP = "lookup";
     public static final String RAW_PATH_ID = "id";
 
 	public static final int MY_TABLE = 0xffff;
 	public static final int MY_TABLE_COUNT = 0xfffe;
-	public static final int MY_TABLE_ID = 0xfffd;
-	public static final int MY_TABLE_LOOKUP = 0xfffc;
+	public static final int MY_TABLE_SUM = 0xfffd;
+	public static final int MY_TABLE_ID = 0xfffc;
+	public static final int MY_TABLE_LOOKUP = 0xfffb;
 
     private static Uri sBaseContentUri = null;
     private static Context sApplicationContext = null;
@@ -76,6 +79,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
 
 		matcher.addURI(authority, MyTableInfo.PATH, MY_TABLE);
 		matcher.addURI(authority, MyTableInfo.PATH + PATH_COUNT, MY_TABLE_COUNT);
+		matcher.addURI(authority, MyTableInfo.PATH + PATH_SUM, MY_TABLE_SUM);
 		matcher.addURI(authority, MyTableInfo.PATH + PATH_ID, MY_TABLE_ID);
 		matcher.addURI(authority, MyTableInfo.PATH + PATH_LOOKUP, MY_TABLE_LOOKUP);
 
@@ -100,6 +104,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
         switch(match) {
 			case MY_TABLE:
 			case MY_TABLE_COUNT:
+			case MY_TABLE_SUM:
 				return MyTableInfo.CONTENT_TYPE;
 			case MY_TABLE_ID:
 			case MY_TABLE_LOOKUP:
@@ -151,7 +156,10 @@ public abstract class BaseSampleProvider extends ContentProvider {
         final SelectionBuilder builder = buildSimpleSelection(uri, match).where(selection, selectionArgs);
         switch(match) {
 			case MY_TABLE_COUNT:
-				return builder.query(mDatabase.getReadableDatabase(), new String[] {"count(*) as count"}, null);
+				return builder.query(mDatabase.getReadableDatabase(), new String[] {"count(*) as my_count"}, null);
+
+			case MY_TABLE_SUM:
+				return builder.query(mDatabase.getReadableDatabase(), new String[] {"sum(" + projection[0] + ") as my_sum"}, null);
 
             default:
                 return builder.query(mDatabase.getReadableDatabase(), projection, sortOrder);
@@ -188,6 +196,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
         switch(match) {
 			case MY_TABLE:
 			case MY_TABLE_COUNT:
+			case MY_TABLE_SUM:
 				return builder.table(MyTableInfo.TABLE_NAME);
 			case MY_TABLE_ID:
 				builder.where(MyTableInfo.Columns._ID + "=?", uri.getLastPathSegment());

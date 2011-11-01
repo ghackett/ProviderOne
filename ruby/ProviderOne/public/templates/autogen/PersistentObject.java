@@ -35,6 +35,54 @@ public abstract class PersistentObject implements Parcelable {
         {ProjectName}Provider.getAppContext().getContentResolver().delete(uri, where, selectionArgs);
     }
 
+    public static int getSingleIntResult(Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        int rtr = -1;
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                rtr = c.getInt(0);
+            }
+            c.close();
+        }
+        return rtr;
+    }
+
+    public static long getSingleLongResult(Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        long rtr = -1;
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                rtr = c.getLong(0);
+            }
+            c.close();
+        }
+        return rtr;
+    }
+
+    public static double getSingleDoubleResult(Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        double rtr = -1;
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                rtr = c.getDouble(0);
+            }
+            c.close();
+        }
+        return rtr;
+    }
+
+    public static float getSingleFloatResult(Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        float rtr = -1;
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                rtr = c.getFloat(0);
+            }
+            c.close();
+        }
+        return rtr;
+    }
+
     protected boolean mIsNew;
 
     public PersistentObject() {

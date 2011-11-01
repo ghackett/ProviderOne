@@ -32,7 +32,7 @@ public class SampleDatabase extends SQLiteOpenHelper {
     }
 
     public static final String DB_NAME = "my_database.sqlite";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 1;
 
 	public static final String IDX_CREATE_SAMPLE_IDX = "CREATE INDEX \"sample_idx\" ON \"my_table\" (\"my_double\")";
 	public static final String IDX_DROP_SAMPLE_IDX = "DROP INDEX IF EXISTS \"sample_idx\"";

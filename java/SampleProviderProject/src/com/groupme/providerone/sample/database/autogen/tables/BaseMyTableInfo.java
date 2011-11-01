@@ -52,6 +52,7 @@ public class BaseMyTableInfo  {
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/com.groupme.providerone.sample.my_table";
     public static final Uri CONTENT_URI = Uri.withAppendedPath(SampleProvider.getBaseContentUri(), PATH);
     public static final Uri COUNT_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_COUNT);
+    public static final Uri SUM_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_SUM);
     public static final Uri ID_LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_ID);
 
 

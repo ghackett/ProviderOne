@@ -115,6 +115,8 @@ class TableInfo
     match_count-=1;
     defs += "\tpublic static final int #{@cap_name}_COUNT = 0x#{match_count.to_s(16)};\n";
     match_count-=1;
+    defs += "\tpublic static final int #{@cap_name}_SUM = 0x#{match_count.to_s(16)};\n";
+    match_count-=1;
     defs += "\tpublic static final int #{@cap_name}_ID = 0x#{match_count.to_s(16)};\n";
     match_count-=1;
 
@@ -132,6 +134,7 @@ class TableInfo
     defs = ""
     defs += "\t\tmatcher.addURI(authority, #{@cap_camel_name}Info.PATH, #{@cap_name});\n"
     defs += "\t\tmatcher.addURI(authority, #{@cap_camel_name}Info.PATH + PATH_COUNT, #{@cap_name}_COUNT);\n"
+    defs += "\t\tmatcher.addURI(authority, #{@cap_camel_name}Info.PATH + PATH_SUM, #{@cap_name}_SUM);\n"
     defs += "\t\tmatcher.addURI(authority, #{@cap_camel_name}Info.PATH + PATH_ID, #{@cap_name}_ID);\n"
     if (has_lookup_column)
       defs += "\t\tmatcher.addURI(authority, #{@cap_camel_name}Info.PATH + PATH_LOOKUP, #{@cap_name}_LOOKUP);\n"
@@ -143,6 +146,7 @@ class TableInfo
     defs = ""
     defs += "\t\t\tcase #{@cap_name}:\n"
     defs += "\t\t\tcase #{@cap_name}_COUNT:\n"
+    defs += "\t\t\tcase #{@cap_name}_SUM:\n"
     defs += "\t\t\t\treturn #{@cap_camel_name}Info.CONTENT_TYPE;\n"
     defs += "\t\t\tcase #{@cap_name}_ID:\n"
     if (has_lookup_column)
@@ -177,6 +181,7 @@ class TableInfo
     defs = ""
     defs += "\t\t\tcase #{@cap_name}:\n"
     defs += "\t\t\tcase #{@cap_name}_COUNT:\n"
+    defs += "\t\t\tcase #{@cap_name}_SUM:\n"
     defs += "\t\t\t\treturn builder.table(#{@cap_camel_name}Info.TABLE_NAME);\n"
     defs += "\t\t\tcase #{@cap_name}_ID:\n"
     defs += "\t\t\t\tbuilder.where(#{@cap_camel_name}Info.Columns._ID + \"=?\", uri.getLastPathSegment());\n"

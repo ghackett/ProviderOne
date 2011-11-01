@@ -9,6 +9,9 @@ import com.groupme.providerone.sample.database.autogen.tables.BaseMyTableInfo;
 
 public class MyTableInfo extends BaseMyTableInfo {
 
+    public interface Columns extends BaseMyTableInfo.Columns {
+
+    }
 
     public static void upgradeTable(SQLiteDatabase db, int oldVersion, int newVersion) {
         BaseMyTableInfo.upgradeTable(db, oldVersion, newVersion);
