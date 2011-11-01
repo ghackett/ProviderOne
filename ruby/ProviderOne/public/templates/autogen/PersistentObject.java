@@ -37,7 +37,7 @@ public abstract class PersistentObject implements Parcelable {
 
     public static int getSingleIntResult(Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {
         int rtr = -1;
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
         if (c != null) {
             if (c.moveToFirst()) {
                 rtr = c.getInt(0);
@@ -49,7 +49,7 @@ public abstract class PersistentObject implements Parcelable {
 
     public static long getSingleLongResult(Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {
         long rtr = -1;
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
         if (c != null) {
             if (c.moveToFirst()) {
                 rtr = c.getLong(0);
@@ -61,7 +61,7 @@ public abstract class PersistentObject implements Parcelable {
 
     public static double getSingleDoubleResult(Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {
         double rtr = -1;
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
         if (c != null) {
             if (c.moveToFirst()) {
                 rtr = c.getDouble(0);
@@ -73,7 +73,7 @@ public abstract class PersistentObject implements Parcelable {
 
     public static float getSingleFloatResult(Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {
         float rtr = -1;
-        Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(uri, projection, selection, selectionArgs, orderBy);
         if (c != null) {
             if (c.moveToFirst()) {
                 rtr = c.getFloat(0);
