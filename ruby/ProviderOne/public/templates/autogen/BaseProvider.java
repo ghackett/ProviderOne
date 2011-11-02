@@ -54,6 +54,7 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
     protected abstract Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder, int match);
     protected abstract Integer update(Uri uri, ContentValues values, String selection, String[] selectionArgs, int match);
     protected abstract boolean buildSimpleSelection(Uri uri, int match, SelectionBuilder builder);
+    protected abstract int getCustomUpdateAlgorithm(Uri uri, int match);
 
     @Override
     public boolean onCreate() {
@@ -148,6 +149,10 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
         int algorithm = SQLiteDatabase.CONFLICT_FAIL;
         switch(match) {
 {UriUpdateAlgorithmMatches}
+			default:
+				algorithm = getCustomUpdateAlgorithm(uri, match);
+				if (algorithm == -1)
+				    algorithm = SQLiteDatabase.CONFLICT_FAIL;
         }
         return builder.where(selection, selectionArgs).updateWithOnConflict(mDatabase, values, algorithm);
     }

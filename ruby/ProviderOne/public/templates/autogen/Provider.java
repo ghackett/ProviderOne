@@ -90,4 +90,14 @@ public class {ProjectName}Provider extends Base{ProjectName}Provider {
         return false;
     }
 
+    /**
+     * if you are leaving updates up to the selection builder (i.e. trusting buildSimpleSelection)
+     * then you should return the appropriate sqlite update algorithm here. You can also use this method
+     * to define a default update algorithm for any updates not matched by the base provider
+     */
+    @Override
+    protected int getCustomUpdateAlgorithm(Uri uri, int match) {
+        return -1;
+    }
+
 }
