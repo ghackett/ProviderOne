@@ -59,10 +59,7 @@ public abstract class BaseMyTable extends PersistentObject {
     }
 
     public static ArrayList<MyTable> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if (projection == null)
-            projection = MyTableInfo.ALL_COLUMNS;
-
-        return findAllWhere(new MyTableInfo.ColumnHelper(projection), selection, selectionArgs, sortOrder);
+        return findAllWhere(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection), selection, selectionArgs, sortOrder);
     }
 
     public static ArrayList<MyTable> findAllWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
@@ -74,10 +71,7 @@ public abstract class BaseMyTable extends PersistentObject {
     }
 
     public static MyTable findOneWhere(String[] projection, String selection, String[] selectionArgs) {
-        if (projection == null)
-            projection = MyTableInfo.ALL_COLUMNS;
-
-        return findOneWhere(new MyTableInfo.ColumnHelper(projection), selection, selectionArgs);
+        return findOneWhere(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection), selection, selectionArgs);
     }
 
     public static MyTable findOneWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs) {
@@ -93,9 +87,7 @@ public abstract class BaseMyTable extends PersistentObject {
     }
 
     public static MyTable findOneById(long id, String[] projection) {
-        if (projection == null)
-            projection = MyTableInfo.ALL_COLUMNS;
-        return findOneById(id, new MyTableInfo.ColumnHelper(projection));
+        return findOneById(id, projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection));
     }
 
     public static MyTable findOneById(long id, MyTableInfo.ColumnHelper helper) {
@@ -112,9 +104,7 @@ public abstract class BaseMyTable extends PersistentObject {
     }
             
     public static MyTable findOneByMyString(String myString, String[] projection) {
-        if (projection == null)
-            projection = MyTableInfo.ALL_COLUMNS;
-        return findOneByMyString(myString, new MyTableInfo.ColumnHelper(projection));
+        return findOneByMyString(myString, projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection));
     }
     
     public static MyTable findOneByMyString(String myString, MyTableInfo.ColumnHelper helper) {
@@ -130,7 +120,7 @@ public abstract class BaseMyTable extends PersistentObject {
         MyTable rtr = null;
 
         if (helper == null)
-            helper = new MyTableInfo.ColumnHelper(MyTableInfo.ALL_COLUMNS);
+            helper = MyTableInfo.ALL_COLUMNS_HELPER;
         
         if (TextUtils.isEmpty(sortOrder))
             sortOrder = MyTableInfo.Columns._ID;
@@ -152,7 +142,7 @@ public abstract class BaseMyTable extends PersistentObject {
 
     public static ArrayList<MyTable> findAllByUri(Uri uri, MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
         if (helper == null)
-            helper = new MyTableInfo.ColumnHelper(MyTableInfo.ALL_COLUMNS);
+            helper = MyTableInfo.ALL_COLUMNS_HELPER;
 
         Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, helper.projection, selection, selectionArgs, sortOrder);
         ArrayList<MyTable> rtr = new ArrayList<MyTable>();
@@ -326,14 +316,12 @@ public abstract class BaseMyTable extends PersistentObject {
 
     @Override
     public JSONObject toJson(String[] projection) throws JSONException {
-        if (projection == null)
-            projection = MyTableInfo.ALL_COLUMNS;
-        return toJson(new MyTableInfo.ColumnHelper(projection));
+        return toJson(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection));
     }
 
     public JSONObject toJson(MyTableInfo.ColumnHelper h) throws JSONException {
         if (h == null)
-            h = new MyTableInfo.ColumnHelper(MyTableInfo.ALL_COLUMNS);
+            h = MyTableInfo.ALL_COLUMNS_HELPER;
         JSONObject rtr = new JSONObject();
 		if (mIdSet && h.col__id != -1)
 			rtr.put(MyTableInfo.Columns._ID, mId);
@@ -399,6 +387,46 @@ public abstract class BaseMyTable extends PersistentObject {
 
         Uri delUri = MyTableInfo.buildIdLookupUri(mId);
         SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
+    }
+    
+    @Override
+    public boolean reload() {
+        return reload(MyTableInfo.ALL_COLUMNS_HELPER);
+    }
+
+    @Override
+    public boolean reload(String[] projection) {
+        return reload(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection));
+    }
+
+    @Override
+    public boolean reload(ColumnHelper helper) {
+        assertColumnHelper(helper, true);
+        return reload((MyTableInfo.ColumnHelper)helper);
+    }
+    
+    public boolean reload(MyTableInfo.ColumnHelper helper) {
+        if (isNew() || !mIdSet)
+            throw new IllegalArgumentException("Trying to reload a record without an id");
+        if (helper == null)
+            helper = MyTableInfo.ALL_COLUMNS_HELPER;
+        
+        boolean result = false;
+        
+        Cursor c = SampleProvider.getAppContext().getContentResolver().query(
+                MyTableInfo.buildIdLookupUri(mId),
+                helper.projection,
+                null,
+                null,
+                null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                hydrate(c, helper);
+                result = true;
+            }
+            c.close();
+        }
+        return result;
     }
 
     public Long getId() {

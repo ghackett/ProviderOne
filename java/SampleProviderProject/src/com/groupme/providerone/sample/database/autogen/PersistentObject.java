@@ -105,6 +105,9 @@ public abstract class PersistentObject implements Parcelable {
     abstract public JSONObject toJson(ColumnHelper helper) throws JSONException;
     abstract public JSONObject toJson(String[] projection) throws JSONException;
     abstract public ContentProviderOperation getSaveProviderOperation();
+    abstract public boolean reload();
+    abstract public boolean reload(String[] projection);
+    abstract public boolean reload(ColumnHelper helper);
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

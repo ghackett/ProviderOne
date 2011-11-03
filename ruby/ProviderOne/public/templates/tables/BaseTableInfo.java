@@ -7,6 +7,7 @@ import android.net.Uri;
 
 import {PackageName}.database.{ProjectName}Provider;
 import {PackageName}.database.autogen.PersistentObject;
+import {PackageName}.database.tables.{CapCamelTableName}Info;
 
 public class Base{CapCamelTableName}Info  {
 
@@ -21,6 +22,8 @@ public class Base{CapCamelTableName}Info  {
     public static final String[] ALL_COLUMNS = new String[] {
 {ColumnList}
     };
+
+    public static final {CapCamelTableName}Info.ColumnHelper ALL_COLUMNS_HELPER = new {CapCamelTableName}Info.ColumnHelper(ALL_COLUMNS);
 
 
     public static final String PATH = "{SqlTableName}";

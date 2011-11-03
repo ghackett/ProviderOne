@@ -53,10 +53,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     public static ArrayList<{CapCamelTableName}> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if (projection == null)
-            projection = {CapCamelTableName}Info.ALL_COLUMNS;
-
-        return findAllWhere(new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs, sortOrder);
+        return findAllWhere(projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs, sortOrder);
     }
 
     public static ArrayList<{CapCamelTableName}> findAllWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
@@ -68,10 +65,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     public static {CapCamelTableName} findOneWhere(String[] projection, String selection, String[] selectionArgs) {
-        if (projection == null)
-            projection = {CapCamelTableName}Info.ALL_COLUMNS;
-
-        return findOneWhere(new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs);
+        return findOneWhere(projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs);
     }
 
     public static {CapCamelTableName} findOneWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs) {
@@ -87,9 +81,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     public static {CapCamelTableName} findOneById(long id, String[] projection) {
-        if (projection == null)
-            projection = {CapCamelTableName}Info.ALL_COLUMNS;
-        return findOneById(id, new {CapCamelTableName}Info.ColumnHelper(projection));
+        return findOneById(id, projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection));
     }
 
     public static {CapCamelTableName} findOneById(long id, {CapCamelTableName}Info.ColumnHelper helper) {
@@ -106,9 +98,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
             
     public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCamelName}, String[] projection) {
-        if (projection == null)
-            projection = {CapCamelTableName}Info.ALL_COLUMNS;
-        return findOneBy{LookupCapCamelName}({LookupCamelName}, new {CapCamelTableName}Info.ColumnHelper(projection));
+        return findOneBy{LookupCapCamelName}({LookupCamelName}, projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection));
     }
     
     public static {CapCamelTableName} findOneBy{LookupCapCamelName}(String {LookupCamelName}, {CapCamelTableName}Info.ColumnHelper helper) {
@@ -124,7 +114,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         {CapCamelTableName} rtr = null;
 
         if (helper == null)
-            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
+            helper = {CapCamelTableName}Info.ALL_COLUMNS_HELPER;
         
         if (TextUtils.isEmpty(sortOrder))
             sortOrder = {CapCamelTableName}Info.Columns._ID;
@@ -146,7 +136,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
 
     public static ArrayList<{CapCamelTableName}> findAllByUri(Uri uri, {CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
         if (helper == null)
-            helper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
+            helper = {CapCamelTableName}Info.ALL_COLUMNS_HELPER;
 
         Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(uri, helper.projection, selection, selectionArgs, sortOrder);
         ArrayList<{CapCamelTableName}> rtr = new ArrayList<{CapCamelTableName}>();
@@ -205,14 +195,12 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
 
     @Override
     public JSONObject toJson(String[] projection) throws JSONException {
-        if (projection == null)
-            projection = {CapCamelTableName}Info.ALL_COLUMNS;
-        return toJson(new {CapCamelTableName}Info.ColumnHelper(projection));
+        return toJson(projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection));
     }
 
     public JSONObject toJson({CapCamelTableName}Info.ColumnHelper h) throws JSONException {
         if (h == null)
-            h = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
+            h = {CapCamelTableName}Info.ALL_COLUMNS_HELPER;
         JSONObject rtr = new JSONObject();
 {ToJson}
         return rtr;
@@ -259,6 +247,46 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
 
         Uri delUri = {CapCamelTableName}Info.buildIdLookupUri(mId);
         {ProjectName}Provider.getAppContext().getContentResolver().delete(delUri, null, null);
+    }
+    
+    @Override
+    public boolean reload() {
+        return reload({CapCamelTableName}Info.ALL_COLUMNS_HELPER);
+    }
+
+    @Override
+    public boolean reload(String[] projection) {
+        return reload(projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection));
+    }
+
+    @Override
+    public boolean reload(ColumnHelper helper) {
+        assertColumnHelper(helper, true);
+        return reload(({CapCamelTableName}Info.ColumnHelper)helper);
+    }
+    
+    public boolean reload({CapCamelTableName}Info.ColumnHelper helper) {
+        if (isNew() || !mIdSet)
+            throw new IllegalArgumentException("Trying to reload a record without an id");
+        if (helper == null)
+            helper = {CapCamelTableName}Info.ALL_COLUMNS_HELPER;
+        
+        boolean result = false;
+        
+        Cursor c = {ProjectName}Provider.getAppContext().getContentResolver().query(
+                {CapCamelTableName}Info.buildIdLookupUri(mId),
+                helper.projection,
+                null,
+                null,
+                null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                hydrate(c, helper);
+                result = true;
+            }
+            c.close();
+        }
+        return result;
     }
 
 {BaseTableMethods}

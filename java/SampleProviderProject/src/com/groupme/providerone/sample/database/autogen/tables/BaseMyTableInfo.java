@@ -11,6 +11,7 @@ import android.net.Uri;
 
 import com.groupme.providerone.sample.database.SampleProvider;
 import com.groupme.providerone.sample.database.autogen.PersistentObject;
+import com.groupme.providerone.sample.database.tables.MyTableInfo;
 
 public class BaseMyTableInfo  {
 
@@ -45,6 +46,8 @@ public class BaseMyTableInfo  {
 		Columns.MY_TIME,
 
     };
+
+    public static final MyTableInfo.ColumnHelper ALL_COLUMNS_HELPER = new MyTableInfo.ColumnHelper(ALL_COLUMNS);
 
 
     public static final String PATH = "my_table";
