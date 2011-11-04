@@ -78,8 +78,8 @@ public abstract class BaseMyTable extends PersistentObject {
         return findOneByUri(MyTableInfo.CONTENT_URI, helper, selection, selectionArgs, null);
     }
 
-    public static void deleteWhere(String where, String[] selectionArgs) {
-        deleteByUri(MyTableInfo.CONTENT_URI, where, selectionArgs);
+    public static int deleteWhere(String where, String[] selectionArgs) {
+        return deleteByUri(MyTableInfo.CONTENT_URI, where, selectionArgs);
     }
 
     public static MyTable findOneById(long id) {
@@ -94,8 +94,8 @@ public abstract class BaseMyTable extends PersistentObject {
         return findOneByUri(MyTableInfo.buildIdLookupUri(id), helper, null, null, null);
     }
 
-    public static void deleteOneById(long id) {
-        deleteByUri(MyTableInfo.buildIdLookupUri(id), null, null);
+    public static int deleteOneById(long id) {
+        return deleteByUri(MyTableInfo.buildIdLookupUri(id), null, null);
     }
 
 
@@ -111,8 +111,8 @@ public abstract class BaseMyTable extends PersistentObject {
         return findOneByUri(MyTableInfo.buildMyStringLookupUri(myString), helper, null, null, null);
     }
 
-    public static void deleteOneByMyString(String myString) {
-        deleteByUri(MyTableInfo.buildMyStringLookupUri(myString), null, null);
+    public static int deleteOneByMyString(String myString) {
+        return deleteByUri(MyTableInfo.buildMyStringLookupUri(myString), null, null);
     }
 
 
@@ -379,14 +379,14 @@ public abstract class BaseMyTable extends PersistentObject {
     }
 
     @Override
-    public void delete() {
+    public int delete() {
         if (isNew())
             throw new IllegalArgumentException("Trying to delete a MyTable record that has never been saved");
         if (!mIdSet)
             throw new IllegalArgumentException("Trying to delete a MyTable record that doesnt have its ID column set");
 
         Uri delUri = MyTableInfo.buildIdLookupUri(mId);
-        SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
+        return SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
     }
     
     @Override

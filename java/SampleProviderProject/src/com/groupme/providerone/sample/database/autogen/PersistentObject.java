@@ -35,8 +35,8 @@ public abstract class PersistentObject implements Parcelable {
         return ops;
     }
 
-    public static void deleteByUri(Uri uri, String where, String[] selectionArgs) {
-        SampleProvider.getAppContext().getContentResolver().delete(uri, where, selectionArgs);
+    public static int deleteByUri(Uri uri, String where, String[] selectionArgs) {
+        return SampleProvider.getAppContext().getContentResolver().delete(uri, where, selectionArgs);
     }
 
     public static int getSingleIntResult(Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {
@@ -101,7 +101,7 @@ public abstract class PersistentObject implements Parcelable {
     abstract public ContentValues toContentValues();
     abstract protected void hydrate(Cursor c, ColumnHelper helper);
     abstract public void save();
-    abstract public void delete();
+    abstract public int delete();
     abstract public JSONObject toJson(ColumnHelper helper) throws JSONException;
     abstract public JSONObject toJson(String[] projection) throws JSONException;
     abstract public ContentProviderOperation getSaveProviderOperation();

@@ -72,8 +72,8 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         return findOneByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, null);
     }
 
-    public static void deleteWhere(String where, String[] selectionArgs) {
-        deleteByUri({CapCamelTableName}Info.CONTENT_URI, where, selectionArgs);
+    public static int deleteWhere(String where, String[] selectionArgs) {
+        return deleteByUri({CapCamelTableName}Info.CONTENT_URI, where, selectionArgs);
     }
 
     public static {CapCamelTableName} findOneById(long id) {
@@ -88,8 +88,8 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         return findOneByUri({CapCamelTableName}Info.buildIdLookupUri(id), helper, null, null, null);
     }
 
-    public static void deleteOneById(long id) {
-        deleteByUri({CapCamelTableName}Info.buildIdLookupUri(id), null, null);
+    public static int deleteOneById(long id) {
+        return deleteByUri({CapCamelTableName}Info.buildIdLookupUri(id), null, null);
     }
 
 {LookupStart}
@@ -105,8 +105,8 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         return findOneByUri({CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName}), helper, null, null, null);
     }
 
-    public static void deleteOneBy{LookupCapCamelName}(String {LookupCamelName}) {
-        deleteByUri({CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName}), null, null);
+    public static int deleteOneBy{LookupCapCamelName}(String {LookupCamelName}) {
+        return deleteByUri({CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName}), null, null);
     }
 {LookupEnd}
 
@@ -239,14 +239,14 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     @Override
-    public void delete() {
+    public int delete() {
         if (isNew())
             throw new IllegalArgumentException("Trying to delete a {CapCamelTableName} record that has never been saved");
         if (!mIdSet)
             throw new IllegalArgumentException("Trying to delete a {CapCamelTableName} record that doesnt have its ID column set");
 
         Uri delUri = {CapCamelTableName}Info.buildIdLookupUri(mId);
-        {ProjectName}Provider.getAppContext().getContentResolver().delete(delUri, null, null);
+        return {ProjectName}Provider.getAppContext().getContentResolver().delete(delUri, null, null);
     }
     
     @Override
