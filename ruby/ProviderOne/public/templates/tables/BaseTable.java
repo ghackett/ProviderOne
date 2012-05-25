@@ -28,6 +28,14 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         return obj;
     }
 
+    public static {CapCamelTableName} fromJson(JSONObject obj) {
+        if (obj == null)
+            return null;
+        {CapCamelTableName} {CamelTableName} = new {CapCamelTableName}();
+        {CamelTableName}.hydrate(obj);
+        return {CamelTableName};
+    }
+
     public static int getCount(String selection, String[] selectionArgs) {
         return getSingleIntResult({CapCamelTableName}Info.COUNT_URI, null, selection, selectionArgs, null);
     }

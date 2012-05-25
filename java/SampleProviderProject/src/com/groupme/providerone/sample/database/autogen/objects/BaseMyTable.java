@@ -34,6 +34,14 @@ public abstract class BaseMyTable extends PersistentObject {
         return obj;
     }
 
+    public static MyTable fromJson(JSONObject obj) {
+        if (obj == null)
+            return null;
+        MyTable myTable = new MyTable();
+        myTable.hydrate(obj);
+        return myTable;
+    }
+
     public static int getCount(String selection, String[] selectionArgs) {
         return getSingleIntResult(MyTableInfo.COUNT_URI, null, selection, selectionArgs, null);
     }
