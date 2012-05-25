@@ -12,6 +12,11 @@ class BlobColumn < ColumnInfo
       proc = File.read("public/templates/columns/blob/HydrateProcedure.java")
       return process_file_content(proc)
     end
+    
+    def get_hydrate_json_proc
+      proc = File.read("public/templates/columns/blob/HydrateJsonProcedure.java")
+      return process_file_content(proc)    
+    end
 
     def get_add_to_content_values(table)
       defs = "\t\tif (m#{@cap_camel_name}Set)\n"

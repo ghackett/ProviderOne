@@ -46,6 +46,7 @@ LookupCamelName
 
 JavaDefs
 HydrateProc
+HydrateJsonProc
 Imports
 ToContentValues
 ToJson
@@ -64,4 +65,5 @@ SqlName
 LowerName
 CamelName
 CapCamelName
+CapName
 ---------------

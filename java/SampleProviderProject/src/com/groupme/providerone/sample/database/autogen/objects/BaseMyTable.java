@@ -281,6 +281,83 @@ public abstract class BaseMyTable extends PersistentObject {
         mIsNew = false;
     }
 
+	protected void hydrate(JSONObject obj) {
+		if (obj == null)
+			return;
+//_id doesnt get hydrated from json
+		if (obj.has(MyTableInfo.Columns.MY_BOOLEAN)) {
+		    try {
+		        mMyBoolean = obj.getBoolean(MyTableInfo.Columns.MY_BOOLEAN);
+		    } catch (JSONException e) {
+		        mMyBoolean = false;
+		    }
+		    mMyBooleanSet = true;
+		}
+		if (obj.has(MyTableInfo.Columns.MY_DOUBLE)) {
+		    try {
+		        mMyDouble = obj.getDouble(MyTableInfo.Columns.MY_DOUBLE);
+		    } catch (JSONException e) {
+		        mMyDouble = null;
+		    }
+		    mMyDoubleSet = true;
+		}
+		if (obj.has(MyTableInfo.Columns.MY_FLOAT)) {
+		    try {
+		        mMyFloat = (float)obj.getDouble(MyTableInfo.Columns.MY_FLOAT);
+		    } catch (JSONException e) {
+		        mMyFloat = null;
+		    }
+		    mMyFloatSet = true;
+		}
+		if (obj.has(MyTableInfo.Columns.MY_INT)) {
+		    try {
+		        mMyInt = obj.getInt(MyTableInfo.Columns.MY_INT);
+		    } catch (JSONException e) {
+		        mMyInt = null;
+		    }
+		    mMyIntSet = true;
+		}
+		if (obj.has(MyTableInfo.Columns.MY_LONG)) {
+		    try {
+		        mMyLong = obj.getLong(MyTableInfo.Columns.MY_LONG);
+		    } catch (JSONException e) {
+		        mMyLong = null;
+		    }
+		    mMyLongSet = true;
+		}
+		if (obj.has(MyTableInfo.Columns.MY_CHAR)) {
+			String myChar = null;
+		    try {
+		        myChar = obj.getString(MyTableInfo.Columns.MY_CHAR);
+				if (myChar == null || myChar.length() == 0)
+					mMyChar = null;
+				else
+					mMyChar = myChar.charAt(0);
+		    } catch (JSONException e) {
+		        mMyChar = null;
+		    }
+		    mMyCharSet = true;
+		}
+		if (obj.has(MyTableInfo.Columns.MY_STRING)) {
+		    try {
+		        mMyString = obj.getString(MyTableInfo.Columns.MY_STRING);
+		    } catch (JSONException e) {
+		        mMyString = null;
+		    }
+		    mMyStringSet = true;
+		}
+//Can't hydrate a BLOB from JSON
+		if (obj.has(MyTableInfo.Columns.MY_TIME)) {
+		    try {
+		        mMyTime = obj.getLong(MyTableInfo.Columns.MY_TIME);
+		    } catch (JSONException e) {
+		        mMyTime = null;
+		    }
+		    mMyTimeSet = true;
+		}
+
+	}
+
     @Override
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
@@ -436,6 +513,7 @@ public abstract class BaseMyTable extends PersistentObject {
     public void setId(Long id) {
         mId = id;
         mIdSet = true;
+        mIsNew = id != null;
     }
 
     public Boolean getMyBoolean() {

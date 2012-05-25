@@ -180,6 +180,12 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         mIsNew = false;
     }
 
+	protected void hydrate(JSONObject obj) {
+		if (obj == null)
+			return;
+{HydrateJsonProc}
+	}
+
     @Override
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();

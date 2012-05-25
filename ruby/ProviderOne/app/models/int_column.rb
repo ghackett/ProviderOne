@@ -7,4 +7,9 @@ class IntColumn < ColumnInfo
       proc = File.read("public/templates/columns/int/HydrateProcedure.java")
       return process_file_content(proc)
     end
+    
+    def get_hydrate_json_proc
+      proc = File.read("public/templates/columns/int/HydrateJsonProcedure.java")
+      return process_file_content(proc)    
+    end
 end

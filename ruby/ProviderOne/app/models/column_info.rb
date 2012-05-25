@@ -19,6 +19,7 @@ class ColumnInfo
     file_content = file_content.gsub("{LowerName}", @lower_name);
     file_content = file_content.gsub("{CamelName}", @camel_name);
     file_content = file_content.gsub("{CapCamelName}", @cap_camel_name);
+    file_content = file_content.gsub("{CapName}", @cap_name);
     return file_content
   end
 
@@ -31,6 +32,11 @@ class ColumnInfo
   def get_hydrate_proc
     proc = File.read("public/templates/columns/generic/HydrateProcedure.java")
     return process_file_content(proc)
+  end
+  
+  def get_hydrate_json_proc
+    proc = File.read("public/templates/columns/generic/HydrateJsonProcedure.java")
+    return process_file_content(proc)    
   end
 
   def get_imports

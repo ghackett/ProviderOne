@@ -8,4 +8,9 @@ class FloatColumn < ColumnInfo
       defs = "\t\tif (m#{@cap_camel_name}Set && h.col_#{@lower_name} != -1)\n\t\t\trtr.put(#{table.cap_camel_name}Info.Columns.#{@cap_name}, m#{@cap_camel_name}.doubleValue());\n"
       return defs
     end
+    
+    def get_hydrate_json_proc
+      proc = File.read("public/templates/columns/float/HydrateJsonProcedure.java")
+      return process_file_content(proc)    
+    end
 end
