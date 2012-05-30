@@ -116,7 +116,27 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     public static int deleteOneBy{LookupCapCamelName}(String {LookupCamelName}) {
         return deleteByUri({CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName}), null, null);
     }
+
+    public static {CapCamelTableName} findOneWith{LookupCapCamelName}InArray(String {LookupCamelName}, ArrayList<{CapCamelTableName}> {CamelTableName}List) {
+		if ({LookupCamelName} == null || {CamelTableName}List == null || {CamelTableName}List.isEmpty())
+            return null;
+        for ({CapCamelTableName} {CamelTableName} : {CamelTableName}List) {
+            if ({CamelTableName}.m{LookupCapCamelName}Set && {CamelTableName}.m{LookupCapCamelName} != null && {CamelTableName}.m{LookupCapCamelName}.equals({LookupCamelName}))
+                return {CamelTableName};
+        }
+        return null;
+    }
 {LookupEnd}
+
+	public static {CapCamelTableName} findOneWithIdInArray(long id, ArrayList<{CapCamelTableName}> {CamelTableName}List) {
+	    if ({CamelTableName}List == null || {CamelTableName}List.isEmpty())
+	        return null;
+	    for ({CapCamelTableName} {CamelTableName} : {CamelTableName}List) {
+	        if ({CamelTableName}.mIdSet && {CamelTableName}.mId != null && {CamelTableName}.mId.longValue() == id)
+	            return {CamelTableName};
+	    }
+	    return null;
+	}
 
     public static {CapCamelTableName} findOneByUri(Uri uri, {CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
         {CapCamelTableName} rtr = null;

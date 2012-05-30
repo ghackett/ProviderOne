@@ -123,6 +123,26 @@ public abstract class BaseMyTable extends PersistentObject {
         return deleteByUri(MyTableInfo.buildMyStringLookupUri(myString), null, null);
     }
 
+    public static MyTable findOneWithMyStringInArray(String myString, ArrayList<MyTable> myTableList) {
+		if (myString == null || myTableList == null || myTableList.isEmpty())
+            return null;
+        for (MyTable myTable : myTableList) {
+            if (myTable.mMyStringSet && myTable.mMyString != null && myTable.mMyString.equals(myString))
+                return myTable;
+        }
+        return null;
+    }
+
+
+	public static MyTable findOneWithIdInArray(long id, ArrayList<MyTable> myTableList) {
+	    if (myTableList == null || myTableList.isEmpty())
+	        return null;
+	    for (MyTable myTable : myTableList) {
+	        if (myTable.mIdSet && myTable.mId != null && myTable.mId.longValue() == id)
+	            return myTable;
+	    }
+	    return null;
+	}
 
     public static MyTable findOneByUri(Uri uri, MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
         MyTable rtr = null;
