@@ -1,6 +1,6 @@
 class ColumnInfo
 
-  attr_accessor :name, :type, :is_lookup_key, :camel_name, :cap_camel_name, :cap_name, :lower_name, :java_type
+  attr_accessor :name, :type, :is_lookup_key, :camel_name, :cap_camel_name, :cap_name, :lower_name, :java_type, :is_valid_lookup_key
 
   def initialize(name, type)
     @name = name;
@@ -11,6 +11,7 @@ class ColumnInfo
     @cap_name = @name.upcase
     @lower_name = @name.downcase
     @is_lookup_key = false
+    @is_valid_lookup_key = true
   end
 
   def process_file_content(file_content)

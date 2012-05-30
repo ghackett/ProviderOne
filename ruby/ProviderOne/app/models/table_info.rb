@@ -1,6 +1,6 @@
 class TableInfo
 
-  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm, :lower_name, :drop_stmt, :cap_name
+  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm, :lower_name, :drop_stmt, :cap_name, :valid_lookup_columns
 
   def initialize(tablename, sql, tableinfo)
     @name = tablename
@@ -8,6 +8,7 @@ class TableInfo
     @create_stmt = sql.to_s.gsub("\r\n", " ").gsub("\n", " ").gsub("\"", "\\\"")
     @drop_stmt = "DROP TABLE IF EXISTS \\\"" + @name + "\\\""
     @columns = [];
+    @valid_lookup_columns = [];
     @camel_name = @name.camelize
     @camel_name[0] = @camel_name.first.downcase
     @cap_camel_name = @name.camelize
@@ -18,6 +19,12 @@ class TableInfo
 
     tableinfo.each do |info|
       @columns <<  ColumnInfo.get_column(info)
+    end
+    
+    @columns.each do |col|
+      if (col.is_valid_lookup_key)
+        @valid_lookup_columns << col
+      end
     end
 
   end
@@ -80,6 +87,8 @@ class TableInfo
 
       content = content.gsub("{LookupCapCamelName}", lookup_col.cap_camel_name)
       content = content.gsub("{LookupCamelName}", lookup_col.camel_name)
+      content = content.gsub("{LookupJavaType}", lookup_col.java_type)
+      
     end
     return content
   end

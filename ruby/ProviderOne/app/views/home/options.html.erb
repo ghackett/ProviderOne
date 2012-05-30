@@ -39,7 +39,7 @@
           <p>
               <strong><%=table.name%></strong><br/>
               lookup key =
-              <%= select_tag "lookup_key_" + table.name, options_from_collection_for_select(table.columns, :name, :name, table.get_lookup_column.name) %>
+              <%= select_tag "lookup_key_" + table.name, options_from_collection_for_select(table.valid_lookup_columns, :name, :name, table.get_lookup_column.name) %>
 
               <br/>
 

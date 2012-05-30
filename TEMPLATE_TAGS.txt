@@ -43,6 +43,7 @@ LookupStart
 LookupEnd
 LookupCapCamelName
 LookupCamelName
+LookupJavaType
 
 JavaDefs
 HydrateProc

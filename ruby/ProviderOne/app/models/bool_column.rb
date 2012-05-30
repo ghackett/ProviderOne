@@ -2,6 +2,7 @@ class BoolColumn < ColumnInfo
     def initialize(name, type)
       super(name, type)
       @java_type = "Boolean"
+      @is_valid_lookup_key = false
     end
 
     def get_hydrate_proc

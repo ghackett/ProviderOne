@@ -116,11 +116,11 @@ public abstract class BaseMyTable extends PersistentObject {
     }
     
     public static MyTable findOneByMyString(String myString, MyTableInfo.ColumnHelper helper) {
-        return findOneByUri(MyTableInfo.buildMyStringLookupUri(myString), helper, null, null, null);
+        return findOneByUri(MyTableInfo.buildMyStringLookupUri(myString.toString()), helper, null, null, null);
     }
 
     public static int deleteOneByMyString(String myString) {
-        return deleteByUri(MyTableInfo.buildMyStringLookupUri(myString), null, null);
+        return deleteByUri(MyTableInfo.buildMyStringLookupUri(myString.toString()), null, null);
     }
 
     public static MyTable findOneWithMyStringInArray(String myString, ArrayList<MyTable> myTableList) {

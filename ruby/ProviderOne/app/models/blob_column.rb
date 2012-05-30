@@ -2,6 +2,7 @@ class BlobColumn < ColumnInfo
     def initialize(name, type)
       super(name, type)
       @java_type = "ByteBuffer"
+      @is_valid_lookup_key = false
     end
 
     def get_imports
