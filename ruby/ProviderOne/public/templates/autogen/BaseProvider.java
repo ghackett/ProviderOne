@@ -102,7 +102,9 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
             return result.intValue();
 
         final SelectionBuilder builder = buildSimpleSelection(uri, match);
-        return builder.where(selection, selectionArgs).delete(mDatabase.getWritableDatabase());
+        int delResult = builder.where(selection, selectionArgs).delete(mDatabase.getWritableDatabase());
+        getAppContext().getContentResolver().notifyChange(uri, null);
+        return delResult;
     }
 
     @Override
@@ -154,7 +156,9 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
 				if (algorithm == -1)
 				    algorithm = SQLiteDatabase.CONFLICT_FAIL;
         }
-        return builder.where(selection, selectionArgs).updateWithOnConflict(mDatabase, values, algorithm);
+        int updateResult = builder.where(selection, selectionArgs).updateWithOnConflict(mDatabase, values, algorithm);
+        getAppContext().getContentResolver().notifyChange(uri, null);
+        return updateResult;
     }
 
     private SelectionBuilder buildSimpleSelection(Uri uri, int match) {

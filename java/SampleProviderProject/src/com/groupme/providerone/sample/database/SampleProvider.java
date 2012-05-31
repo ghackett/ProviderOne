@@ -43,21 +43,32 @@ public class SampleProvider extends BaseSampleProvider {
     }
 
     /**
-     * handle deletes for your custom uri matchings, return null if un-matched
-     */
-    @Override
-    protected Integer delete(Uri uri, String selection, String[] selectionArgs, int match) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
      * handle inserts for your custom uri matchings, return null if un-matched
+     * IT IS YOUR RESPONSABILITY TO NOTIFY THE CONTENT RESOLVER OF A CHANGE
+     * You can use getAppContext().getContentResolver() to retrieve the
+     * ContentResolver
      */
     @Override
     protected Uri insert(Uri uri, ContentValues values, int match) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    /**
+     * if your custom uri matching corresponds directly to a table or view, you can
+     * build a selection here using the SelectionBuilder that is passed to you. This
+     * avoids the need to fill in the query, update and delete methods.
+     * 
+     * If you use this method, as opposed to query, update and delete, then 
+     * the ContentResolver WILL be notified on your behalf for updates and deletes
+     *
+     * return true if you matched and modified the builder, false otherwise (to let
+     * the base provider do its thing)
+     */
+    @Override
+    protected boolean buildSimpleSelection(Uri uri, int match, SelectionBuilder builder) {
+        // TODO Auto-generated method stub
+        return false;
     }
 
     /**
@@ -71,6 +82,9 @@ public class SampleProvider extends BaseSampleProvider {
 
     /**
      * handle updates for your custom uri matchings, return null if un-matched
+     * IT IS YOUR RESPONSABILITY TO NOTIFY THE CONTENT RESOLVER OF A CHANGE
+     * You can use getAppContext().getContentResolver() to retrieve the
+     * ContentResolver
      */
     @Override
     protected Integer update(Uri uri, ContentValues values, String selection, String[] selectionArgs, int match) {
@@ -79,17 +93,15 @@ public class SampleProvider extends BaseSampleProvider {
     }
 
     /**
-     * if your custom uri matching corresponds directly to a table or view, you can
-     * build a selection here using the SelectionBuilder that is passed to you. This
-     * avoids the need to fill in the query, update and delete methods
-     *
-     * return true if you matched and modified the builder, false otherwise (to let
-     * the base provider do its thing)
+     * handle deletes for your custom uri matchings, return null if un-matched
+     * IT IS YOUR RESPONSABILITY TO NOTIFY THE CONTENT RESOLVER OF A CHANGE
+     * You can use getAppContext().getContentResolver() to retrieve the
+     * ContentResolver
      */
     @Override
-    protected boolean buildSimpleSelection(Uri uri, int match, SelectionBuilder builder) {
+    protected Integer delete(Uri uri, String selection, String[] selectionArgs, int match) {
         // TODO Auto-generated method stub
-        return false;
+        return null;
     }
 
     /**
