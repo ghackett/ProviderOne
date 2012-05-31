@@ -35,7 +35,7 @@ public abstract class {CapCamelTableName}Adapter extends CursorAdapter {
     public {CapCamelTableName}Adapter(Context context, {CapCamelTableName}Info.ColumnHelper columnHelper) {
         super(context, null, false);
         if (columnHelper == null)
-            columnHelper = new {CapCamelTableName}Info.ColumnHelper({CapCamelTableName}Info.ALL_COLUMNS);
+            columnHelper = {CapCamelTableName}Info.ALL_COLUMNS_HELPER;
         mColumnHelper = columnHelper;
     }
 
@@ -58,11 +58,11 @@ public abstract class {CapCamelTableName}Adapter extends CursorAdapter {
         View v;
         {CapCamelTableName} {CamelTableName} = {CapCamelTableName}.fromCursor(mCursor, mColumnHelper);
         if (convertView == null) {
-            v = newView(mContext, {CamelTableName}, parent);
+            v = newView(mContext, {CamelTableName}, parent, position);
         } else {
             v = convertView;
         }
-        bindView(v, mContext, {CamelTableName});
+        bindView(v, mContext, {CamelTableName}, position);
         return v;
     }
     
@@ -77,7 +77,7 @@ public abstract class {CapCamelTableName}Adapter extends CursorAdapter {
         return null;
     }
 
-    abstract public View newView(Context ctx, {CapCamelTableName} {CamelTableName}, ViewGroup parent);
-    abstract public void bindView(View view, Context ctx, {CapCamelTableName} {CamelTableName});
+    abstract public View newView(Context ctx, {CapCamelTableName} {CamelTableName}, ViewGroup parent, int position);
+    abstract public void bindView(View view, Context ctx, {CapCamelTableName} {CamelTableName}, int position);
 
 }

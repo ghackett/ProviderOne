@@ -39,7 +39,7 @@ public abstract class MyTableAdapter extends CursorAdapter {
     public MyTableAdapter(Context context, MyTableInfo.ColumnHelper columnHelper) {
         super(context, null, false);
         if (columnHelper == null)
-            columnHelper = new MyTableInfo.ColumnHelper(MyTableInfo.ALL_COLUMNS);
+            columnHelper = MyTableInfo.ALL_COLUMNS_HELPER;
         mColumnHelper = columnHelper;
     }
 
@@ -62,11 +62,11 @@ public abstract class MyTableAdapter extends CursorAdapter {
         View v;
         MyTable myTable = MyTable.fromCursor(mCursor, mColumnHelper);
         if (convertView == null) {
-            v = newView(mContext, myTable, parent);
+            v = newView(mContext, myTable, parent, position);
         } else {
             v = convertView;
         }
-        bindView(v, mContext, myTable);
+        bindView(v, mContext, myTable, position);
         return v;
     }
     
@@ -81,7 +81,7 @@ public abstract class MyTableAdapter extends CursorAdapter {
         return null;
     }
 
-    abstract public View newView(Context ctx, MyTable myTable, ViewGroup parent);
-    abstract public void bindView(View view, Context ctx, MyTable myTable);
+    abstract public View newView(Context ctx, MyTable myTable, ViewGroup parent, int position);
+    abstract public void bindView(View view, Context ctx, MyTable myTable, int position);
 
 }

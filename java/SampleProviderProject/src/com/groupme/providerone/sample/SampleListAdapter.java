@@ -24,12 +24,12 @@ public class SampleListAdapter extends MyTableAdapter {
     }
 
     @Override
-    public View newView(Context ctx, MyTable myTable, ViewGroup parent) {
+    public View newView(Context ctx, MyTable myTable, ViewGroup parent, int position) {
         return LayoutInflater.from(ctx).inflate(R.layout.list_item, parent, false);
     }
 
     @Override
-    public void bindView(View view, Context ctx, MyTable myTable) {
+    public void bindView(View view, Context ctx, MyTable myTable, int position) {
         ((TextView)view.findViewById(R.id.tv_1)).setText(myTable.getMyString());
         ((TextView)view.findViewById(R.id.tv_2)).setText(myTable.getMyInt().toString());
         ((TextView)view.findViewById(R.id.tv_3)).setText(myTable.getMyDouble().toString());
