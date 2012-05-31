@@ -45,15 +45,15 @@ public class SampleProviderProjectActivity extends Activity {
         protected String doInBackground(Void... params) {
             int count = MyTable.getCount(null, null);
             publishProgress("\nCurrent count = " + count);
-            if (count > 0 && count < 500) {
+            if (count > 0 && count < 100) {
                 publishProgress("deleting all records");
                 MyTable.deleteWhere(null, null);
                 publishProgress("Current count = " + MyTable.getCount(null, null) + "\n");                
             } else {
                 publishProgress("");
             }
-            if (count < 500) {
-                for (int i = 0; i<500; i++) {
+            if (count < 100) {
+                for (int i = 0; i<100; i++) {
                     MyTable table = new MyTable();
                     table.setMyString("test_lookup_" + i);
                     table.setMyInt(i);
