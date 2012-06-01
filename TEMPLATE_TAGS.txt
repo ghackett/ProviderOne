@@ -23,6 +23,8 @@ UriCountMatches
 UriSumMatches
 UriUpdateAlgorithmMatches
 UriSimpleSelectionMatches
+UriDeleteInvalidMatches
+UriUpdateInvalidMatches
 ---------------
 
 

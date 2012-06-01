@@ -186,8 +186,42 @@ class TableInfo
     return defs
   end
 
+  def get_provider_invalid_delete_matches
+    defs = ""
+    defs += "\t\t\tcase #{@cap_name}_COUNT:\n"
+    defs += "\t\t\tcase #{@cap_name}_SUM:\n"
+    defs += "\t\t\t\tthrow new UnsupportedOperationException(\"Can't delete using a sum or count uri. (#{@cap_camel_name})\");\n"
+    if (!@is_editable)
+      defs += "\t\t\tcase #{@cap_name}:\n"
+      defs += "\t\t\tcase #{@cap_name}_ID:\n"
+      if (has_lookup_column)
+        defs += "\t\t\tcase #{@cap_name}_LOOKUP:\n"
+      end
+    defs += "\t\t\t\tthrow new UnsupportedOperationException(\"Can't delete from a sqlite view. (#{@cap_camel_name})\");\n"
+    end
+    return defs
+  end
+  
+  def get_provider_invalid_update_matches
+    defs = ""
+    defs += "\t\t\tcase #{@cap_name}_COUNT:\n"
+    defs += "\t\t\tcase #{@cap_name}_SUM:\n"
+    defs += "\t\t\t\tthrow new UnsupportedOperationException(\"Can't update using a sum or count uri. (#{@cap_camel_name})\");\n"
+    if (!@is_editable)
+      defs += "\t\t\tcase #{@cap_name}:\n"
+      defs += "\t\t\tcase #{@cap_name}_ID:\n"
+      if (has_lookup_column)
+        defs += "\t\t\tcase #{@cap_name}_LOOKUP:\n"
+      end
+    defs += "\t\t\t\tthrow new UnsupportedOperationException(\"Can't update a sqlite view. (#{@cap_camel_name})\");\n"
+    end
+    return defs
+  end
 
   def get_provider_insert_match
+    if (!@is_editable)
+      return ""
+    end
     defs = ""
     defs += "\t\t\tcase #{@cap_name}: {\n"
     defs += "\t\t\t\tlong id = db.insertWithOnConflict(#{@cap_camel_name}Info.TABLE_NAME, null, values, #{@cap_camel_name}Info.INSERT_ALGORITHM);\n"

@@ -136,6 +136,8 @@ class DatabaseInfo
     table_provider_sum_matches = ""
     table_provider_update_alg_matches = ""
     table_provider_simple_selection_matches = ""
+    table_provider_deletes_invalid = ""
+    table_provider_updates_invalid = ""
 
     match_count = 65535
     @tables.each_value do |tbl|
@@ -153,6 +155,8 @@ class DatabaseInfo
       table_provider_sum_matches += "\t\t\tcase #{tbl.cap_name}_SUM:\n"
       table_provider_update_alg_matches += tbl.get_provider_update_algorithm_match
       table_provider_simple_selection_matches += tbl.get_provider_simple_selection_matches
+      table_provider_deletes_invalid += tbl.get_provider_invalid_delete_matches
+      table_provider_updates_invalid += tbl.get_provider_invalid_update_matches
     end
 
     table_provider_count_matches += "\t\t\t\treturn builder.query(mDatabase.getReadableDatabase(), new String[] {\"count(*) as my_count\"}, null);\n"
@@ -167,6 +171,8 @@ class DatabaseInfo
     file_content = file_content.gsub("{UriSumMatches}", table_provider_sum_matches);
     file_content = file_content.gsub("{UriUpdateAlgorithmMatches}", table_provider_update_alg_matches);
     file_content = file_content.gsub("{UriSimpleSelectionMatches}", table_provider_simple_selection_matches);
+    file_content = file_content.gsub("{UriDeleteInvalidMatches}", table_provider_deletes_invalid);
+    file_content = file_content.gsub("{UriUpdateInvalidMatches}", table_provider_updates_invalid);
 
     return process_file_content(file_content)
   end

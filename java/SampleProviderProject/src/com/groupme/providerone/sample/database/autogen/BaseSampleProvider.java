@@ -141,6 +141,20 @@ public abstract class BaseSampleProvider extends ContentProvider {
         if (result != null)
             return result.intValue();
 
+		switch(match) {
+			case MY_TABLE_COUNT:
+			case MY_TABLE_SUM:
+				throw new UnsupportedOperationException("Can't delete using a sum or count uri. (MyTable)");
+			case MY_VIEW_COUNT:
+			case MY_VIEW_SUM:
+				throw new UnsupportedOperationException("Can't delete using a sum or count uri. (MyView)");
+			case MY_VIEW:
+			case MY_VIEW_ID:
+			case MY_VIEW_LOOKUP:
+				throw new UnsupportedOperationException("Can't delete from a sqlite view. (MyView)");
+
+		}
+
         final SelectionBuilder builder = buildSimpleSelection(uri, match);
         int delResult = builder.where(selection, selectionArgs).delete(mDatabase.getWritableDatabase());
         getAppContext().getContentResolver().notifyChange(uri, null);
@@ -162,15 +176,9 @@ public abstract class BaseSampleProvider extends ContentProvider {
 				getAppContext().getContentResolver().notifyChange(newUri, null);
 				return newUri;
 			}
-			case MY_VIEW: {
-				long id = db.insertWithOnConflict(MyViewInfo.TABLE_NAME, null, values, MyViewInfo.INSERT_ALGORITHM);
-				Uri newUri = MyViewInfo.buildIdLookupUri(id);
-				getAppContext().getContentResolver().notifyChange(newUri, null);
-				return newUri;
-			}
 
             default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+                throw new UnsupportedOperationException("Invalid uri for insert: " + uri);
         }
     }
 
@@ -204,6 +212,20 @@ public abstract class BaseSampleProvider extends ContentProvider {
         Integer result = update(uri, values, selection, selectionArgs, match);
         if (result != null)
             return result;
+
+		switch(match) {
+			case MY_TABLE_COUNT:
+			case MY_TABLE_SUM:
+				throw new UnsupportedOperationException("Can't update using a sum or count uri. (MyTable)");
+			case MY_VIEW_COUNT:
+			case MY_VIEW_SUM:
+				throw new UnsupportedOperationException("Can't update using a sum or count uri. (MyView)");
+			case MY_VIEW:
+			case MY_VIEW_ID:
+			case MY_VIEW_LOOKUP:
+				throw new UnsupportedOperationException("Can't update from a sqlite view. (MyView)");
+
+		}
 
         final SelectionBuilder builder = buildSimpleSelection(uri, match);
         int algorithm = SQLiteDatabase.CONFLICT_FAIL;

@@ -101,6 +101,10 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
         if (result != null)
             return result.intValue();
 
+		switch(match) {
+{UriDeleteInvalidMatches}
+		}
+
         final SelectionBuilder builder = buildSimpleSelection(uri, match);
         int delResult = builder.where(selection, selectionArgs).delete(mDatabase.getWritableDatabase());
         getAppContext().getContentResolver().notifyChange(uri, null);
@@ -118,7 +122,7 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
         switch(match) {
 {UriInsertMatches}
             default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+                throw new UnsupportedOperationException("Invalid uri for insert: " + uri);
         }
     }
 
@@ -146,6 +150,10 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
         Integer result = update(uri, values, selection, selectionArgs, match);
         if (result != null)
             return result;
+
+		switch(match) {
+{UriUpdateInvalidMatches}
+		}
 
         final SelectionBuilder builder = buildSimpleSelection(uri, match);
         int algorithm = SQLiteDatabase.CONFLICT_FAIL;
