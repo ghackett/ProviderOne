@@ -64,7 +64,7 @@ public abstract class BaseMyView extends PersistentObject {
     }
 
     public static ArrayList<MyView> findAllWhere(String selection, String[] selectionArgs, String sortOrder) {
-        return findAllWhere(MyViewInfo.ALL_COLUMNS, selection, selectionArgs, sortOrder);
+        return findAllWhere(MyViewInfo.ALL_COLUMNS_HELPER, selection, selectionArgs, sortOrder);
     }
 
     public static ArrayList<MyView> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -76,7 +76,7 @@ public abstract class BaseMyView extends PersistentObject {
     }
 
     public static MyView findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere(MyViewInfo.ALL_COLUMNS, selection, selectionArgs);
+        return findOneWhere(MyViewInfo.ALL_COLUMNS_HELPER, selection, selectionArgs);
     }
 
     public static MyView findOneWhere(String[] projection, String selection, String[] selectionArgs) {
@@ -88,7 +88,7 @@ public abstract class BaseMyView extends PersistentObject {
     }
 
     public static MyView findOneById(long id) {
-        return findOneById(id, MyViewInfo.ALL_COLUMNS);
+        return findOneById(id, MyViewInfo.ALL_COLUMNS_HELPER);
     }
 
     public static MyView findOneById(long id, String[] projection) {
@@ -101,7 +101,7 @@ public abstract class BaseMyView extends PersistentObject {
 
 
     public static MyView findOneByMyLong(Long myLong) {
-        return findOneByMyLong(myLong, MyViewInfo.ALL_COLUMNS);
+        return findOneByMyLong(myLong, MyViewInfo.ALL_COLUMNS_HELPER);
     }
             
     public static MyView findOneByMyLong(Long myLong, String[] projection) {
@@ -442,45 +442,17 @@ public abstract class BaseMyView extends PersistentObject {
 
     @Override
     public void save() {
-        if (isNew()) {
-            Uri result = SampleProvider.getAppContext().getContentResolver().insert(MyViewInfo.CONTENT_URI, toContentValues());
-            if (result != null) {
-                setId(Long.valueOf(result.getLastPathSegment()));
-            }
-            mIsNew = false;
-        } else {
-            if (!mIdSet) {
-                throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
-            }
-            Uri updateUri = MyViewInfo.buildIdLookupUri(mId);
-            SampleProvider.getAppContext().getContentResolver().update(updateUri, toContentValues(), null, null);
-        }
+		throw new UnsupportedOperationException("Cannot save or delete a MyView because it's a sqlite view");
     }
 
     @Override
     public ContentProviderOperation getSaveProviderOperation() {
-        ContentProviderOperation op = null;
-        if (isNew()) {
-            op = ContentProviderOperation.newInsert(MyViewInfo.CONTENT_URI).withValues(toContentValues()).build();
-        } else {
-            if (!mIdSet) {
-                throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
-            }
-            Uri updateUri = MyViewInfo.buildIdLookupUri(mId);
-            op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
-        }
-        return op;
+		throw new UnsupportedOperationException("Cannot save or delete a MyView because it's a sqlite view");
     }
 
     @Override
     public int delete() {
-        if (isNew())
-            throw new IllegalArgumentException("Trying to delete a MyView record that has never been saved");
-        if (!mIdSet)
-            throw new IllegalArgumentException("Trying to delete a MyView record that doesnt have its ID column set");
-
-        Uri delUri = MyViewInfo.buildIdLookupUri(mId);
-        return SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
+		throw new UnsupportedOperationException("Cannot save or delete a MyView because it's a sqlite view");
     }
     
     @Override

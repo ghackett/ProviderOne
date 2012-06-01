@@ -64,7 +64,7 @@ public abstract class BaseMyTable extends PersistentObject {
     }
 
     public static ArrayList<MyTable> findAllWhere(String selection, String[] selectionArgs, String sortOrder) {
-        return findAllWhere(MyTableInfo.ALL_COLUMNS, selection, selectionArgs, sortOrder);
+        return findAllWhere(MyTableInfo.ALL_COLUMNS_HELPER, selection, selectionArgs, sortOrder);
     }
 
     public static ArrayList<MyTable> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -76,7 +76,7 @@ public abstract class BaseMyTable extends PersistentObject {
     }
 
     public static MyTable findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere(MyTableInfo.ALL_COLUMNS, selection, selectionArgs);
+        return findOneWhere(MyTableInfo.ALL_COLUMNS_HELPER, selection, selectionArgs);
     }
 
     public static MyTable findOneWhere(String[] projection, String selection, String[] selectionArgs) {
@@ -92,7 +92,7 @@ public abstract class BaseMyTable extends PersistentObject {
     }
 
     public static MyTable findOneById(long id) {
-        return findOneById(id, MyTableInfo.ALL_COLUMNS);
+        return findOneById(id, MyTableInfo.ALL_COLUMNS_HELPER);
     }
 
     public static MyTable findOneById(long id, String[] projection) {
@@ -109,7 +109,7 @@ public abstract class BaseMyTable extends PersistentObject {
 
 
     public static MyTable findOneByMyString(String myString) {
-        return findOneByMyString(myString, MyTableInfo.ALL_COLUMNS);
+        return findOneByMyString(myString, MyTableInfo.ALL_COLUMNS_HELPER);
     }
             
     public static MyTable findOneByMyString(String myString, String[] projection) {
@@ -454,6 +454,7 @@ public abstract class BaseMyTable extends PersistentObject {
 
     @Override
     public void save() {
+
         if (isNew()) {
             Uri result = SampleProvider.getAppContext().getContentResolver().insert(MyTableInfo.CONTENT_URI, toContentValues());
             if (result != null) {
@@ -467,10 +468,12 @@ public abstract class BaseMyTable extends PersistentObject {
             Uri updateUri = MyTableInfo.buildIdLookupUri(mId);
             SampleProvider.getAppContext().getContentResolver().update(updateUri, toContentValues(), null, null);
         }
+
     }
 
     @Override
     public ContentProviderOperation getSaveProviderOperation() {
+
         ContentProviderOperation op = null;
         if (isNew()) {
             op = ContentProviderOperation.newInsert(MyTableInfo.CONTENT_URI).withValues(toContentValues()).build();
@@ -482,10 +485,12 @@ public abstract class BaseMyTable extends PersistentObject {
             op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
         }
         return op;
+
     }
 
     @Override
     public int delete() {
+
         if (isNew())
             throw new IllegalArgumentException("Trying to delete a MyTable record that has never been saved");
         if (!mIdSet)
@@ -493,6 +498,7 @@ public abstract class BaseMyTable extends PersistentObject {
 
         Uri delUri = MyTableInfo.buildIdLookupUri(mId);
         return SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
+
     }
     
     @Override

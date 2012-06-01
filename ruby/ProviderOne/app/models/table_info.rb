@@ -318,6 +318,8 @@ class TableInfo
     if (@is_editable)
       file_content = file_content.gsub("{EditableStart}", "")
       file_content = file_content.gsub("{EditableEnd}", "")
+      file_content = file_content.gsub("{EditableStartWithException}", "")
+      file_content = file_content.gsub("{EditableEndWithException}", "")
     else
       
       while (file_content.index("{EditableStart}") != nil)
@@ -325,6 +327,13 @@ class TableInfo
         idxEnd = file_content.index("{EditableEnd}") + 13
         file_content = file_content[0..idxStart] + file_content[idxEnd...file_content.length]
       end
+      
+      while (file_content.index("{EditableStartWithException}") != nil)
+        idxStart = file_content.index("{EditableStartWithException}")-1
+        idxEnd = file_content.index("{EditableEndWithException}") + 26
+        file_content = file_content[0..idxStart] + "\t\tthrow new UnsupportedOperationException(\"Cannot save or delete a #{@cap_camel_name} because it's a sqlite view\");" + file_content[idxEnd...file_content.length]
+      end
+      
     end
 
     file_content = process_file_content(file_content, dbinfo)

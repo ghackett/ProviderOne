@@ -58,7 +58,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     public static ArrayList<{CapCamelTableName}> findAllWhere(String selection, String[] selectionArgs, String sortOrder) {
-        return findAllWhere({CapCamelTableName}Info.ALL_COLUMNS, selection, selectionArgs, sortOrder);
+        return findAllWhere({CapCamelTableName}Info.ALL_COLUMNS_HELPER, selection, selectionArgs, sortOrder);
     }
 
     public static ArrayList<{CapCamelTableName}> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -70,7 +70,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     public static {CapCamelTableName} findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere({CapCamelTableName}Info.ALL_COLUMNS, selection, selectionArgs);
+        return findOneWhere({CapCamelTableName}Info.ALL_COLUMNS_HELPER, selection, selectionArgs);
     }
 
     public static {CapCamelTableName} findOneWhere(String[] projection, String selection, String[] selectionArgs) {
@@ -86,7 +86,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 {EditableEnd}
     public static {CapCamelTableName} findOneById(long id) {
-        return findOneById(id, {CapCamelTableName}Info.ALL_COLUMNS);
+        return findOneById(id, {CapCamelTableName}Info.ALL_COLUMNS_HELPER);
     }
 
     public static {CapCamelTableName} findOneById(long id, String[] projection) {
@@ -103,7 +103,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
 {EditableEnd}
 {LookupStart}
     public static {CapCamelTableName} findOneBy{LookupCapCamelName}({LookupJavaType} {LookupCamelName}) {
-        return findOneBy{LookupCapCamelName}({LookupCamelName}, {CapCamelTableName}Info.ALL_COLUMNS);
+        return findOneBy{LookupCapCamelName}({LookupCamelName}, {CapCamelTableName}Info.ALL_COLUMNS_HELPER);
     }
             
     public static {CapCamelTableName} findOneBy{LookupCapCamelName}({LookupJavaType} {LookupCamelName}, String[] projection) {
@@ -243,6 +243,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
 
     @Override
     public void save() {
+{EditableStartWithException}
         if (isNew()) {
             Uri result = {ProjectName}Provider.getAppContext().getContentResolver().insert({CapCamelTableName}Info.CONTENT_URI, toContentValues());
             if (result != null) {
@@ -256,10 +257,12 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
             Uri updateUri = {CapCamelTableName}Info.buildIdLookupUri(mId);
             {ProjectName}Provider.getAppContext().getContentResolver().update(updateUri, toContentValues(), null, null);
         }
+{EditableEndWithException}
     }
 
     @Override
     public ContentProviderOperation getSaveProviderOperation() {
+{EditableStartWithException}
         ContentProviderOperation op = null;
         if (isNew()) {
             op = ContentProviderOperation.newInsert({CapCamelTableName}Info.CONTENT_URI).withValues(toContentValues()).build();
@@ -271,10 +274,12 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
             op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
         }
         return op;
+{EditableEndWithException}
     }
 
     @Override
     public int delete() {
+{EditableStartWithException}
         if (isNew())
             throw new IllegalArgumentException("Trying to delete a {CapCamelTableName} record that has never been saved");
         if (!mIdSet)
@@ -282,6 +287,7 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
 
         Uri delUri = {CapCamelTableName}Info.buildIdLookupUri(mId);
         return {ProjectName}Provider.getAppContext().getContentResolver().delete(delUri, null, null);
+{EditableEndWithException}
     }
     
     @Override

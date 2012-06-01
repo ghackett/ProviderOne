@@ -49,6 +49,8 @@ LookupJavaType
 IsEditableValue
 EditableStart
 EditableEnd
+EditableStartWithException
+EditableEndWithException
 
 JavaDefs
 HydrateProc
