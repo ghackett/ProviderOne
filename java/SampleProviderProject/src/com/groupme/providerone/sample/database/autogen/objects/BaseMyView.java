@@ -5,8 +5,6 @@
  */
 package com.groupme.providerone.sample.database.autogen.objects;
 
-import java.nio.ByteBuffer;
-import java.util.Date;
 
 import java.util.ArrayList;
 
@@ -100,23 +98,23 @@ public abstract class BaseMyView extends PersistentObject {
     }
 
 
-    public static MyView findOneByMyLong(Long myLong) {
-        return findOneByMyLong(myLong, MyViewInfo.ALL_COLUMNS_HELPER);
+    public static MyView findOneByMyString(String myString) {
+        return findOneByMyString(myString, MyViewInfo.ALL_COLUMNS_HELPER);
     }
             
-    public static MyView findOneByMyLong(Long myLong, String[] projection) {
-        return findOneByMyLong(myLong, projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection));
+    public static MyView findOneByMyString(String myString, String[] projection) {
+        return findOneByMyString(myString, projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection));
     }
     
-    public static MyView findOneByMyLong(Long myLong, MyViewInfo.ColumnHelper helper) {
-        return findOneByUri(MyViewInfo.buildMyLongLookupUri(myLong.toString()), helper, null, null, null);
+    public static MyView findOneByMyString(String myString, MyViewInfo.ColumnHelper helper) {
+        return findOneByUri(MyViewInfo.buildMyStringLookupUri(myString.toString()), helper, null, null, null);
     }
 
-    public static MyView findOneWithMyLongInArray(Long myLong, ArrayList<MyView> myViewList) {
-		if (myLong == null || myViewList == null || myViewList.isEmpty())
+    public static MyView findOneWithMyStringInArray(String myString, ArrayList<MyView> myViewList) {
+		if (myString == null || myViewList == null || myViewList.isEmpty())
             return null;
         for (MyView myView : myViewList) {
-            if (myView.mMyLongSet && myView.mMyLong != null && myView.mMyLong.equals(myLong))
+            if (myView.mMyStringSet && myView.mMyString != null && myView.mMyString.equals(myString))
                 return myView;
         }
         return null;
@@ -176,22 +174,8 @@ public abstract class BaseMyView extends PersistentObject {
 	protected boolean mIdSet = false;
 	protected Boolean mMyBoolean = null;
 	protected boolean mMyBooleanSet = false;
-	protected Double mMyDouble = null;
-	protected boolean mMyDoubleSet = false;
-	protected Float mMyFloat = null;
-	protected boolean mMyFloatSet = false;
-	protected Integer mMyInt = null;
-	protected boolean mMyIntSet = false;
-	protected Long mMyLong = null;
-	protected boolean mMyLongSet = false;
-	protected Character mMyChar = null;
-	protected boolean mMyCharSet = false;
 	protected String mMyString = null;
 	protected boolean mMyStringSet = false;
-	protected ByteBuffer mMyBlob = null;
-	protected boolean mMyBlobSet = false;
-	protected Long mMyTime = null;
-	protected boolean mMyTimeSet = false;
 
 
     public BaseMyView() {
@@ -233,66 +217,12 @@ public abstract class BaseMyView extends PersistentObject {
             mMyBoolean = null;
             mMyBooleanSet = false;
         }
-        if (h.col_my_double != -1) {
-            mMyDouble = c.isNull(h.col_my_double) ? null : c.getDouble(h.col_my_double);
-            mMyDoubleSet = true;
-        } else {
-            mMyDouble = null;
-            mMyDoubleSet = false;
-        }
-        if (h.col_my_float != -1) {
-            mMyFloat = c.isNull(h.col_my_float) ? null : c.getFloat(h.col_my_float);
-            mMyFloatSet = true;
-        } else {
-            mMyFloat = null;
-            mMyFloatSet = false;
-        }
-        if (h.col_my_int != -1) {
-            mMyInt = c.isNull(h.col_my_int) ? null : c.getInt(h.col_my_int);
-            mMyIntSet = true;
-        } else {
-            mMyInt = null;
-            mMyIntSet = false;
-        }
-        if (h.col_my_long != -1) {
-            mMyLong = c.isNull(h.col_my_long) ? null : c.getLong(h.col_my_long);
-            mMyLongSet = true;
-        } else {
-            mMyLong = null;
-            mMyLongSet = false;
-        }
-        if (h.col_my_char != -1) {
-            mMyChar = null;
-            if (!c.isNull(h.col_my_char)) {
-                String myChar = c.getString(h.col_my_char);
-                if (myChar.length() > 0)
-                    mMyChar = myChar.charAt(0);
-            }
-            mMyCharSet = true;
-        } else {
-            mMyChar = null;
-            mMyCharSet = false;
-        }
         if (h.col_my_string != -1) {
             mMyString = c.getString(h.col_my_string);
             mMyStringSet = true;
         } else {
             mMyString = null;
             mMyStringSet = false;
-        }
-        if (h.col_my_blob != -1) {
-            mMyBlob = c.isNull(h.col_my_blob) ? null : ByteBuffer.wrap(c.getBlob(h.col_my_blob));
-            mMyBlobSet = true;
-        } else {
-            mMyBlob = null;
-            mMyBlobSet = false;
-        }
-        if (h.col_my_time != -1) {
-            mMyTime = c.isNull(h.col_my_time) ? null : c.getLong(h.col_my_time);
-            mMyTimeSet = true;
-        } else {
-            mMyTime = null;
-            mMyTimeSet = false;
         }
 
         mIsNew = false;
@@ -310,51 +240,6 @@ public abstract class BaseMyView extends PersistentObject {
 		    }
 		    mMyBooleanSet = true;
 		}
-		if (obj.has(MyViewInfo.Columns.MY_DOUBLE)) {
-		    try {
-		        mMyDouble = obj.getDouble(MyViewInfo.Columns.MY_DOUBLE);
-		    } catch (JSONException e) {
-		        mMyDouble = null;
-		    }
-		    mMyDoubleSet = true;
-		}
-		if (obj.has(MyViewInfo.Columns.MY_FLOAT)) {
-		    try {
-		        mMyFloat = (float)obj.getDouble(MyViewInfo.Columns.MY_FLOAT);
-		    } catch (JSONException e) {
-		        mMyFloat = null;
-		    }
-		    mMyFloatSet = true;
-		}
-		if (obj.has(MyViewInfo.Columns.MY_INT)) {
-		    try {
-		        mMyInt = obj.getInt(MyViewInfo.Columns.MY_INT);
-		    } catch (JSONException e) {
-		        mMyInt = null;
-		    }
-		    mMyIntSet = true;
-		}
-		if (obj.has(MyViewInfo.Columns.MY_LONG)) {
-		    try {
-		        mMyLong = obj.getLong(MyViewInfo.Columns.MY_LONG);
-		    } catch (JSONException e) {
-		        mMyLong = null;
-		    }
-		    mMyLongSet = true;
-		}
-		if (obj.has(MyViewInfo.Columns.MY_CHAR)) {
-			String myChar = null;
-		    try {
-		        myChar = obj.getString(MyViewInfo.Columns.MY_CHAR);
-				if (myChar == null || myChar.length() == 0)
-					mMyChar = null;
-				else
-					mMyChar = myChar.charAt(0);
-		    } catch (JSONException e) {
-		        mMyChar = null;
-		    }
-		    mMyCharSet = true;
-		}
 		if (obj.has(MyViewInfo.Columns.MY_STRING)) {
 		    try {
 		        mMyString = obj.getString(MyViewInfo.Columns.MY_STRING);
@@ -362,15 +247,6 @@ public abstract class BaseMyView extends PersistentObject {
 		        mMyString = null;
 		    }
 		    mMyStringSet = true;
-		}
-//Can't hydrate a BLOB from JSON
-		if (obj.has(MyViewInfo.Columns.MY_TIME)) {
-		    try {
-		        mMyTime = obj.getLong(MyViewInfo.Columns.MY_TIME);
-		    } catch (JSONException e) {
-		        mMyTime = null;
-		    }
-		    mMyTimeSet = true;
 		}
 
 	}
@@ -382,22 +258,8 @@ public abstract class BaseMyView extends PersistentObject {
 			values.put(MyViewInfo.Columns._ID, mId);
 		if (mMyBooleanSet)
 			values.put(MyViewInfo.Columns.MY_BOOLEAN, mMyBoolean);
-		if (mMyDoubleSet)
-			values.put(MyViewInfo.Columns.MY_DOUBLE, mMyDouble);
-		if (mMyFloatSet)
-			values.put(MyViewInfo.Columns.MY_FLOAT, mMyFloat);
-		if (mMyIntSet)
-			values.put(MyViewInfo.Columns.MY_INT, mMyInt);
-		if (mMyLongSet)
-			values.put(MyViewInfo.Columns.MY_LONG, mMyLong);
-		if (mMyCharSet)
-			values.put(MyViewInfo.Columns.MY_CHAR, mMyChar == null ? null : String.valueOf(mMyChar));
 		if (mMyStringSet)
 			values.put(MyViewInfo.Columns.MY_STRING, mMyString);
-		if (mMyBlobSet)
-			values.put(MyViewInfo.Columns.MY_BLOB, mMyBlob == null ? null : mMyBlob.array());
-		if (mMyTimeSet)
-			values.put(MyViewInfo.Columns.MY_TIME, mMyTime);
 
         return values;
     }
@@ -421,21 +283,8 @@ public abstract class BaseMyView extends PersistentObject {
 			rtr.put(MyViewInfo.Columns._ID, mId);
 		if (mMyBooleanSet && h.col_my_boolean != -1)
 			rtr.put(MyViewInfo.Columns.MY_BOOLEAN, mMyBoolean);
-		if (mMyDoubleSet && h.col_my_double != -1)
-			rtr.put(MyViewInfo.Columns.MY_DOUBLE, mMyDouble);
-		if (mMyFloatSet && h.col_my_float != -1)
-			rtr.put(MyViewInfo.Columns.MY_FLOAT, mMyFloat.doubleValue());
-		if (mMyIntSet && h.col_my_int != -1)
-			rtr.put(MyViewInfo.Columns.MY_INT, mMyInt);
-		if (mMyLongSet && h.col_my_long != -1)
-			rtr.put(MyViewInfo.Columns.MY_LONG, mMyLong);
-		if (mMyCharSet && h.col_my_char != -1)
-			rtr.put(MyViewInfo.Columns.MY_CHAR, String.valueOf(mMyChar));
 		if (mMyStringSet && h.col_my_string != -1)
 			rtr.put(MyViewInfo.Columns.MY_STRING, mMyString);
-		//Cannot add blobs to Json objects so MyBlob is skipped
-		if (mMyTimeSet && h.col_my_time != -1)
-			rtr.put(MyViewInfo.Columns.MY_TIME, mMyTime);
 
         return rtr;
     }
@@ -514,51 +363,6 @@ public abstract class BaseMyView extends PersistentObject {
         mMyBooleanSet = true;
     }
 
-    public Double getMyDouble() {
-        return mMyDouble;
-    }
-
-    public void setMyDouble(Double myDouble) {
-        mMyDouble = myDouble;
-        mMyDoubleSet = true;
-    }
-
-    public Float getMyFloat() {
-        return mMyFloat;
-    }
-
-    public void setMyFloat(Float myFloat) {
-        mMyFloat = myFloat;
-        mMyFloatSet = true;
-    }
-
-    public Integer getMyInt() {
-        return mMyInt;
-    }
-
-    public void setMyInt(Integer myInt) {
-        mMyInt = myInt;
-        mMyIntSet = true;
-    }
-
-    public Long getMyLong() {
-        return mMyLong;
-    }
-
-    public void setMyLong(Long myLong) {
-        mMyLong = myLong;
-        mMyLongSet = true;
-    }
-
-    public Character getMyChar() {
-        return mMyChar;
-    }
-
-    public void setMyChar(Character myChar) {
-        mMyChar = myChar;
-        mMyCharSet = true;
-    }
-
     public String getMyString() {
         return mMyString;
     }
@@ -568,52 +372,6 @@ public abstract class BaseMyView extends PersistentObject {
         mMyStringSet = true;
     }
 
-    public ByteBuffer getMyBlob() {
-        return mMyBlob;
-    }
-
-    public void setMyBlob(ByteBuffer myBlob) {
-        mMyBlob = myBlob;
-        mMyBlobSet = true;
-    }
-
-   public Long getMyTimeInMillis() {
-       return mMyTime;
-   }
-
-   public Integer getMyTimeInSeconds() {
-       if (mMyTime == null)
-           return null;
-       return (int)(mMyTime.longValue()/1000);
-   }
-
-   public Date getMyTimeAsDate() {
-       if (mMyTime == null)
-           return null;
-       return new Date(mMyTime);
-   }
-
-   public void setMyTimeInMillis(Long myTime) {
-       mMyTime = myTime;
-       mMyTimeSet = true;
-   }
-
-   public void setMyTimeInSeconds(Integer myTime) {
-       if (myTime == null) {
-           mMyTime = null;
-           return;
-       }
-       mMyTime = myTime.longValue() * 1000;
-   }
-
-   public void setMyTimeAsDate(Date myTime) {
-       if (myTime == null) {
-           mMyTime = null;
-           return;
-       } else {
-           mMyTime = myTime.getTime();
-       }
-   }
 
 
     public boolean isIdSet() {
@@ -622,29 +380,8 @@ public abstract class BaseMyView extends PersistentObject {
     public boolean isMyBooleanSet() {
         return mMyBooleanSet;
     }
-    public boolean isMyDoubleSet() {
-        return mMyDoubleSet;
-    }
-    public boolean isMyFloatSet() {
-        return mMyFloatSet;
-    }
-    public boolean isMyIntSet() {
-        return mMyIntSet;
-    }
-    public boolean isMyLongSet() {
-        return mMyLongSet;
-    }
-    public boolean isMyCharSet() {
-        return mMyCharSet;
-    }
     public boolean isMyStringSet() {
         return mMyStringSet;
-    }
-    public boolean isMyBlobSet() {
-        return mMyBlobSet;
-    }
-    public boolean isMyTimeSet() {
-        return mMyTimeSet;
     }
 
 
@@ -663,29 +400,8 @@ public abstract class BaseMyView extends PersistentObject {
 		dest.writeValue(mMyBoolean);
 		dest.writeInt(mMyBooleanSet ? 1 : 0);
 
-		dest.writeValue(mMyDouble);
-		dest.writeInt(mMyDoubleSet ? 1 : 0);
-
-		dest.writeValue(mMyFloat);
-		dest.writeInt(mMyFloatSet ? 1 : 0);
-
-		dest.writeValue(mMyInt);
-		dest.writeInt(mMyIntSet ? 1 : 0);
-
-		dest.writeValue(mMyLong);
-		dest.writeInt(mMyLongSet ? 1 : 0);
-
-		dest.writeValue(mMyChar == null ? null : String.valueOf(mMyChar));
-		dest.writeInt(mMyCharSet ? 1 : 0);
-
 		dest.writeValue(mMyString);
 		dest.writeInt(mMyStringSet ? 1 : 0);
-
-		dest.writeValue(mMyBlob == null ? null : mMyBlob.array());
-		dest.writeInt(mMyBlobSet ? 1 : 0);
-
-		dest.writeValue(mMyTime);
-		dest.writeInt(mMyTimeSet ? 1 : 0);
 
 
     }
@@ -700,31 +416,8 @@ public abstract class BaseMyView extends PersistentObject {
 		mMyBoolean = (Boolean) in.readValue(Boolean.class.getClassLoader());
 		mMyBooleanSet = in.readInt() == 1;
 
-		mMyDouble = (Double) in.readValue(Double.class.getClassLoader());
-		mMyDoubleSet = in.readInt() == 1;
-
-		mMyFloat = (Float) in.readValue(Float.class.getClassLoader());
-		mMyFloatSet = in.readInt() == 1;
-
-		mMyInt = (Integer) in.readValue(Integer.class.getClassLoader());
-		mMyIntSet = in.readInt() == 1;
-
-		mMyLong = (Long) in.readValue(Long.class.getClassLoader());
-		mMyLongSet = in.readInt() == 1;
-
-        String my_char_tmp = in.readString();
-        mMyChar = my_char_tmp == null || my_char_tmp.length() <= 0 ? null : my_char_tmp.charAt(0);
-		mMyCharSet = in.readInt() == 1;
-
 		mMyString = (String) in.readValue(String.class.getClassLoader());
 		mMyStringSet = in.readInt() == 1;
-
-        byte[] my_blob_temp = (byte[]) in.readValue(byte[].class.getClassLoader());
-        mMyBlob = my_blob_temp == null ? null : ByteBuffer.wrap(my_blob_temp);
-		mMyBlobSet = in.readInt() == 1;
-
-		mMyTime = (Long) in.readValue(Long.class.getClassLoader());
-		mMyTimeSet = in.readInt() == 1;
 
 
     }

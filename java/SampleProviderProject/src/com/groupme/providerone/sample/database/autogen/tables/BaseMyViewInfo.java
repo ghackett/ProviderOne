@@ -18,32 +18,18 @@ public class BaseMyViewInfo  {
     public interface Columns {
 		String _ID = "_id";
 		String MY_BOOLEAN = "my_boolean";
-		String MY_DOUBLE = "my_double";
-		String MY_FLOAT = "my_float";
-		String MY_INT = "my_int";
-		String MY_LONG = "my_long";
-		String MY_CHAR = "my_char";
 		String MY_STRING = "my_string";
-		String MY_BLOB = "my_blob";
-		String MY_TIME = "my_time";
 
     }
 
     public static final String TABLE_NAME = "my_view";
-    public static final String SQL_CREATE = "CREATE VIEW \"my_view\" AS  	SELECT * FROM \"my_table\"";
+    public static final String SQL_CREATE = "CREATE VIEW \"my_view\" AS  	SELECT \"_id\", \"my_boolean\", \"my_string\" FROM \"my_table\"";
     public static final String SQL_DROP = "DROP TABLE IF EXISTS \"my_view\"";
 
     public static final String[] ALL_COLUMNS = new String[] {
 		Columns._ID,
 		Columns.MY_BOOLEAN,
-		Columns.MY_DOUBLE,
-		Columns.MY_FLOAT,
-		Columns.MY_INT,
-		Columns.MY_LONG,
-		Columns.MY_CHAR,
 		Columns.MY_STRING,
-		Columns.MY_BLOB,
-		Columns.MY_TIME,
 
     };
 
@@ -81,28 +67,14 @@ public class BaseMyViewInfo  {
     public static class ColumnHelper extends PersistentObject.ColumnHelper {
 		public int col__id = -1;
 		public int col_my_boolean = -1;
-		public int col_my_double = -1;
-		public int col_my_float = -1;
-		public int col_my_int = -1;
-		public int col_my_long = -1;
-		public int col_my_char = -1;
 		public int col_my_string = -1;
-		public int col_my_blob = -1;
-		public int col_my_time = -1;
 
 
 		public ColumnHelper(String[] projection) {
 			super(projection);
 			col__id = getColumnIndex(Columns._ID);
 			col_my_boolean = getColumnIndex(Columns.MY_BOOLEAN);
-			col_my_double = getColumnIndex(Columns.MY_DOUBLE);
-			col_my_float = getColumnIndex(Columns.MY_FLOAT);
-			col_my_int = getColumnIndex(Columns.MY_INT);
-			col_my_long = getColumnIndex(Columns.MY_LONG);
-			col_my_char = getColumnIndex(Columns.MY_CHAR);
 			col_my_string = getColumnIndex(Columns.MY_STRING);
-			col_my_blob = getColumnIndex(Columns.MY_BLOB);
-			col_my_time = getColumnIndex(Columns.MY_TIME);
 		}
     }
 
@@ -110,8 +82,8 @@ public class BaseMyViewInfo  {
 
 
     public static final Uri LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_LOOKUP);
-    public static Uri buildMyLongLookupUri(String myLong) {
-        return Uri.withAppendedPath(LOOKUP_URI, Uri.encode(myLong));
+    public static Uri buildMyStringLookupUri(String myString) {
+        return Uri.withAppendedPath(LOOKUP_URI, Uri.encode(myString));
     }
 
 }

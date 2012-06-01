@@ -276,7 +276,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
 				builder.where(MyViewInfo.Columns._ID + "=?", uri.getLastPathSegment());
 				return builder.table(MyViewInfo.TABLE_NAME);
 			case MY_VIEW_LOOKUP:
-				builder.where(MyViewInfo.Columns.MY_LONG + "=?", uri.getLastPathSegment());
+				builder.where(MyViewInfo.Columns.MY_STRING + "=?", uri.getLastPathSegment());
 				return builder.table(MyViewInfo.TABLE_NAME);
 
             default:
