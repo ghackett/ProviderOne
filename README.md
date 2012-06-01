@@ -54,6 +54,22 @@ There are a few rules that your database must abide by in order to get properly 
 - Views are supported exactly like Tables (except with some sanity checking so you can't edit view records). This means that every view must still contain an _id column, just like tables. If you don't have an _id to select from, you should be able to include a `SELECT 0 AS '_id'` style hack to fake an _id column in your CREATE VIEW statement.
 - All sqlite column names must be lowercase and underscored, i.e. my_column_name. In java, you would call getMyColumnName() to fetch the value of that column, or isMyColumnNameSet() to find out if that column is current loaded in that object.
 
+## Supported Column Types
+
+ProviderOne supports a number of standard and non-standard sqlite column types. While the sqlite doesn't care about columns types, java does. So these types are used to determine what type of object the column should map to. You'll notice that all of the java types are Objects instead of primitives, so that they can also be set to null. Below is a list of the supported column types and the java types they map to.
+
+- INT, INTEGER => Integer
+- TEXT, STRING, VARCHAR, CLOB => String
+- DOUBLE, REAL, NUMERIC => Double
+- FLOAT => Float
+- LONG => Long
+- BOOL, BOOLEAN => Boolean
+- CHAR, CHARACTER => Character
+- BLOB => ByteBuffer
+- DATETIME, DATE, TIMESTAMP => Long (time in millis, with helper methods to convert to and from Date objects)
+
+It's also worth noting that the `_id` column of every table/view will be treated as a Long, regardless of it's sqlite type.
+
 ## Running the Rails app
 
 This project was built using ruby v1.9.3-rc1 and rails v3.1.0. If you have both of those installed, you should be able to start the rails app pretty quickly. In your terminal, navigate to the project folder/ruby/ProviderOne, type `bundle install` then `rails server`. Once the server is running, point your browser to http://localhost:3000 and you should be good to go.
