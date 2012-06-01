@@ -314,6 +314,18 @@ class TableInfo
     file_content = file_content.gsub("{ReadFromParcel}", read_from_parcel);
     file_content = file_content.gsub("{BaseTableMethods}", methods);
     file_content = file_content.gsub("{IsSetMethods}", is_set_methods);
+    
+    if (@is_editable)
+      file_content = file_content.gsub("{EditableStart}", "")
+      file_content = file_content.gsub("{EditableEnd}", "")
+    else
+      
+      while (file_content.index("{EditableStart}") != nil)
+        idxStart = file_content.index("{EditableStart}")-1
+        idxEnd = file_content.index("{EditableEnd}") + 13
+        file_content = file_content[0..idxStart] + file_content[idxEnd...file_content.length]
+      end
+    end
 
     file_content = process_file_content(file_content, dbinfo)
     return file_content

@@ -223,7 +223,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
 			case MY_VIEW:
 			case MY_VIEW_ID:
 			case MY_VIEW_LOOKUP:
-				throw new UnsupportedOperationException("Can't update from a sqlite view. (MyView)");
+				throw new UnsupportedOperationException("Can't update a sqlite view. (MyView)");
 
 		}
 

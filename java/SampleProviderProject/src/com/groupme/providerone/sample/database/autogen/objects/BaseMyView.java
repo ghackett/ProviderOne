@@ -87,10 +87,6 @@ public abstract class BaseMyView extends PersistentObject {
         return findOneByUri(MyViewInfo.CONTENT_URI, helper, selection, selectionArgs, null);
     }
 
-    public static int deleteWhere(String where, String[] selectionArgs) {
-        return deleteByUri(MyViewInfo.CONTENT_URI, where, selectionArgs);
-    }
-
     public static MyView findOneById(long id) {
         return findOneById(id, MyViewInfo.ALL_COLUMNS);
     }
@@ -101,10 +97,6 @@ public abstract class BaseMyView extends PersistentObject {
 
     public static MyView findOneById(long id, MyViewInfo.ColumnHelper helper) {
         return findOneByUri(MyViewInfo.buildIdLookupUri(id), helper, null, null, null);
-    }
-
-    public static int deleteOneById(long id) {
-        return deleteByUri(MyViewInfo.buildIdLookupUri(id), null, null);
     }
 
 
@@ -118,10 +110,6 @@ public abstract class BaseMyView extends PersistentObject {
     
     public static MyView findOneByMyLong(Long myLong, MyViewInfo.ColumnHelper helper) {
         return findOneByUri(MyViewInfo.buildMyLongLookupUri(myLong.toString()), helper, null, null, null);
-    }
-
-    public static int deleteOneByMyLong(Long myLong) {
-        return deleteByUri(MyViewInfo.buildMyLongLookupUri(myLong.toString()), null, null);
     }
 
     public static MyView findOneWithMyLongInArray(Long myLong, ArrayList<MyView> myViewList) {

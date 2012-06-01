@@ -80,11 +80,11 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     public static {CapCamelTableName} findOneWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs) {
         return findOneByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, null);
     }
-
+{EditableStart}
     public static int deleteWhere(String where, String[] selectionArgs) {
         return deleteByUri({CapCamelTableName}Info.CONTENT_URI, where, selectionArgs);
     }
-
+{EditableEnd}
     public static {CapCamelTableName} findOneById(long id) {
         return findOneById(id, {CapCamelTableName}Info.ALL_COLUMNS);
     }
@@ -96,11 +96,11 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     public static {CapCamelTableName} findOneById(long id, {CapCamelTableName}Info.ColumnHelper helper) {
         return findOneByUri({CapCamelTableName}Info.buildIdLookupUri(id), helper, null, null, null);
     }
-
+{EditableStart}
     public static int deleteOneById(long id) {
         return deleteByUri({CapCamelTableName}Info.buildIdLookupUri(id), null, null);
     }
-
+{EditableEnd}
 {LookupStart}
     public static {CapCamelTableName} findOneBy{LookupCapCamelName}({LookupJavaType} {LookupCamelName}) {
         return findOneBy{LookupCapCamelName}({LookupCamelName}, {CapCamelTableName}Info.ALL_COLUMNS);
@@ -113,11 +113,11 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     public static {CapCamelTableName} findOneBy{LookupCapCamelName}({LookupJavaType} {LookupCamelName}, {CapCamelTableName}Info.ColumnHelper helper) {
         return findOneByUri({CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName}.toString()), helper, null, null, null);
     }
-
+{EditableStart}
     public static int deleteOneBy{LookupCapCamelName}({LookupJavaType} {LookupCamelName}) {
         return deleteByUri({CapCamelTableName}Info.build{LookupCapCamelName}LookupUri({LookupCamelName}.toString()), null, null);
     }
-
+{EditableEnd}
     public static {CapCamelTableName} findOneWith{LookupCapCamelName}InArray({LookupJavaType} {LookupCamelName}, ArrayList<{CapCamelTableName}> {CamelTableName}List) {
 		if ({LookupCamelName} == null || {CamelTableName}List == null || {CamelTableName}List.isEmpty())
             return null;
