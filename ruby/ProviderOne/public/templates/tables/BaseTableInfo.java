@@ -53,14 +53,16 @@ public class Base{CapCamelTableName}Info  {
             if (c.moveToFirst()) {
                 while (!c.isAfterLast()) {
                     String colName = c.getString(c.getColumnIndexOrThrow("name"));
-                    if (sBuilder == null) {
-                        sBuilder = new StringBuilder();
-                    } else {
-                        sBuilder.append(", ");
-                    }
-                    sBuilder.append("\"");
-                    sBuilder.append(colName);
-                    sBuilder.append("\"");
+					if (ALL_COLUMNS_HELPER.getColumnIndex(colName) != -1) {
+                    	if (sBuilder == null) {
+	                        sBuilder = new StringBuilder();
+	                    } else {
+	                        sBuilder.append(", ");
+	                    }
+	                    sBuilder.append("\"");
+	                    sBuilder.append(colName);
+	                    sBuilder.append("\"");
+					}
                     c.moveToNext();
                 }
             }

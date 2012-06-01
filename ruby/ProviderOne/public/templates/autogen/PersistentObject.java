@@ -122,7 +122,7 @@ public abstract class PersistentObject implements Parcelable {
             this.projection = projection;
         }
 
-        protected int getColumnIndex(String columnName) {
+        public int getColumnIndex(String columnName) {
             if (columnName == null || projection == null)
                 return -1;
             for (int i = 0; i<projection.length; i++) {
