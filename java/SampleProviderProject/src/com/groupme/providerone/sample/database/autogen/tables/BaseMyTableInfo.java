@@ -71,6 +71,7 @@ public class BaseMyTableInfo  {
     public static void upgradeTable(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         try {
+			db.execSQL(String.format("DROP TABLE IF EXISTS \"%s_old\";" , TABLE_NAME));
             db.execSQL(String.format("ALTER TABLE \"%s\" RENAME TO \"%s_old\";", TABLE_NAME, TABLE_NAME));
             StringBuilder sBuilder = null;
             Cursor c = db.rawQuery(String.format("PRAGMA table_info(\"%s_old\");", TABLE_NAME), null);
