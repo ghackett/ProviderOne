@@ -27,7 +27,9 @@ class DatabaseInfo
 
       if (! name.to_s.starts_with? "sqlite")
         if (type.downcase == "table")
-          @tables[name] = TableInfo.new(name, sql, db.table_info(name))
+          @tables[name] = TableInfo.new(name, sql, db.table_info(name), true)
+        elsif (type.downcase == "view")
+          @tables[name] = TableInfo.new(name, sql, db.table_info(name), false)
         elsif (type.downcase == "index")
           @indecies << IndexInfo.new(name, tbl_name, sql)
         end
@@ -259,8 +261,10 @@ class DatabaseInfo
 
     @tables.each_value do |table|
       table.set_lookup_column(params["lookup_key_" + table.name])
-      table.update_algorithm = params["update_algorithm_" + table.name]
-      table.insert_algorithm = params["insert_algorithm_" + table.name]
+      if (table.is_editable)
+        table.update_algorithm = params["update_algorithm_" + table.name]
+        table.insert_algorithm = params["insert_algorithm_" + table.name]
+      end
     end
   end
 

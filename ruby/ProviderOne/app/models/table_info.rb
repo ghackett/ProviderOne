@@ -1,18 +1,24 @@
 class TableInfo
 
-  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm, :lower_name, :drop_stmt, :cap_name, :valid_lookup_columns
+  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm, :lower_name, :drop_stmt, :cap_name, :valid_lookup_columns, :is_editable
 
-  def initialize(tablename, sql, tableinfo)
+  def initialize(tablename, sql, tableinfo, editable)
     @name = tablename
+    @is_editable = editable
     @lower_name = @name.downcase
     @create_stmt = sql.to_s.gsub("\r\n", " ").gsub("\n", " ").gsub("\"", "\\\"")
-    @drop_stmt = "DROP TABLE IF EXISTS \\\"" + @name + "\\\""
+    if (!is_editable)
+      @drop_stmt = "DROP TABLE IF EXISTS \\\"" + @name + "\\\""
+    else
+      @drop_stmt = "DROP VIEW IF EXISTS \\\"" + @name + "\\\""
+    end
     @columns = [];
     @valid_lookup_columns = [];
     @camel_name = @name.camelize
     @camel_name[0] = @camel_name.first.downcase
     @cap_camel_name = @name.camelize
     @cap_name = @name.upcase
+
 
     @update_algorithm = "CONFLICT_NONE"
     @insert_algorithm = "CONFLICT_NONE"
@@ -72,6 +78,11 @@ class TableInfo
     file_content = file_content.gsub("{DropStatement}", @drop_stmt);
     file_content = file_content.gsub("{InsertAlgorithm}", @insert_algorithm);
     file_content = file_content.gsub("{UpdateAlgorithm}", @update_algorithm);
+    if (@is_editable) 
+      file_content = file_content.gsub("{IsEditableValue}", "true");
+    else
+      file_content = file_content.gsub("{IsEditableValue}", "false");
+    end
     return dbinfo.process_file_content(file_content)
   end
 
@@ -96,6 +107,16 @@ class TableInfo
   def get_base_table_info_content(dbinfo)
     content = File.read("public/templates/tables/BaseTableInfo.java")
     content = process_lookup_content(content)
+    
+    if (@is_editable)
+      content = content.gsub("{EditableStart}", "")
+      content = content.gsub("{EditableEnd}", "")
+    else
+      idxStart = content.index("{EditableStart}")-1
+      idxEnd = content.index("{EditableEnd}") + 13
+      content = content[0..idxStart] + "\t\tcreateTable(db);" + content[idxEnd...content.length]
+      content = content.gsub("import android.database.Cursor;", "")
+    end
 
     col_defs = ""
     col_list = ""
@@ -284,29 +305,21 @@ class TableInfo
   end
 
   def to_hash
-    tbl = {"name" => @name, "update_algorithm" => @update_algorithm, "insert_algorithm" => @insert_algorithm, "lookup_key" => get_lookup_column.name}
-    #columns = [];
-    #@columns.each do |col|
-    #  columns << col.to_hash
-    #end
-    #tbl['column'] = columns
+    if (@is_editable)
+      tbl = {"name" => @name, "update_algorithm" => @update_algorithm, "insert_algorithm" => @insert_algorithm, "lookup_key" => get_lookup_column.name}
+    else
+      tbl = {"name" => @name, "lookup_key" => get_lookup_column.name}
+    end
     return tbl
   end
 
   def from_hash(hash)
     if (hash['name'] == @name)
-
-      @update_algorithm = hash['update_algorithm']
-      @insert_algorithm = hash['insert_algorithm']
+      if (@is_editable)
+        @update_algorithm = hash['update_algorithm']
+        @insert_algorithm = hash['insert_algorithm']
+      end
       set_lookup_column(hash['lookup_key'])
-
-      #columns = hash['column']
-      #columns.each do |col|
-      #  mycol = get_column_by_name(col['name'])
-      #  if (mycol != nil)
-      #    mycol.from_hash(col)
-      #  end
-      #end
     end
   end
 end

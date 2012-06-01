@@ -22,137 +22,137 @@ import android.text.TextUtils;
 
 import com.groupme.providerone.sample.database.SampleProvider;
 import com.groupme.providerone.sample.database.autogen.PersistentObject;
-import com.groupme.providerone.sample.database.objects.MyTable;
-import com.groupme.providerone.sample.database.tables.MyTableInfo;
+import com.groupme.providerone.sample.database.objects.MyView;
+import com.groupme.providerone.sample.database.tables.MyViewInfo;
 
-public abstract class BaseMyTable extends PersistentObject {
+public abstract class BaseMyView extends PersistentObject {
 
-	public static final boolean IS_EDITABLE = true;
+	public static final boolean IS_EDITABLE = false;
 
-    public static MyTable fromCursor(Cursor cursor, MyTable.ColumnHelper helper) {
-        MyTable obj = new MyTable();
+    public static MyView fromCursor(Cursor cursor, MyView.ColumnHelper helper) {
+        MyView obj = new MyView();
         obj.hydrate(cursor, helper);
         return obj;
     }
 
-    public static MyTable fromJson(JSONObject obj) {
+    public static MyView fromJson(JSONObject obj) {
         if (obj == null)
             return null;
-        MyTable myTable = new MyTable();
-        myTable.hydrate(obj);
-        return myTable;
+        MyView myView = new MyView();
+        myView.hydrate(obj);
+        return myView;
     }
 
     public static int getCount(String selection, String[] selectionArgs) {
-        return getSingleIntResult(MyTableInfo.COUNT_URI, null, selection, selectionArgs, null);
+        return getSingleIntResult(MyViewInfo.COUNT_URI, null, selection, selectionArgs, null);
     }
 
     public static int getIntSum(String columnName, String selection, String[] selectionArgs) {
-        return getSingleIntResult(MyTableInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+        return getSingleIntResult(MyViewInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
     }
 
     public static long getLongSum(String columnName, String selection, String[] selectionArgs) {
-        return getSingleLongResult(MyTableInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+        return getSingleLongResult(MyViewInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
     }
 
     public static double getDoubleSum(String columnName, String selection, String[] selectionArgs) {
-        return getSingleDoubleResult(MyTableInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+        return getSingleDoubleResult(MyViewInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
     }
 
     public static float getFloatSum(String columnName, String selection, String[] selectionArgs) {
-        return getSingleFloatResult(MyTableInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
+        return getSingleFloatResult(MyViewInfo.SUM_URI, new String[] {columnName}, selection, selectionArgs, null);
     }
 
-    public static ArrayList<MyTable> findAllWhere(String selection, String[] selectionArgs, String sortOrder) {
-        return findAllWhere(MyTableInfo.ALL_COLUMNS, selection, selectionArgs, sortOrder);
+    public static ArrayList<MyView> findAllWhere(String selection, String[] selectionArgs, String sortOrder) {
+        return findAllWhere(MyViewInfo.ALL_COLUMNS, selection, selectionArgs, sortOrder);
     }
 
-    public static ArrayList<MyTable> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return findAllWhere(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection), selection, selectionArgs, sortOrder);
+    public static ArrayList<MyView> findAllWhere(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        return findAllWhere(projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection), selection, selectionArgs, sortOrder);
     }
 
-    public static ArrayList<MyTable> findAllWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
-        return findAllByUri(MyTableInfo.CONTENT_URI, helper, selection, selectionArgs, sortOrder);
+    public static ArrayList<MyView> findAllWhere(MyViewInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
+        return findAllByUri(MyViewInfo.CONTENT_URI, helper, selection, selectionArgs, sortOrder);
     }
 
-    public static MyTable findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere(MyTableInfo.ALL_COLUMNS, selection, selectionArgs);
+    public static MyView findOneWhere(String selection, String[] selectionArgs) {
+        return findOneWhere(MyViewInfo.ALL_COLUMNS, selection, selectionArgs);
     }
 
-    public static MyTable findOneWhere(String[] projection, String selection, String[] selectionArgs) {
-        return findOneWhere(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection), selection, selectionArgs);
+    public static MyView findOneWhere(String[] projection, String selection, String[] selectionArgs) {
+        return findOneWhere(projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection), selection, selectionArgs);
     }
 
-    public static MyTable findOneWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs) {
-        return findOneByUri(MyTableInfo.CONTENT_URI, helper, selection, selectionArgs, null);
+    public static MyView findOneWhere(MyViewInfo.ColumnHelper helper, String selection, String[] selectionArgs) {
+        return findOneByUri(MyViewInfo.CONTENT_URI, helper, selection, selectionArgs, null);
     }
 
     public static int deleteWhere(String where, String[] selectionArgs) {
-        return deleteByUri(MyTableInfo.CONTENT_URI, where, selectionArgs);
+        return deleteByUri(MyViewInfo.CONTENT_URI, where, selectionArgs);
     }
 
-    public static MyTable findOneById(long id) {
-        return findOneById(id, MyTableInfo.ALL_COLUMNS);
+    public static MyView findOneById(long id) {
+        return findOneById(id, MyViewInfo.ALL_COLUMNS);
     }
 
-    public static MyTable findOneById(long id, String[] projection) {
-        return findOneById(id, projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection));
+    public static MyView findOneById(long id, String[] projection) {
+        return findOneById(id, projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection));
     }
 
-    public static MyTable findOneById(long id, MyTableInfo.ColumnHelper helper) {
-        return findOneByUri(MyTableInfo.buildIdLookupUri(id), helper, null, null, null);
+    public static MyView findOneById(long id, MyViewInfo.ColumnHelper helper) {
+        return findOneByUri(MyViewInfo.buildIdLookupUri(id), helper, null, null, null);
     }
 
     public static int deleteOneById(long id) {
-        return deleteByUri(MyTableInfo.buildIdLookupUri(id), null, null);
+        return deleteByUri(MyViewInfo.buildIdLookupUri(id), null, null);
     }
 
 
-    public static MyTable findOneByMyString(String myString) {
-        return findOneByMyString(myString, MyTableInfo.ALL_COLUMNS);
+    public static MyView findOneByMyLong(Long myLong) {
+        return findOneByMyLong(myLong, MyViewInfo.ALL_COLUMNS);
     }
             
-    public static MyTable findOneByMyString(String myString, String[] projection) {
-        return findOneByMyString(myString, projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection));
+    public static MyView findOneByMyLong(Long myLong, String[] projection) {
+        return findOneByMyLong(myLong, projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection));
     }
     
-    public static MyTable findOneByMyString(String myString, MyTableInfo.ColumnHelper helper) {
-        return findOneByUri(MyTableInfo.buildMyStringLookupUri(myString.toString()), helper, null, null, null);
+    public static MyView findOneByMyLong(Long myLong, MyViewInfo.ColumnHelper helper) {
+        return findOneByUri(MyViewInfo.buildMyLongLookupUri(myLong.toString()), helper, null, null, null);
     }
 
-    public static int deleteOneByMyString(String myString) {
-        return deleteByUri(MyTableInfo.buildMyStringLookupUri(myString.toString()), null, null);
+    public static int deleteOneByMyLong(Long myLong) {
+        return deleteByUri(MyViewInfo.buildMyLongLookupUri(myLong.toString()), null, null);
     }
 
-    public static MyTable findOneWithMyStringInArray(String myString, ArrayList<MyTable> myTableList) {
-		if (myString == null || myTableList == null || myTableList.isEmpty())
+    public static MyView findOneWithMyLongInArray(Long myLong, ArrayList<MyView> myViewList) {
+		if (myLong == null || myViewList == null || myViewList.isEmpty())
             return null;
-        for (MyTable myTable : myTableList) {
-            if (myTable.mMyStringSet && myTable.mMyString != null && myTable.mMyString.equals(myString))
-                return myTable;
+        for (MyView myView : myViewList) {
+            if (myView.mMyLongSet && myView.mMyLong != null && myView.mMyLong.equals(myLong))
+                return myView;
         }
         return null;
     }
 
 
-	public static MyTable findOneWithIdInArray(long id, ArrayList<MyTable> myTableList) {
-	    if (myTableList == null || myTableList.isEmpty())
+	public static MyView findOneWithIdInArray(long id, ArrayList<MyView> myViewList) {
+	    if (myViewList == null || myViewList.isEmpty())
 	        return null;
-	    for (MyTable myTable : myTableList) {
-	        if (myTable.mIdSet && myTable.mId != null && myTable.mId.longValue() == id)
-	            return myTable;
+	    for (MyView myView : myViewList) {
+	        if (myView.mIdSet && myView.mId != null && myView.mId.longValue() == id)
+	            return myView;
 	    }
 	    return null;
 	}
 
-    public static MyTable findOneByUri(Uri uri, MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
-        MyTable rtr = null;
+    public static MyView findOneByUri(Uri uri, MyViewInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
+        MyView rtr = null;
 
         if (helper == null)
-            helper = MyTableInfo.ALL_COLUMNS_HELPER;
+            helper = MyViewInfo.ALL_COLUMNS_HELPER;
         
         if (TextUtils.isEmpty(sortOrder))
-            sortOrder = MyTableInfo.Columns._ID;
+            sortOrder = MyViewInfo.Columns._ID;
 
         Cursor c = SampleProvider.getAppContext().getContentResolver().query(
                 uri,
@@ -169,15 +169,15 @@ public abstract class BaseMyTable extends PersistentObject {
         return rtr;
     }
 
-    public static ArrayList<MyTable> findAllByUri(Uri uri, MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
+    public static ArrayList<MyView> findAllByUri(Uri uri, MyViewInfo.ColumnHelper helper, String selection, String[] selectionArgs, String sortOrder) {
         if (helper == null)
-            helper = MyTableInfo.ALL_COLUMNS_HELPER;
+            helper = MyViewInfo.ALL_COLUMNS_HELPER;
 
         Cursor c = SampleProvider.getAppContext().getContentResolver().query(uri, helper.projection, selection, selectionArgs, sortOrder);
-        ArrayList<MyTable> rtr = new ArrayList<MyTable>();
+        ArrayList<MyView> rtr = new ArrayList<MyView>();
         if (c != null) {
             while(c.moveToNext()) {
-                rtr.add(MyTable.fromCursor(c, helper));
+                rtr.add(MyView.fromCursor(c, helper));
             }
             c.close();
         }
@@ -206,10 +206,10 @@ public abstract class BaseMyTable extends PersistentObject {
 	protected boolean mMyTimeSet = false;
 
 
-    public BaseMyTable() {
+    public BaseMyView() {
         super();
     }
-    public BaseMyTable(Parcel in) {
+    public BaseMyView(Parcel in) {
         readFromParcel(in);
     }
 
@@ -218,19 +218,19 @@ public abstract class BaseMyTable extends PersistentObject {
             if (allowNull)
                 return;
             else
-                throw new IllegalArgumentException("Trying to use a null column helper with MyTable");
+                throw new IllegalArgumentException("Trying to use a null column helper with MyView");
         }
-        if (!(helper instanceof MyTableInfo.ColumnHelper))
-            throw new IllegalArgumentException("Trying to use wrong type of ColumnHelper with MyTable - " + helper.getClass().getName());
+        if (!(helper instanceof MyViewInfo.ColumnHelper))
+            throw new IllegalArgumentException("Trying to use wrong type of ColumnHelper with MyView - " + helper.getClass().getName());
     }
 
     @Override
     protected void hydrate(Cursor c, ColumnHelper helper) {
         assertColumnHelper(helper, false);
-        hydrate(c, (MyTableInfo.ColumnHelper)helper);
+        hydrate(c, (MyViewInfo.ColumnHelper)helper);
     }
 
-    protected void hydrate(Cursor c, MyTableInfo.ColumnHelper h) {
+    protected void hydrate(Cursor c, MyViewInfo.ColumnHelper h) {
         if (h.col__id != -1) {
             mId = c.isNull(h.col__id) ? null : c.getLong(h.col__id);
             mIdSet = true;
@@ -314,50 +314,50 @@ public abstract class BaseMyTable extends PersistentObject {
 		if (obj == null)
 			return;
 //_id doesnt get hydrated from json
-		if (obj.has(MyTableInfo.Columns.MY_BOOLEAN)) {
+		if (obj.has(MyViewInfo.Columns.MY_BOOLEAN)) {
 		    try {
-		        mMyBoolean = obj.getBoolean(MyTableInfo.Columns.MY_BOOLEAN);
+		        mMyBoolean = obj.getBoolean(MyViewInfo.Columns.MY_BOOLEAN);
 		    } catch (JSONException e) {
 		        mMyBoolean = false;
 		    }
 		    mMyBooleanSet = true;
 		}
-		if (obj.has(MyTableInfo.Columns.MY_DOUBLE)) {
+		if (obj.has(MyViewInfo.Columns.MY_DOUBLE)) {
 		    try {
-		        mMyDouble = obj.getDouble(MyTableInfo.Columns.MY_DOUBLE);
+		        mMyDouble = obj.getDouble(MyViewInfo.Columns.MY_DOUBLE);
 		    } catch (JSONException e) {
 		        mMyDouble = null;
 		    }
 		    mMyDoubleSet = true;
 		}
-		if (obj.has(MyTableInfo.Columns.MY_FLOAT)) {
+		if (obj.has(MyViewInfo.Columns.MY_FLOAT)) {
 		    try {
-		        mMyFloat = (float)obj.getDouble(MyTableInfo.Columns.MY_FLOAT);
+		        mMyFloat = (float)obj.getDouble(MyViewInfo.Columns.MY_FLOAT);
 		    } catch (JSONException e) {
 		        mMyFloat = null;
 		    }
 		    mMyFloatSet = true;
 		}
-		if (obj.has(MyTableInfo.Columns.MY_INT)) {
+		if (obj.has(MyViewInfo.Columns.MY_INT)) {
 		    try {
-		        mMyInt = obj.getInt(MyTableInfo.Columns.MY_INT);
+		        mMyInt = obj.getInt(MyViewInfo.Columns.MY_INT);
 		    } catch (JSONException e) {
 		        mMyInt = null;
 		    }
 		    mMyIntSet = true;
 		}
-		if (obj.has(MyTableInfo.Columns.MY_LONG)) {
+		if (obj.has(MyViewInfo.Columns.MY_LONG)) {
 		    try {
-		        mMyLong = obj.getLong(MyTableInfo.Columns.MY_LONG);
+		        mMyLong = obj.getLong(MyViewInfo.Columns.MY_LONG);
 		    } catch (JSONException e) {
 		        mMyLong = null;
 		    }
 		    mMyLongSet = true;
 		}
-		if (obj.has(MyTableInfo.Columns.MY_CHAR)) {
+		if (obj.has(MyViewInfo.Columns.MY_CHAR)) {
 			String myChar = null;
 		    try {
-		        myChar = obj.getString(MyTableInfo.Columns.MY_CHAR);
+		        myChar = obj.getString(MyViewInfo.Columns.MY_CHAR);
 				if (myChar == null || myChar.length() == 0)
 					mMyChar = null;
 				else
@@ -367,18 +367,18 @@ public abstract class BaseMyTable extends PersistentObject {
 		    }
 		    mMyCharSet = true;
 		}
-		if (obj.has(MyTableInfo.Columns.MY_STRING)) {
+		if (obj.has(MyViewInfo.Columns.MY_STRING)) {
 		    try {
-		        mMyString = obj.getString(MyTableInfo.Columns.MY_STRING);
+		        mMyString = obj.getString(MyViewInfo.Columns.MY_STRING);
 		    } catch (JSONException e) {
 		        mMyString = null;
 		    }
 		    mMyStringSet = true;
 		}
 //Can't hydrate a BLOB from JSON
-		if (obj.has(MyTableInfo.Columns.MY_TIME)) {
+		if (obj.has(MyViewInfo.Columns.MY_TIME)) {
 		    try {
-		        mMyTime = obj.getLong(MyTableInfo.Columns.MY_TIME);
+		        mMyTime = obj.getLong(MyViewInfo.Columns.MY_TIME);
 		    } catch (JSONException e) {
 		        mMyTime = null;
 		    }
@@ -391,25 +391,25 @@ public abstract class BaseMyTable extends PersistentObject {
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
 		if (mIdSet)
-			values.put(MyTableInfo.Columns._ID, mId);
+			values.put(MyViewInfo.Columns._ID, mId);
 		if (mMyBooleanSet)
-			values.put(MyTableInfo.Columns.MY_BOOLEAN, mMyBoolean);
+			values.put(MyViewInfo.Columns.MY_BOOLEAN, mMyBoolean);
 		if (mMyDoubleSet)
-			values.put(MyTableInfo.Columns.MY_DOUBLE, mMyDouble);
+			values.put(MyViewInfo.Columns.MY_DOUBLE, mMyDouble);
 		if (mMyFloatSet)
-			values.put(MyTableInfo.Columns.MY_FLOAT, mMyFloat);
+			values.put(MyViewInfo.Columns.MY_FLOAT, mMyFloat);
 		if (mMyIntSet)
-			values.put(MyTableInfo.Columns.MY_INT, mMyInt);
+			values.put(MyViewInfo.Columns.MY_INT, mMyInt);
 		if (mMyLongSet)
-			values.put(MyTableInfo.Columns.MY_LONG, mMyLong);
+			values.put(MyViewInfo.Columns.MY_LONG, mMyLong);
 		if (mMyCharSet)
-			values.put(MyTableInfo.Columns.MY_CHAR, mMyChar == null ? null : String.valueOf(mMyChar));
+			values.put(MyViewInfo.Columns.MY_CHAR, mMyChar == null ? null : String.valueOf(mMyChar));
 		if (mMyStringSet)
-			values.put(MyTableInfo.Columns.MY_STRING, mMyString);
+			values.put(MyViewInfo.Columns.MY_STRING, mMyString);
 		if (mMyBlobSet)
-			values.put(MyTableInfo.Columns.MY_BLOB, mMyBlob == null ? null : mMyBlob.array());
+			values.put(MyViewInfo.Columns.MY_BLOB, mMyBlob == null ? null : mMyBlob.array());
 		if (mMyTimeSet)
-			values.put(MyTableInfo.Columns.MY_TIME, mMyTime);
+			values.put(MyViewInfo.Columns.MY_TIME, mMyTime);
 
         return values;
     }
@@ -417,37 +417,37 @@ public abstract class BaseMyTable extends PersistentObject {
     @Override
     public JSONObject toJson(ColumnHelper helper) throws JSONException {
         assertColumnHelper(helper, true);
-        return toJson((MyTableInfo.ColumnHelper)helper);
+        return toJson((MyViewInfo.ColumnHelper)helper);
     }
 
     @Override
     public JSONObject toJson(String[] projection) throws JSONException {
-        return toJson(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection));
+        return toJson(projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection));
     }
 
-    public JSONObject toJson(MyTableInfo.ColumnHelper h) throws JSONException {
+    public JSONObject toJson(MyViewInfo.ColumnHelper h) throws JSONException {
         if (h == null)
-            h = MyTableInfo.ALL_COLUMNS_HELPER;
+            h = MyViewInfo.ALL_COLUMNS_HELPER;
         JSONObject rtr = new JSONObject();
 		if (mIdSet && h.col__id != -1)
-			rtr.put(MyTableInfo.Columns._ID, mId);
+			rtr.put(MyViewInfo.Columns._ID, mId);
 		if (mMyBooleanSet && h.col_my_boolean != -1)
-			rtr.put(MyTableInfo.Columns.MY_BOOLEAN, mMyBoolean);
+			rtr.put(MyViewInfo.Columns.MY_BOOLEAN, mMyBoolean);
 		if (mMyDoubleSet && h.col_my_double != -1)
-			rtr.put(MyTableInfo.Columns.MY_DOUBLE, mMyDouble);
+			rtr.put(MyViewInfo.Columns.MY_DOUBLE, mMyDouble);
 		if (mMyFloatSet && h.col_my_float != -1)
-			rtr.put(MyTableInfo.Columns.MY_FLOAT, mMyFloat.doubleValue());
+			rtr.put(MyViewInfo.Columns.MY_FLOAT, mMyFloat.doubleValue());
 		if (mMyIntSet && h.col_my_int != -1)
-			rtr.put(MyTableInfo.Columns.MY_INT, mMyInt);
+			rtr.put(MyViewInfo.Columns.MY_INT, mMyInt);
 		if (mMyLongSet && h.col_my_long != -1)
-			rtr.put(MyTableInfo.Columns.MY_LONG, mMyLong);
+			rtr.put(MyViewInfo.Columns.MY_LONG, mMyLong);
 		if (mMyCharSet && h.col_my_char != -1)
-			rtr.put(MyTableInfo.Columns.MY_CHAR, String.valueOf(mMyChar));
+			rtr.put(MyViewInfo.Columns.MY_CHAR, String.valueOf(mMyChar));
 		if (mMyStringSet && h.col_my_string != -1)
-			rtr.put(MyTableInfo.Columns.MY_STRING, mMyString);
+			rtr.put(MyViewInfo.Columns.MY_STRING, mMyString);
 		//Cannot add blobs to Json objects so MyBlob is skipped
 		if (mMyTimeSet && h.col_my_time != -1)
-			rtr.put(MyTableInfo.Columns.MY_TIME, mMyTime);
+			rtr.put(MyViewInfo.Columns.MY_TIME, mMyTime);
 
         return rtr;
     }
@@ -455,7 +455,7 @@ public abstract class BaseMyTable extends PersistentObject {
     @Override
     public void save() {
         if (isNew()) {
-            Uri result = SampleProvider.getAppContext().getContentResolver().insert(MyTableInfo.CONTENT_URI, toContentValues());
+            Uri result = SampleProvider.getAppContext().getContentResolver().insert(MyViewInfo.CONTENT_URI, toContentValues());
             if (result != null) {
                 setId(Long.valueOf(result.getLastPathSegment()));
             }
@@ -464,7 +464,7 @@ public abstract class BaseMyTable extends PersistentObject {
             if (!mIdSet) {
                 throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
             }
-            Uri updateUri = MyTableInfo.buildIdLookupUri(mId);
+            Uri updateUri = MyViewInfo.buildIdLookupUri(mId);
             SampleProvider.getAppContext().getContentResolver().update(updateUri, toContentValues(), null, null);
         }
     }
@@ -473,12 +473,12 @@ public abstract class BaseMyTable extends PersistentObject {
     public ContentProviderOperation getSaveProviderOperation() {
         ContentProviderOperation op = null;
         if (isNew()) {
-            op = ContentProviderOperation.newInsert(MyTableInfo.CONTENT_URI).withValues(toContentValues()).build();
+            op = ContentProviderOperation.newInsert(MyViewInfo.CONTENT_URI).withValues(toContentValues()).build();
         } else {
             if (!mIdSet) {
                 throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
             }
-            Uri updateUri = MyTableInfo.buildIdLookupUri(mId);
+            Uri updateUri = MyViewInfo.buildIdLookupUri(mId);
             op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
         }
         return op;
@@ -487,40 +487,40 @@ public abstract class BaseMyTable extends PersistentObject {
     @Override
     public int delete() {
         if (isNew())
-            throw new IllegalArgumentException("Trying to delete a MyTable record that has never been saved");
+            throw new IllegalArgumentException("Trying to delete a MyView record that has never been saved");
         if (!mIdSet)
-            throw new IllegalArgumentException("Trying to delete a MyTable record that doesnt have its ID column set");
+            throw new IllegalArgumentException("Trying to delete a MyView record that doesnt have its ID column set");
 
-        Uri delUri = MyTableInfo.buildIdLookupUri(mId);
+        Uri delUri = MyViewInfo.buildIdLookupUri(mId);
         return SampleProvider.getAppContext().getContentResolver().delete(delUri, null, null);
     }
     
     @Override
     public boolean reload() {
-        return reload(MyTableInfo.ALL_COLUMNS_HELPER);
+        return reload(MyViewInfo.ALL_COLUMNS_HELPER);
     }
 
     @Override
     public boolean reload(String[] projection) {
-        return reload(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection));
+        return reload(projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection));
     }
 
     @Override
     public boolean reload(ColumnHelper helper) {
         assertColumnHelper(helper, true);
-        return reload((MyTableInfo.ColumnHelper)helper);
+        return reload((MyViewInfo.ColumnHelper)helper);
     }
     
-    public boolean reload(MyTableInfo.ColumnHelper helper) {
+    public boolean reload(MyViewInfo.ColumnHelper helper) {
         if (isNew() || !mIdSet)
             throw new IllegalArgumentException("Trying to reload a record without an id");
         if (helper == null)
-            helper = MyTableInfo.ALL_COLUMNS_HELPER;
+            helper = MyViewInfo.ALL_COLUMNS_HELPER;
         
         boolean result = false;
         
         Cursor c = SampleProvider.getAppContext().getContentResolver().query(
-                MyTableInfo.buildIdLookupUri(mId),
+                MyViewInfo.buildIdLookupUri(mId),
                 helper.projection,
                 null,
                 null,

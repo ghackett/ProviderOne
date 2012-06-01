@@ -16,6 +16,7 @@ import android.net.Uri;
 import com.groupme.providerone.sample.database.autogen.util.PlatformDatabaseUtils;
 import com.groupme.providerone.sample.database.autogen.util.SelectionBuilder;
 import com.groupme.providerone.sample.database.tables.MyTableInfo;
+import com.groupme.providerone.sample.database.tables.MyViewInfo;
 
 
 public abstract class BaseSampleProvider extends ContentProvider {
@@ -35,6 +36,11 @@ public abstract class BaseSampleProvider extends ContentProvider {
 	public static final int MY_TABLE_SUM = 0xfffd;
 	public static final int MY_TABLE_ID = 0xfffc;
 	public static final int MY_TABLE_LOOKUP = 0xfffb;
+	public static final int MY_VIEW = 0xfffa;
+	public static final int MY_VIEW_COUNT = 0xfff9;
+	public static final int MY_VIEW_SUM = 0xfff8;
+	public static final int MY_VIEW_ID = 0xfff7;
+	public static final int MY_VIEW_LOOKUP = 0xfff6;
 
     private static Uri sBaseContentUri = null;
     private static Context sApplicationContext = null;
@@ -83,6 +89,11 @@ public abstract class BaseSampleProvider extends ContentProvider {
 		matcher.addURI(authority, MyTableInfo.PATH + PATH_SUM, MY_TABLE_SUM);
 		matcher.addURI(authority, MyTableInfo.PATH + PATH_ID, MY_TABLE_ID);
 		matcher.addURI(authority, MyTableInfo.PATH + PATH_LOOKUP, MY_TABLE_LOOKUP);
+		matcher.addURI(authority, MyViewInfo.PATH, MY_VIEW);
+		matcher.addURI(authority, MyViewInfo.PATH + PATH_COUNT, MY_VIEW_COUNT);
+		matcher.addURI(authority, MyViewInfo.PATH + PATH_SUM, MY_VIEW_SUM);
+		matcher.addURI(authority, MyViewInfo.PATH + PATH_ID, MY_VIEW_ID);
+		matcher.addURI(authority, MyViewInfo.PATH + PATH_LOOKUP, MY_VIEW_LOOKUP);
 
         buildSecondaryCustomUriMatcher(matcher, authority);
     }
@@ -110,6 +121,13 @@ public abstract class BaseSampleProvider extends ContentProvider {
 			case MY_TABLE_ID:
 			case MY_TABLE_LOOKUP:
 				return MyTableInfo.CONTENT_ITEM_TYPE;
+			case MY_VIEW:
+			case MY_VIEW_COUNT:
+			case MY_VIEW_SUM:
+				return MyViewInfo.CONTENT_TYPE;
+			case MY_VIEW_ID:
+			case MY_VIEW_LOOKUP:
+				return MyViewInfo.CONTENT_ITEM_TYPE;
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -144,6 +162,12 @@ public abstract class BaseSampleProvider extends ContentProvider {
 				getAppContext().getContentResolver().notifyChange(newUri, null);
 				return newUri;
 			}
+			case MY_VIEW: {
+				long id = db.insertWithOnConflict(MyViewInfo.TABLE_NAME, null, values, MyViewInfo.INSERT_ALGORITHM);
+				Uri newUri = MyViewInfo.buildIdLookupUri(id);
+				getAppContext().getContentResolver().notifyChange(newUri, null);
+				return newUri;
+			}
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -161,9 +185,11 @@ public abstract class BaseSampleProvider extends ContentProvider {
         final SelectionBuilder builder = buildSimpleSelection(uri, match).where(selection, selectionArgs);
         switch(match) {
 			case MY_TABLE_COUNT:
+			case MY_VIEW_COUNT:
 				return builder.query(mDatabase.getReadableDatabase(), new String[] {"count(*) as my_count"}, null);
 
 			case MY_TABLE_SUM:
+			case MY_VIEW_SUM:
 				return builder.query(mDatabase.getReadableDatabase(), new String[] {"sum(" + projection[0] + ") as my_sum"}, null);
 
             default:
@@ -186,6 +212,11 @@ public abstract class BaseSampleProvider extends ContentProvider {
 			case MY_TABLE_ID:
 			case MY_TABLE_LOOKUP:
 				algorithm = MyTableInfo.UPDATE_ALGORITHM;
+				break;
+			case MY_VIEW:
+			case MY_VIEW_ID:
+			case MY_VIEW_LOOKUP:
+				algorithm = MyViewInfo.UPDATE_ALGORITHM;
 				break;
 
 			default:
@@ -215,6 +246,16 @@ public abstract class BaseSampleProvider extends ContentProvider {
 			case MY_TABLE_LOOKUP:
 				builder.where(MyTableInfo.Columns.MY_STRING + "=?", uri.getLastPathSegment());
 				return builder.table(MyTableInfo.TABLE_NAME);
+			case MY_VIEW:
+			case MY_VIEW_COUNT:
+			case MY_VIEW_SUM:
+				return builder.table(MyViewInfo.TABLE_NAME);
+			case MY_VIEW_ID:
+				builder.where(MyViewInfo.Columns._ID + "=?", uri.getLastPathSegment());
+				return builder.table(MyViewInfo.TABLE_NAME);
+			case MY_VIEW_LOOKUP:
+				builder.where(MyViewInfo.Columns.MY_LONG + "=?", uri.getLastPathSegment());
+				return builder.table(MyViewInfo.TABLE_NAME);
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

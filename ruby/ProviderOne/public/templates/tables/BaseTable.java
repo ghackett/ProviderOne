@@ -21,6 +21,7 @@ import {PackageName}.database.tables.{CapCamelTableName}Info;
 
 public abstract class Base{CapCamelTableName} extends PersistentObject {
 
+	public static final boolean IS_EDITABLE = {IsEditableValue};
 
     public static {CapCamelTableName} fromCursor(Cursor cursor, {CapCamelTableName}.ColumnHelper helper) {
         {CapCamelTableName} obj = new {CapCamelTableName}();

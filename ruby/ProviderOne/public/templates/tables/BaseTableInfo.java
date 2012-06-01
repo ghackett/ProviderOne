@@ -45,6 +45,7 @@ public class Base{CapCamelTableName}Info  {
     }
 
     public static void upgradeTable(SQLiteDatabase db, int oldVersion, int newVersion) {
+{EditableStart}
         try {
             db.execSQL(String.format("ALTER TABLE \"%s\" RENAME TO \"%s_old\";", TABLE_NAME, TABLE_NAME));
             StringBuilder sBuilder = null;
@@ -76,6 +77,7 @@ public class Base{CapCamelTableName}Info  {
             e.printStackTrace();
             createTable(db);
         }
+{EditableEnd}
     }
 
     public static Uri buildIdLookupUri(long _id) {

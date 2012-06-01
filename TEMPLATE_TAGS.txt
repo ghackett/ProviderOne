@@ -44,6 +44,9 @@ LookupEnd
 LookupCapCamelName
 LookupCamelName
 LookupJavaType
+IsEditableValue
+EditableStart
+EditableEnd
 
 JavaDefs
 HydrateProc

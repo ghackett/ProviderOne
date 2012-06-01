@@ -12,3 +12,6 @@ CREATE TABLE "my_table" (
 );
 
 CREATE INDEX "sample_idx" ON "my_table" ("my_double");
+
+CREATE VIEW "my_view" AS 
+	SELECT * FROM "my_table";

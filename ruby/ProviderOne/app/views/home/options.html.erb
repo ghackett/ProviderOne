@@ -34,13 +34,14 @@
 
 
     <div id="rightcolumn">
-      <h2>Table Options</h2>
+      <h2>Table/View Options</h2>
       <%@dbinfo.tables.each_value do |table|%>
           <p>
-              <strong><%=table.name%></strong><br/>
+              <strong><%=table.name%></strong> (<%if table.is_editable == true%>table<%else%>view<%end%>)<br/>
               lookup key =
               <%= select_tag "lookup_key_" + table.name, options_from_collection_for_select(table.valid_lookup_columns, :name, :name, table.get_lookup_column.name) %>
 
+			<%if table.is_editable == true%>
               <br/>
 
               insert algorithm =
@@ -50,6 +51,8 @@
 
               update algorithm =
               <%= select_tag "update_algorithm_" + table.name, options_from_array_for_select(insert_update_algorithms, table.update_algorithm)%>
+
+			<%end%>
           </p>
       <%end%>
 

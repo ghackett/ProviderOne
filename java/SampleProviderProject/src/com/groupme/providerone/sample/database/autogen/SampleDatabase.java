@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.groupme.providerone.sample.database.SampleProvider;
 import com.groupme.providerone.sample.database.tables.MyTableInfo;
+import com.groupme.providerone.sample.database.tables.MyViewInfo;
 
 
 public class SampleDatabase extends SQLiteOpenHelper {
@@ -21,6 +22,7 @@ public class SampleDatabase extends SQLiteOpenHelper {
     public static boolean deleteAllDatabaseRecords() {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
 		ops.add(ContentProviderOperation.newDelete(MyTableInfo.CONTENT_URI).build());
+		ops.add(ContentProviderOperation.newDelete(MyViewInfo.CONTENT_URI).build());
 
         try {
             SampleProvider.getAppContext().getContentResolver().applyBatch(SampleProvider.getContentAuthority(), ops);
@@ -32,7 +34,7 @@ public class SampleDatabase extends SQLiteOpenHelper {
     }
 
     public static final String DB_NAME = "my_database.sqlite";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 3;
 
 	public static final String IDX_CREATE_SAMPLE_IDX = "CREATE INDEX \"sample_idx\" ON \"my_table\" (\"my_double\")";
 	public static final String IDX_DROP_SAMPLE_IDX = "DROP INDEX IF EXISTS \"sample_idx\"";
@@ -46,6 +48,7 @@ public class SampleDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 		MyTableInfo.createTable(db);
+		MyViewInfo.createTable(db);
 
 		db.execSQL(IDX_DROP_SAMPLE_IDX);
 		db.execSQL(IDX_CREATE_SAMPLE_IDX);
@@ -56,6 +59,7 @@ public class SampleDatabase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		MyTableInfo.upgradeTable(db, oldVersion, newVersion);
+		MyViewInfo.upgradeTable(db, oldVersion, newVersion);
 
 		db.execSQL(IDX_DROP_SAMPLE_IDX);
 		db.execSQL(IDX_CREATE_SAMPLE_IDX);

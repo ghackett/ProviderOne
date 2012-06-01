@@ -5,15 +5,15 @@
  */
 package com.groupme.providerone.sample.database.autogen.tables;
 
-import android.database.Cursor;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.groupme.providerone.sample.database.SampleProvider;
 import com.groupme.providerone.sample.database.autogen.PersistentObject;
-import com.groupme.providerone.sample.database.tables.MyTableInfo;
+import com.groupme.providerone.sample.database.tables.MyViewInfo;
 
-public class BaseMyTableInfo  {
+public class BaseMyViewInfo  {
 
     public interface Columns {
 		String _ID = "_id";
@@ -29,9 +29,9 @@ public class BaseMyTableInfo  {
 
     }
 
-    public static final String TABLE_NAME = "my_table";
-    public static final String SQL_CREATE = "CREATE TABLE \"my_table\" ( \"_id\" INTEGER PRIMARY KEY AUTOINCREMENT, \"my_boolean\" BOOL, \"my_double\" DOUBLE, \"my_float\" FLOAT, \"my_int\" INTEGER, \"my_long\" LONG, \"my_char\" CHAR, \"my_string\" TEXT, \"my_blob\" BLOB, \"my_time\" DATETIME )";
-    public static final String SQL_DROP = "DROP VIEW IF EXISTS \"my_table\"";
+    public static final String TABLE_NAME = "my_view";
+    public static final String SQL_CREATE = "CREATE VIEW \"my_view\" AS  	SELECT * FROM \"my_table\"";
+    public static final String SQL_DROP = "DROP TABLE IF EXISTS \"my_view\"";
 
     public static final String[] ALL_COLUMNS = new String[] {
 		Columns._ID,
@@ -47,12 +47,12 @@ public class BaseMyTableInfo  {
 
     };
 
-    public static final MyTableInfo.ColumnHelper ALL_COLUMNS_HELPER = new MyTableInfo.ColumnHelper(ALL_COLUMNS);
+    public static final MyViewInfo.ColumnHelper ALL_COLUMNS_HELPER = new MyViewInfo.ColumnHelper(ALL_COLUMNS);
 
 
-    public static final String PATH = "my_table";
-    public static final String CONTENT_TYPE = "vnd.android.cursor.dir/com.groupme.providerone.sample.my_table";
-    public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/com.groupme.providerone.sample.my_table";
+    public static final String PATH = "my_view";
+    public static final String CONTENT_TYPE = "vnd.android.cursor.dir/com.groupme.providerone.sample.my_view";
+    public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/com.groupme.providerone.sample.my_view";
     public static final Uri CONTENT_URI = Uri.withAppendedPath(SampleProvider.getBaseContentUri(), PATH);
     public static final Uri COUNT_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_COUNT);
     public static final Uri SUM_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_SUM);
@@ -60,8 +60,8 @@ public class BaseMyTableInfo  {
 
 
 
-    public static final int INSERT_ALGORITHM = SQLiteDatabase.CONFLICT_FAIL;
-    public static final int UPDATE_ALGORITHM = SQLiteDatabase.CONFLICT_FAIL;
+    public static final int INSERT_ALGORITHM = SQLiteDatabase.CONFLICT_NONE;
+    public static final int UPDATE_ALGORITHM = SQLiteDatabase.CONFLICT_NONE;
 
     public static void createTable(SQLiteDatabase db) {
         db.execSQL(SQL_DROP);
@@ -69,39 +69,7 @@ public class BaseMyTableInfo  {
     }
 
     public static void upgradeTable(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        try {
-            db.execSQL(String.format("ALTER TABLE \"%s\" RENAME TO \"%s_old\";", TABLE_NAME, TABLE_NAME));
-            StringBuilder sBuilder = null;
-            Cursor c = db.rawQuery(String.format("PRAGMA table_info(\"%s_old\");", TABLE_NAME), null);
-            if (c.moveToFirst()) {
-                while (!c.isAfterLast()) {
-                    String colName = c.getString(c.getColumnIndexOrThrow("name"));
-                    if (sBuilder == null) {
-                        sBuilder = new StringBuilder();
-                    } else {
-                        sBuilder.append(", ");
-                    }
-                    sBuilder.append("\"");
-                    sBuilder.append(colName);
-                    sBuilder.append("\"");
-                    c.moveToNext();
-                }
-            }
-            c.close();
-
-            createTable(db);
-            if (sBuilder != null) {
-                String colList = sBuilder.toString();
-                db.execSQL(String.format("INSERT INTO \"%s\" (%s) SELECT %s FROM \"%s_old\";", TABLE_NAME, colList, colList, TABLE_NAME));
-            }
-            db.execSQL(String.format("DROP TABLE IF EXISTS \"%s_old\";" , TABLE_NAME));
-
-        } catch (Throwable e) {
-            e.printStackTrace();
-            createTable(db);
-        }
-
+		createTable(db);
     }
 
     public static Uri buildIdLookupUri(long _id) {
@@ -142,8 +110,8 @@ public class BaseMyTableInfo  {
 
 
     public static final Uri LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, SampleProvider.RAW_PATH_LOOKUP);
-    public static Uri buildMyStringLookupUri(String myString) {
-        return Uri.withAppendedPath(LOOKUP_URI, Uri.encode(myString));
+    public static Uri buildMyLongLookupUri(String myLong) {
+        return Uri.withAppendedPath(LOOKUP_URI, Uri.encode(myLong));
     }
 
 }
