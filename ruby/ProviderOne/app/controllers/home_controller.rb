@@ -111,7 +111,7 @@ class HomeController < ApplicationController
       end
     end
 
-    send_file(t.path, :type => "application/zip", :disposition => "attachment", :filename => "ProviderOnePackage.zip")
+    send_file(t.path, :type => "application/zip", :disposition => "attachment", :filename => "#{@dbinfo.project_name}_ProviderOnePackage.zip")
     t.close
 
     File.delete(@dbinfo.filepath)
