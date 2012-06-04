@@ -31,7 +31,7 @@ public class BaseMyTableInfo  {
 
     public static final String TABLE_NAME = "my_table";
     public static final String SQL_CREATE = "CREATE TABLE \"my_table\" ( \"_id\" INTEGER PRIMARY KEY AUTOINCREMENT, \"my_boolean\" BOOL, \"my_double\" DOUBLE, \"my_float\" FLOAT, \"my_int\" INTEGER, \"my_long\" LONG, \"my_char\" CHAR, \"my_string\" TEXT, \"my_blob\" BLOB, \"my_time\" DATETIME )";
-    public static final String SQL_DROP = "DROP VIEW IF EXISTS \"my_table\"";
+    public static final String SQL_DROP = "DROP TABLE IF EXISTS \"my_table\"";
 
     public static final String[] ALL_COLUMNS = new String[] {
 		Columns._ID,

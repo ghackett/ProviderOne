@@ -7,7 +7,7 @@ class TableInfo
     @is_editable = editable
     @lower_name = @name.downcase
     @create_stmt = sql.to_s.gsub("\r\n", " ").gsub("\n", " ").gsub("\"", "\\\"")
-    if (!is_editable)
+    if (@is_editable)
       @drop_stmt = "DROP TABLE IF EXISTS \\\"" + @name + "\\\""
     else
       @drop_stmt = "DROP VIEW IF EXISTS \\\"" + @name + "\\\""

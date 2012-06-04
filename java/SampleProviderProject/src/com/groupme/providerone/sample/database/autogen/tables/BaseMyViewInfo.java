@@ -24,7 +24,7 @@ public class BaseMyViewInfo  {
 
     public static final String TABLE_NAME = "my_view";
     public static final String SQL_CREATE = "CREATE VIEW \"my_view\" AS  	SELECT \"_id\", \"my_boolean\", \"my_string\" FROM \"my_table\"";
-    public static final String SQL_DROP = "DROP TABLE IF EXISTS \"my_view\"";
+    public static final String SQL_DROP = "DROP VIEW IF EXISTS \"my_view\"";
 
     public static final String[] ALL_COLUMNS = new String[] {
 		Columns._ID,
