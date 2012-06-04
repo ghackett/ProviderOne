@@ -225,12 +225,12 @@ public abstract class BaseMyTable extends PersistentObject {
     }
 
     @Override
-    protected void hydrate(Cursor c, ColumnHelper helper) {
+    public void hydrate(Cursor c, ColumnHelper helper) {
         assertColumnHelper(helper, false);
         hydrate(c, (MyTableInfo.ColumnHelper)helper);
     }
 
-    protected void hydrate(Cursor c, MyTableInfo.ColumnHelper h) {
+    public void hydrate(Cursor c, MyTableInfo.ColumnHelper h) {
         if (h.col__id != -1) {
             mId = c.isNull(h.col__id) ? null : c.getLong(h.col__id);
             mIdSet = true;
@@ -310,7 +310,8 @@ public abstract class BaseMyTable extends PersistentObject {
         mIsNew = false;
     }
 
-	protected void hydrate(JSONObject obj) {
+    @Override
+	public void hydrate(JSONObject obj) {
 		if (obj == null)
 			return;
 //_id doesnt get hydrated from json
