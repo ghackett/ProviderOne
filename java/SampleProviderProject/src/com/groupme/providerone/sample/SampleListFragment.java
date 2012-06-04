@@ -1,15 +1,20 @@
 package com.groupme.providerone.sample;
 
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.RemoteException;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 
+import com.groupme.providerone.sample.database.autogen.PersistentObject;
 import com.groupme.providerone.sample.database.objects.MyTable;
 import com.groupme.providerone.sample.database.tables.MyTableInfo;
 
@@ -21,6 +26,13 @@ public class SampleListFragment extends ListFragment implements LoaderCallbacks<
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setListAdapter(new SampleListAdapter(getActivity()));
+
+    }
+
+    
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
         getLoaderManager().initLoader(0, null, (LoaderCallbacks<Cursor>) this);
         mHandler.postDelayed(new Runnable() {
             
@@ -30,6 +42,14 @@ public class SampleListFragment extends ListFragment implements LoaderCallbacks<
             }
         }, 2000);
     }
+
+
+    @Override
+    public void onDetach() {
+        getLoaderManager().destroyLoader(0);
+        super.onDetach();
+    }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
@@ -57,17 +77,28 @@ public class SampleListFragment extends ListFragment implements LoaderCallbacks<
         @Override
         protected Void doInBackground(Void... params) {
             MyTable.deleteWhere(null, null);
+            ArrayList<PersistentObject> batchOps = new ArrayList<PersistentObject>();
             for (int i = 0; i<100; i++) {
                 MyTable table = new MyTable();
                 table.setMyString("test_lookup_" + i);
                 table.setMyInt(i);
                 table.setMyDouble(i*Math.PI);
-                table.save();
-                Log.e("LISTFRAGMENT", "saved a new myTable with id " + table.getId());
+                batchOps.add(table);
+//                table.save();
+//                Log.e("LISTFRAGMENT", "saved a new myTable with id " + table.getId());
 //                publishProgress("Saved record with MyString = " + table.getMyString() + " and got id " + table.getId());
 //                
 //                MyTable table2 = MyTable.findOneByMyString("test_lookup_" + i);
 //                publishProgress("Loaded record with myString = " + table2.getMyString() + " and got id " + table2.getId() + " and int value " + table2.getMyInt() + "\n");
+            }
+            try {
+                PersistentObject.applyBatchSave(batchOps);
+            } catch (RemoteException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (OperationApplicationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
             return null;
         }
