@@ -301,6 +301,11 @@ public abstract class BaseMyView extends PersistentObject {
     }
 
     @Override
+    public void markForDeletion() {
+		throw new UnsupportedOperationException("Cannot save or delete a MyView because it's a sqlite view");
+    }
+
+    @Override
     public int delete() {
 		throw new UnsupportedOperationException("Cannot save or delete a MyView because it's a sqlite view");
     }

@@ -88,6 +88,7 @@ public abstract class PersistentObject implements Parcelable {
     }
 
     protected boolean mIsNew;
+	protected boolean mIsMarkedForDelete = false;
 
     public PersistentObject() {
         super();
@@ -96,6 +97,21 @@ public abstract class PersistentObject implements Parcelable {
 
     public boolean isNew() {
         return mIsNew;
+    }
+
+    /**
+     * calling this method will cause the
+     * getSaveProviderOperation to return a 
+     * delete instead of an update.
+     */
+    public void markForDeletion() {
+        if (isNew())
+            throw new IllegalArgumentException("Can't mark a new record for deletion");
+        mIsMarkedForDelete = true;
+    }
+    
+    public boolean isMarkedForDeletion() {
+        return mIsMarkedForDelete;
     }
 
     abstract public ContentValues toContentValues();

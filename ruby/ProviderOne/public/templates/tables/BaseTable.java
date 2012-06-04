@@ -265,16 +265,29 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     public ContentProviderOperation getSaveProviderOperation() {
 {EditableStartWithException}
         ContentProviderOperation op = null;
-        if (isNew()) {
-            op = ContentProviderOperation.newInsert({CapCamelTableName}Info.CONTENT_URI).withValues(toContentValues()).build();
+        if (isMarkedForDeletion()) {
+            op = ContentProviderOperation.newDelete({CapCamelTableName}Info.buildIdLookupUri(mId)).build();
         } else {
-            if (!mIdSet) {
-                throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
-            }
-            Uri updateUri = {CapCamelTableName}Info.buildIdLookupUri(mId);
-            op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
-        }
+	        if (isNew()) {
+	            op = ContentProviderOperation.newInsert({CapCamelTableName}Info.CONTENT_URI).withValues(toContentValues()).build();
+	        } else {
+	            if (!mIdSet) {
+	                throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
+	            }
+	            Uri updateUri = {CapCamelTableName}Info.buildIdLookupUri(mId);
+	            op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
+	        }
+		}
         return op;
+{EditableEndWithException}
+    }
+
+    @Override
+    public void markForDeletion() {
+{EditableStartWithException}
+        if (!mIdSet)
+            throw new IllegalArgumentException("Trying to mark {CapCamelTableName} record for deletion that doesnt have its ID column set");
+        super.markForDeletion();
 {EditableEndWithException}
     }
 

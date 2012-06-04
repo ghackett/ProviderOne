@@ -476,16 +476,29 @@ public abstract class BaseMyTable extends PersistentObject {
     public ContentProviderOperation getSaveProviderOperation() {
 
         ContentProviderOperation op = null;
-        if (isNew()) {
-            op = ContentProviderOperation.newInsert(MyTableInfo.CONTENT_URI).withValues(toContentValues()).build();
+        if (isMarkedForDeletion()) {
+            op = ContentProviderOperation.newDelete(MyTableInfo.buildIdLookupUri(mId)).build();
         } else {
-            if (!mIdSet) {
-                throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
-            }
-            Uri updateUri = MyTableInfo.buildIdLookupUri(mId);
-            op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
-        }
+	        if (isNew()) {
+	            op = ContentProviderOperation.newInsert(MyTableInfo.CONTENT_URI).withValues(toContentValues()).build();
+	        } else {
+	            if (!mIdSet) {
+	                throw new IllegalArgumentException("Trying to save an existing persistant object when ID column is not set");
+	            }
+	            Uri updateUri = MyTableInfo.buildIdLookupUri(mId);
+	            op = ContentProviderOperation.newUpdate(updateUri).withValues(toContentValues()).build();
+	        }
+		}
         return op;
+
+    }
+
+    @Override
+    public void markForDeletion() {
+
+        if (!mIdSet)
+            throw new IllegalArgumentException("Trying to mark MyTable record for deletion that doesnt have its ID column set");
+        super.markForDeletion();
 
     }
 
