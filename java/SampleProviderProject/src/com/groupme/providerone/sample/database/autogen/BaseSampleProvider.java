@@ -5,9 +5,14 @@
  */
 package com.groupme.providerone.sample.database.autogen;
 
+import java.util.ArrayList;
+
 import android.content.ContentProvider;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -132,6 +137,28 @@ public abstract class BaseSampleProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
+    }
+
+    @Override
+    public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations) throws OperationApplicationException {
+        return applyBatch(operations, true);
+    }
+
+    public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations, boolean withTransaction) throws OperationApplicationException {
+        
+        if (!withTransaction)
+            return super.applyBatch(operations);
+        
+        ContentProviderResult[] result = null;
+        SQLiteDatabase db = mDatabase.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            result =  super.applyBatch(operations);
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        return result;
     }
 
     @Override
