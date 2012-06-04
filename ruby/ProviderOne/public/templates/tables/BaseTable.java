@@ -199,17 +199,18 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
     }
 
     @Override
-    protected void hydrate(Cursor c, ColumnHelper helper) {
+    public void hydrate(Cursor c, ColumnHelper helper) {
         assertColumnHelper(helper, false);
         hydrate(c, ({CapCamelTableName}Info.ColumnHelper)helper);
     }
 
-    protected void hydrate(Cursor c, {CapCamelTableName}Info.ColumnHelper h) {
+    public void hydrate(Cursor c, {CapCamelTableName}Info.ColumnHelper h) {
 {HydrateProc}
         mIsNew = false;
     }
 
-	protected void hydrate(JSONObject obj) {
+    @Override
+	public void hydrate(JSONObject obj) {
 		if (obj == null)
 			return;
 {HydrateJsonProc}

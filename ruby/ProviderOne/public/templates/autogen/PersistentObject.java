@@ -95,7 +95,8 @@ public abstract class PersistentObject implements Parcelable {
     }
 
     abstract public ContentValues toContentValues();
-    abstract protected void hydrate(Cursor c, ColumnHelper helper);
+    abstract public void hydrate(Cursor c, ColumnHelper helper);
+	abstract public void hydrate(JSONObject obj);
     abstract public void save();
     abstract public int delete();
     abstract public JSONObject toJson(ColumnHelper helper) throws JSONException;
