@@ -4,6 +4,7 @@ package {PackageName}.database;
 import {PackageName}.database.autogen.Base{ProjectName}Provider;
 import {PackageName}.database.autogen.util.SelectionBuilder;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -38,6 +39,15 @@ public class {ProjectName}Provider extends Base{ProjectName}Provider {
     protected String getCustomType(Uri uri, int match) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    /**
+     * Use this method to do any custom ContentResolver.notifyChange calls you may need.
+     * By this point, the ContentResolver has already been notified for the uri, but
+     * if you want to notifyChange for a different uri (that may be related), do so here. 
+     */
+    protected void onNotityChanges(ContentResolver contentResolver, Uri uri, int match) {
+        
     }
 
     /**

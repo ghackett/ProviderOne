@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
@@ -70,6 +71,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
     protected abstract void buildPriorityCustomUriMatcher(UriMatcher matcher, String authority);
     protected abstract void buildSecondaryCustomUriMatcher(UriMatcher matcher, String authority);
     protected abstract String getCustomType(Uri uri, int match);
+	protected abstract void onNotityChanges(ContentResolver contentResolver, Uri uri, int match);
     protected abstract Integer delete(Uri uri, String selection, String[] selectionArgs, int match);
     protected abstract Uri insert(Uri uri, ContentValues values, int match);
     protected abstract Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder, int match);
@@ -184,7 +186,9 @@ public abstract class BaseSampleProvider extends ContentProvider {
 
         final SelectionBuilder builder = buildSimpleSelection(uri, match);
         int delResult = builder.where(selection, selectionArgs).delete(mDatabase.getWritableDatabase());
-        getAppContext().getContentResolver().notifyChange(uri, null);
+        ContentResolver cr = getAppContext().getContentResolver(); 
+        cr.notifyChange(uri, null);
+        onNotityChanges(cr, uri, match);
         return delResult;
     }
 
@@ -200,7 +204,9 @@ public abstract class BaseSampleProvider extends ContentProvider {
 			case MY_TABLE: {
 				long id = db.insertWithOnConflict(MyTableInfo.TABLE_NAME, null, values, MyTableInfo.INSERT_ALGORITHM);
 				Uri newUri = MyTableInfo.buildIdLookupUri(id);
-				getAppContext().getContentResolver().notifyChange(newUri, null);
+				ContentResolver cr = getAppContext().getContentResolver();
+				cr.notifyChange(newUri, null);
+				onNotityChanges(cr, newUri, match);
 				return newUri;
 			}
 
@@ -274,7 +280,9 @@ public abstract class BaseSampleProvider extends ContentProvider {
 				    algorithm = SQLiteDatabase.CONFLICT_FAIL;
         }
         int updateResult = builder.where(selection, selectionArgs).updateWithOnConflict(mDatabase, values, algorithm);
-        getAppContext().getContentResolver().notifyChange(uri, null);
+        ContentResolver cr = getAppContext().getContentResolver(); 
+        cr.notifyChange(uri, null);
+        onNotityChanges(cr, uri, match);
         return updateResult;
     }
 
