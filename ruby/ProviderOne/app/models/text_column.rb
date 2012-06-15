@@ -7,4 +7,8 @@ class TextColumn < ColumnInfo
       proc = File.read("public/templates/columns/string/HydrateProcedure.java")
       return process_file_content(proc)
     end
+    def get_hydrate_json_proc
+      proc = File.read("public/templates/columns/string/HydrateJsonProcedure.java")
+      return process_file_content(proc)    
+    end
 end

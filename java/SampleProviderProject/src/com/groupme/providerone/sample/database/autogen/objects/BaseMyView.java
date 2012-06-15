@@ -244,6 +244,8 @@ public abstract class BaseMyView extends PersistentObject {
 		if (obj.has(MyViewInfo.Columns.MY_STRING)) {
 		    try {
 		        mMyString = obj.getString(MyViewInfo.Columns.MY_STRING);
+				if (NULL.equalsIgnoreCase(mMyString))
+					mMyString = null;
 		    } catch (JSONException e) {
 		        mMyString = null;
 		    }

@@ -24,6 +24,8 @@ import android.os.RemoteException;
 
 public abstract class PersistentObject implements Parcelable {
 
+	public static final String NULL = "null";
+	
     public static ContentProviderResult[] applyBatchSave(ArrayList<PersistentObject> objects) throws RemoteException, OperationApplicationException {
         return SampleProvider.getAppContext().getContentResolver().applyBatch(SampleProvider.getContentAuthority(), getSaveProviderOperations(objects));
     }

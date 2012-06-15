@@ -359,7 +359,7 @@ public abstract class BaseMyTable extends PersistentObject {
 			String myChar = null;
 		    try {
 		        myChar = obj.getString(MyTableInfo.Columns.MY_CHAR);
-				if (myChar == null || myChar.length() == 0)
+				if (myChar == null || myChar.length() == 0 || NULL.equalsIgnoreCase(myChar))
 					mMyChar = null;
 				else
 					mMyChar = myChar.charAt(0);
@@ -371,6 +371,8 @@ public abstract class BaseMyTable extends PersistentObject {
 		if (obj.has(MyTableInfo.Columns.MY_STRING)) {
 		    try {
 		        mMyString = obj.getString(MyTableInfo.Columns.MY_STRING);
+				if (NULL.equalsIgnoreCase(mMyString))
+					mMyString = null;
 		    } catch (JSONException e) {
 		        mMyString = null;
 		    }

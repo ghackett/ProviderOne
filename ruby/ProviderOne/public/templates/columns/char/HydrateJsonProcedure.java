@@ -2,7 +2,7 @@
 			String {CamelName} = null;
 		    try {
 		        {CamelName} = obj.getString({CapCamelTableName}Info.Columns.{CapName});
-				if ({CamelName} == null || {CamelName}.length() == 0)
+				if ({CamelName} == null || {CamelName}.length() == 0 || NULL.equalsIgnoreCase({CamelName}))
 					m{CapCamelName} = null;
 				else
 					m{CapCamelName} = {CamelName}.charAt(0);
