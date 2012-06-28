@@ -80,8 +80,11 @@ class HomeController < ApplicationController
       z.put_next_entry("java/database/autogen/PersistentObject.java")
       z.write(@dbinfo.process_file_content(File.read("public/templates/autogen/PersistentObject.java")))
 
-      z.put_next_entry("java/database/autogen/#{@dbinfo.project_name}Database.java")
-      z.write(@dbinfo.get_database_java)
+      z.put_next_entry("java/database/autogen/Base#{@dbinfo.project_name}Database.java")
+      z.write(@dbinfo.get_base_database_java)
+      
+      z.put_next_entry("java/database/#{@dbinfo.project_name}Database.java")
+      z.write(@dbinfo.process_file_content(File.read("public/templates/autogen/Database.java")))
 
       z.put_next_entry("java/database/autogen/Base#{@dbinfo.project_name}Provider.java")
       z.write(@dbinfo.get_base_provider)

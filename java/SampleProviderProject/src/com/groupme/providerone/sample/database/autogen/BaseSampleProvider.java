@@ -19,6 +19,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import com.groupme.providerone.sample.database.SampleDatabase;
 import com.groupme.providerone.sample.database.autogen.util.PlatformDatabaseUtils;
 import com.groupme.providerone.sample.database.autogen.util.SelectionBuilder;
 import com.groupme.providerone.sample.database.tables.MyTableInfo;

@@ -90,8 +90,9 @@ class DatabaseInfo
     return file_content
   end
 
-  def get_database_java()
-    file_content = File.read("public/templates/autogen/Database.java")
+
+  def get_base_database_java()
+    file_content = File.read("public/templates/autogen/BaseDatabase.java")
 
     table_info_imports = ""
     table_creates = ""

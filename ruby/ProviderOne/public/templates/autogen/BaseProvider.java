@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import {PackageName}.database.{ProjectName}Database;
 import {PackageName}.database.autogen.util.PlatformDatabaseUtils;
 import {PackageName}.database.autogen.util.SelectionBuilder;
 {TableInfoImports}

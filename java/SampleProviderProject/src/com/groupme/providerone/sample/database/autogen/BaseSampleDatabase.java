@@ -17,7 +17,7 @@ import com.groupme.providerone.sample.database.tables.MyTableInfo;
 import com.groupme.providerone.sample.database.tables.MyViewInfo;
 
 
-public class SampleDatabase extends SQLiteOpenHelper {
+public abstract class BaseSampleDatabase extends SQLiteOpenHelper {
 
     public static boolean deleteAllDatabaseRecords() {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
@@ -40,7 +40,7 @@ public class SampleDatabase extends SQLiteOpenHelper {
 	public static final String IDX_DROP_SAMPLE_IDX = "DROP INDEX IF EXISTS \"sample_idx\"";
 
 
-    public SampleDatabase(Context context) {
+    public BaseSampleDatabase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
