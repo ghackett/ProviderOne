@@ -89,9 +89,11 @@ class TableInfo
   def process_lookup_content(content)
     lookup_col = get_lookup_column
     if (lookup_col.name == "_id")
-      idxStart = content.index("{LookupStart}")-1
-      idxEnd = content.index("{LookupEnd}") + 11
-      content = content[0..idxStart] + content[idxEnd...content.length]
+      while content.index("{LookupStart}") != nil
+        idxStart = content.index("{LookupStart}")-1
+        idxEnd = content.index("{LookupEnd}") + 11
+        content = content[0..idxStart] + content[idxEnd...content.length]
+      end
     else
       content = content.gsub("{LookupStart}", "")
       content = content.gsub("{LookupEnd}", "")

@@ -82,7 +82,8 @@ class DatabaseInfo
     @tables.each_value do |tbl|
       object_list += "- #{tbl.cap_camel_name}\n"
       object_list += "- #{tbl.cap_camel_name}Info\n"
-      object_list += "- #{tbl.cap_camel_name}Adapter\n\n"
+      object_list += "- #{tbl.cap_camel_name}Adapter\n"
+      object_list += "- #{tbl.cap_camel_name}Loader\n\n"
     end
 
     file_content = file_content.gsub("{ObjectList}", object_list);

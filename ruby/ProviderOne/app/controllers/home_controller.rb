@@ -111,6 +111,8 @@ class HomeController < ApplicationController
         z.put_next_entry("java/database/autogen/adapters/#{tbl.cap_camel_name}Adapter.java")
         z.write(tbl.process_file_content(File.read("public/templates/tables/TableAdapter.java"), @dbinfo))
 
+        z.put_next_entry("java/database/autogen/loaders/#{tbl.cap_camel_name}Loader.java")
+        z.write(tbl.process_file_content(tbl.process_lookup_content(File.read("public/templates/tables/TableLoader.java")), @dbinfo))
       end
     end
 
