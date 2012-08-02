@@ -18,6 +18,7 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 {LookupEnd}
 	protected {CapCamelTableName} m{CapCamelTableName} = null;
 	protected ForceLoadContentObserver mContentObserver = null;
+	protected boolean mHasBeenReged = false;
 	protected boolean mDidFallBackToFullTableObserver = false;
 
 	public {CapCamelTableName}Loader(Context context, Long id) {
@@ -28,6 +29,7 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 {LookupEnd}
 		if (mId == null)
 			throw new RuntimeException("Tried to construct a {CapCamelTableName}Loader with a null id");
+		mContentObserver = new ForceLoadContentObserver();
 	}
 {LookupStart}
 	public {CapCamelTableName}Loader({LookupJavaType} {LookupCamelName}, Context context) {
@@ -36,6 +38,7 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 		mId = null;
 		if (m{LookupCapCamelName} == null)
 			throw new RuntimeException("Tried to construct a {CapCamelTableName}Loader with a null {LookupCamelName}");
+		mContentObserver = new ForceLoadContentObserver();
 	}
 {LookupEnd}
 	@Override
@@ -48,19 +51,16 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 			m{CapCamelTableName} = {CapCamelTableName}.findOneBy{LookupCapCamelName}(m{LookupCapCamelName});
 		}
 {LookupEnd}
-		if (mContentObserver == null && m{CapCamelTableName} != null) {
-			Uri notifUri = m{CapCamelTableName}.getIdLookupUri();
-			if (notifUri != null) {
-				mContentObserver = new ForceLoadContentObserver();
+		if (mDidFallBackToFullTableObserver || !mHasBeenReged) {
+			Uri notifUri = m{CapCamelTableName} == null ? null : m{CapCamelTableName}.getIdLookupUri();
+			if (notifUri != null && !mHasBeenReged) {
+				mHasBeenReged = true;
 				getContext().getContentResolver().registerContentObserver(notifUri, true, mContentObserver);
-			}
-		} else if (mContentObserver == null && m{CapCamelTableName} == null) {
-			mDidFallBackToFullTableObserver = true;
-			mContentObserver = new ForceLoadContentObserver();
-			getContext().getContentResolver().registerContentObserver({CapCamelTableName}Info.CONTENT_URI, true, mContentObserver);
-		} else if (mContentObserver != null && m{CapCamelTableName} != null && mDidFallBackToFullTableObserver) {
-			Uri notifUri = m{CapCamelTableName}.getIdLookupUri();
-			if (notifUri != null) {
+			} else if (notifUri == null && !mHasBeenReged) {
+				mDidFallBackToFullTableObserver = true;
+				mHasBeenReged = true;
+				getContext().getContentResolver().registerContentObserver({CapCamelTableName}Info.CONTENT_URI, true, mContentObserver);
+			} else if (mHasBeenReged && notifUri != null && mDidFallBackToFullTableObserver) {
 				mDidFallBackToFullTableObserver = false;
 				getContext().getContentResolver().unregisterContentObserver(mContentObserver);
 				getContext().getContentResolver().registerContentObserver(notifUri, true, mContentObserver);
@@ -80,9 +80,10 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 	@Override
 	protected void onStopLoading() {
 		cancelLoad();
-		if (mContentObserver != null) {
+		if (mHasBeenReged) {
 			mDidFallBackToFullTableObserver = false;
 			getContext().getContentResolver().unregisterContentObserver(mContentObserver);
+			mHasBeenReged = false;
 		}
 	}
 
