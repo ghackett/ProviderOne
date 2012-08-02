@@ -5,6 +5,7 @@ package com.groupme.providerone.sample.database.autogen.loaders;
 
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.groupme.providerone.sample.database.objects.MyTable;
@@ -18,7 +19,8 @@ public class MyTableLoader extends AsyncTaskLoader<MyTable> {
 	protected String mMyString = null;
 
 	protected MyTable mMyTable = null;
-	protected ForceLoadContentObserver mContentObserver;
+	protected ForceLoadContentObserver mContentObserver = null;
+	protected boolean mDidFallBackToFullTableObserver = false;
 
 	public MyTableLoader(Context context, Long id) {
 		super(context);
@@ -28,7 +30,6 @@ public class MyTableLoader extends AsyncTaskLoader<MyTable> {
 
 		if (mId == null)
 			throw new RuntimeException("Tried to construct a MyTableLoader with a null id");
-		mContentObserver = new ForceLoadContentObserver();
 	}
 
 	public MyTableLoader(String myString, Context context) {
@@ -37,7 +38,6 @@ public class MyTableLoader extends AsyncTaskLoader<MyTable> {
 		mId = null;
 		if (mMyString == null)
 			throw new RuntimeException("Tried to construct a MyTableLoader with a null myString");
-		mContentObserver = new ForceLoadContentObserver();
 	}
 
 	@Override
@@ -50,6 +50,24 @@ public class MyTableLoader extends AsyncTaskLoader<MyTable> {
 			mMyTable = MyTable.findOneByMyString(mMyString);
 		}
 
+		if (mContentObserver == null && mMyTable != null) {
+			Uri notifUri = mMyTable.getIdLookupUri();
+			if (notifUri != null) {
+				mContentObserver = new ForceLoadContentObserver();
+				getContext().getContentResolver().registerContentObserver(notifUri, true, mContentObserver);
+			}
+		} else if (mContentObserver == null && mMyTable == null) {
+			mDidFallBackToFullTableObserver = true;
+			mContentObserver = new ForceLoadContentObserver();
+			getContext().getContentResolver().registerContentObserver(MyTableInfo.CONTENT_URI, true, mContentObserver);
+		} else if (mContentObserver != null && mMyTable != null && mDidFallBackToFullTableObserver) {
+			Uri notifUri = mMyTable.getIdLookupUri();
+			if (notifUri != null) {
+				mDidFallBackToFullTableObserver = false;
+				getContext().getContentResolver().unregisterContentObserver(mContentObserver);
+				getContext().getContentResolver().registerContentObserver(notifUri, true, mContentObserver);
+			}
+		}
 		return mMyTable;
 	}
 	
@@ -59,13 +77,15 @@ public class MyTableLoader extends AsyncTaskLoader<MyTable> {
 			deliverResult(mMyTable);
 		if (takeContentChanged() || mMyTable == null)
 			forceLoad();
-		getContext().getContentResolver().registerContentObserver(MyTableInfo.CONTENT_URI, true, mContentObserver);
 	}
 	
 	@Override
 	protected void onStopLoading() {
 		cancelLoad();
-		getContext().getContentResolver().unregisterContentObserver(mContentObserver);
+		if (mContentObserver != null) {
+			mDidFallBackToFullTableObserver = false;
+			getContext().getContentResolver().unregisterContentObserver(mContentObserver);
+		}
 	}
 
 	@Override

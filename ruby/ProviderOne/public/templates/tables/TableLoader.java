@@ -3,6 +3,7 @@ package {PackageName}.database.autogen.loaders;
 
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
 
 import {PackageName}.database.objects.{CapCamelTableName};
@@ -16,7 +17,8 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 	protected {LookupJavaType} m{LookupCapCamelName} = null;
 {LookupEnd}
 	protected {CapCamelTableName} m{CapCamelTableName} = null;
-	protected ForceLoadContentObserver mContentObserver;
+	protected ForceLoadContentObserver mContentObserver = null;
+	protected boolean mDidFallBackToFullTableObserver = false;
 
 	public {CapCamelTableName}Loader(Context context, Long id) {
 		super(context);
@@ -26,7 +28,6 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 {LookupEnd}
 		if (mId == null)
 			throw new RuntimeException("Tried to construct a {CapCamelTableName}Loader with a null id");
-		mContentObserver = new ForceLoadContentObserver();
 	}
 {LookupStart}
 	public {CapCamelTableName}Loader({LookupJavaType} {LookupCamelName}, Context context) {
@@ -35,7 +36,6 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 		mId = null;
 		if (m{LookupCapCamelName} == null)
 			throw new RuntimeException("Tried to construct a {CapCamelTableName}Loader with a null {LookupCamelName}");
-		mContentObserver = new ForceLoadContentObserver();
 	}
 {LookupEnd}
 	@Override
@@ -48,6 +48,24 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 			m{CapCamelTableName} = {CapCamelTableName}.findOneBy{LookupCapCamelName}(m{LookupCapCamelName});
 		}
 {LookupEnd}
+		if (mContentObserver == null && m{CapCamelTableName} != null) {
+			Uri notifUri = m{CapCamelTableName}.getIdLookupUri();
+			if (notifUri != null) {
+				mContentObserver = new ForceLoadContentObserver();
+				getContext().getContentResolver().registerContentObserver(notifUri, true, mContentObserver);
+			}
+		} else if (mContentObserver == null && m{CapCamelTableName} == null) {
+			mDidFallBackToFullTableObserver = true;
+			mContentObserver = new ForceLoadContentObserver();
+			getContext().getContentResolver().registerContentObserver({CapCamelTableName}Info.CONTENT_URI, true, mContentObserver);
+		} else if (mContentObserver != null && m{CapCamelTableName} != null && mDidFallBackToFullTableObserver) {
+			Uri notifUri = m{CapCamelTableName}.getIdLookupUri();
+			if (notifUri != null) {
+				mDidFallBackToFullTableObserver = false;
+				getContext().getContentResolver().unregisterContentObserver(mContentObserver);
+				getContext().getContentResolver().registerContentObserver(notifUri, true, mContentObserver);
+			}
+		}
 		return m{CapCamelTableName};
 	}
 	
@@ -57,13 +75,15 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 			deliverResult(m{CapCamelTableName});
 		if (takeContentChanged() || m{CapCamelTableName} == null)
 			forceLoad();
-		getContext().getContentResolver().registerContentObserver({CapCamelTableName}Info.CONTENT_URI, true, mContentObserver);
 	}
 	
 	@Override
 	protected void onStopLoading() {
 		cancelLoad();
-		getContext().getContentResolver().unregisterContentObserver(mContentObserver);
+		if (mContentObserver != null) {
+			mDidFallBackToFullTableObserver = false;
+			getContext().getContentResolver().unregisterContentObserver(mContentObserver);
+		}
 	}
 
 	@Override
