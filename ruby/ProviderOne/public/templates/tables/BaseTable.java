@@ -344,6 +344,13 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         return result;
     }
 
+	public Uri getIdLookupUri() {
+		if (isNew() || !mIdSet)
+			return null;
+		else
+			return {CapCamelTableName}Info.buildIdLookupUri(mId);
+	}
+
 {BaseTableMethods}
 
 {IsSetMethods}

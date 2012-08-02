@@ -123,6 +123,7 @@ public abstract class PersistentObject implements Parcelable {
     abstract public boolean reload();
     abstract public boolean reload(String[] projection);
     abstract public boolean reload(ColumnHelper helper);
+	abstract public Uri getIdLookupUri();
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

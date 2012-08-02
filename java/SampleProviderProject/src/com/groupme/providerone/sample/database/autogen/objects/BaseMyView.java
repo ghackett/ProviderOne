@@ -352,6 +352,13 @@ public abstract class BaseMyView extends PersistentObject {
         return result;
     }
 
+	public Uri getIdLookupUri() {
+		if (isNew() || !mIdSet)
+			return null;
+		else
+			return MyViewInfo.buildIdLookupUri(mId);
+	}
+
     public Long getId() {
         return mId;
     }

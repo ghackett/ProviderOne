@@ -557,6 +557,13 @@ public abstract class BaseMyTable extends PersistentObject {
         return result;
     }
 
+	public Uri getIdLookupUri() {
+		if (isNew() || !mIdSet)
+			return null;
+		else
+			return MyTableInfo.buildIdLookupUri(mId);
+	}
+
     public Long getId() {
         return mId;
     }
