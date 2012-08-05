@@ -228,9 +228,7 @@ class TableInfo
     defs += "\t\t\tcase #{@cap_name}: {\n"
     defs += "\t\t\t\tlong id = db.insertWithOnConflict(#{@cap_camel_name}Info.TABLE_NAME, null, values, #{@cap_camel_name}Info.INSERT_ALGORITHM);\n"
     defs += "\t\t\t\tUri newUri = #{@cap_camel_name}Info.buildIdLookupUri(id);\n"
-    defs += "\t\t\t\tContentResolver cr = getAppContext().getContentResolver();\n"
-    defs += "\t\t\t\tcr.notifyChange(newUri, null);\n"
-    defs += "\t\t\t\tonNotityChanges(cr, newUri, match);\n"
+    defs += "\t\t\t\tnotifyUri(newUri, match);\n"
     defs += "\t\t\t\treturn newUri;\n"
     defs += "\t\t\t}\n"
     return defs

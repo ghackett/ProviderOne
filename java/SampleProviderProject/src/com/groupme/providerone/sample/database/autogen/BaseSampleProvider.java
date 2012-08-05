@@ -68,6 +68,8 @@ public abstract class BaseSampleProvider extends ContentProvider {
 
     protected SampleDatabase mDatabase;
     private UriMatcher mUriMatcher = null;
+    private boolean mIsInTransaction = false;
+    private ArrayList<NotifyInfo> mTransactionNotifyInfo = new ArrayList<NotifyInfo>();
 
     protected abstract void buildPriorityCustomUriMatcher(UriMatcher matcher, String authority);
     protected abstract void buildSecondaryCustomUriMatcher(UriMatcher matcher, String authority);
@@ -154,14 +156,40 @@ public abstract class BaseSampleProvider extends ContentProvider {
         
         ContentProviderResult[] result = null;
         SQLiteDatabase db = mDatabase.getWritableDatabase();
+        mIsInTransaction = true;
         db.beginTransaction();
         try {
             result =  super.applyBatch(operations);
             db.setTransactionSuccessful();
         } finally {
+	        mIsInTransaction = false;
             db.endTransaction();
         }
+
+        if (mTransactionNotifyInfo.size() > 0) {
+        	ContentResolver cr = getAppContext().getContentResolver();
+	        for (NotifyInfo info : mTransactionNotifyInfo) {
+	        	notifyUri(cr, info.notifyUri, info.match);
+	        }
+	        mTransactionNotifyInfo.clear();
+        }
+
         return result;
+    }
+
+    private void notifyUri(Uri notifyUri, int match) {
+    	notifyUri(null, notifyUri, match);
+    }
+    
+    private void notifyUri(ContentResolver resolver, Uri notifyUri, int match) {
+    	if (mIsInTransaction) {
+    		mTransactionNotifyInfo.add(new NotifyInfo(notifyUri, match));
+    	} else {
+    		if (resolver == null)
+    			resolver = getAppContext().getContentResolver();
+    		resolver.notifyChange(notifyUri, null);
+    		onNotityChanges(resolver, notifyUri, match);
+    	}
     }
 
     @Override
@@ -187,10 +215,8 @@ public abstract class BaseSampleProvider extends ContentProvider {
 
         final SelectionBuilder builder = buildSimpleSelection(uri, match);
         int delResult = builder.where(selection, selectionArgs).delete(mDatabase.getWritableDatabase());
-        ContentResolver cr = getAppContext().getContentResolver(); 
-        cr.notifyChange(uri, null);
-        onNotityChanges(cr, uri, match);
-        return delResult;
+        notifyUri(uri, match);
+		return delResult;
     }
 
     @Override
@@ -205,9 +231,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
 			case MY_TABLE: {
 				long id = db.insertWithOnConflict(MyTableInfo.TABLE_NAME, null, values, MyTableInfo.INSERT_ALGORITHM);
 				Uri newUri = MyTableInfo.buildIdLookupUri(id);
-				ContentResolver cr = getAppContext().getContentResolver();
-				cr.notifyChange(newUri, null);
-				onNotityChanges(cr, newUri, match);
+				notifyUri(newUri, match);
 				return newUri;
 			}
 
@@ -281,9 +305,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
 				    algorithm = SQLiteDatabase.CONFLICT_FAIL;
         }
         int updateResult = builder.where(selection, selectionArgs).updateWithOnConflict(mDatabase, values, algorithm);
-        ContentResolver cr = getAppContext().getContentResolver(); 
-        cr.notifyChange(uri, null);
-        onNotityChanges(cr, uri, match);
+        notifyUri(uri, match);
         return updateResult;
     }
 
@@ -318,6 +340,17 @@ public abstract class BaseSampleProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
+    }
+
+    private static class NotifyInfo {
+    	
+    	Uri notifyUri;
+    	int match;
+    	
+    	public NotifyInfo(Uri notifyUri, int match) {
+    		this.notifyUri = notifyUri;
+    		this.match = match;
+    	}
     }
 
 }
