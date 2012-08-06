@@ -82,18 +82,18 @@ public class MyViewLoader extends AsyncTaskLoader<MyView> {
 	@Override
 	protected void onStopLoading() {
 		cancelLoad();
+	}
+
+	@Override
+	protected void onReset() {
+		super.onReset();
+		onStopLoading();
+		mMyView = null;
 		if (mHasBeenReged) {
 			mDidFallBackToFullTableObserver = false;
 			getContext().getContentResolver().unregisterContentObserver(mContentObserver);
 			mHasBeenReged = false;
 		}
-	}
-
-	@Override
-	protected void onReset() {
-		onStopLoading();
-		mMyView = null;
-		super.onReset();
 	}
 
 }

@@ -80,18 +80,18 @@ public class {CapCamelTableName}Loader extends AsyncTaskLoader<{CapCamelTableNam
 	@Override
 	protected void onStopLoading() {
 		cancelLoad();
+	}
+
+	@Override
+	protected void onReset() {
+		super.onReset();
+		onStopLoading();
+		m{CapCamelTableName} = null;
 		if (mHasBeenReged) {
 			mDidFallBackToFullTableObserver = false;
 			getContext().getContentResolver().unregisterContentObserver(mContentObserver);
 			mHasBeenReged = false;
 		}
-	}
-
-	@Override
-	protected void onReset() {
-		onStopLoading();
-		m{CapCamelTableName} = null;
-		super.onReset();
 	}
 
 }
