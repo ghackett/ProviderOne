@@ -22,7 +22,6 @@ public abstract class BaseSampleDatabase extends SQLiteOpenHelper {
     public static boolean deleteAllDatabaseRecords() {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
 		ops.add(ContentProviderOperation.newDelete(MyTableInfo.CONTENT_URI).build());
-		ops.add(ContentProviderOperation.newDelete(MyViewInfo.CONTENT_URI).build());
 
         try {
             SampleProvider.getAppContext().getContentResolver().applyBatch(SampleProvider.getContentAuthority(), ops);

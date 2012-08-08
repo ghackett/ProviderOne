@@ -106,7 +106,9 @@ class DatabaseInfo
       table_info_imports += "import #{@package}.database.tables.#{tbl.cap_camel_name}Info;\n"
       table_creates += "\t\t#{tbl.cap_camel_name}Info.createTable(db);\n"
       table_upgrades += "\t\t#{tbl.cap_camel_name}Info.upgradeTable(db, oldVersion, newVersion);\n"
-      batch_delete_ops += "\t\tops.add(ContentProviderOperation.newDelete(#{tbl.cap_camel_name}Info.CONTENT_URI).build());\n"
+      if (tbl.is_editable)
+        batch_delete_ops += "\t\tops.add(ContentProviderOperation.newDelete(#{tbl.cap_camel_name}Info.CONTENT_URI).build());\n"
+      end
     end
 
     @indecies.each do |idx|
