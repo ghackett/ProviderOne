@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  helper_method :save_db_and_generate_upload_id, :insert_update_algorithms, :options_from_array_for_select, :generate_upload_id
+  helper_method :save_db_and_generate_upload_id, :insert_update_algorithms, :options_from_array_for_select, :generate_upload_id, :valid_column_types
 
   def save_db_and_generate_upload_id(datafile)
     upload_id = generate_upload_id
@@ -22,6 +22,20 @@ class ApplicationController < ActionController::Base
       "CONFLICT_FAIL",
       "CONFLICT_IGNORE",
       "CONFLICT_REPLACE"
+  ]
+  end
+  
+  def valid_column_types
+  [
+      "string",
+      "integer",
+      "double",
+      "boolean",
+      "float",
+      "long",
+      "char",
+      "blob",
+      "timestamp"
   ]
   end
 

@@ -275,6 +275,20 @@ class DatabaseInfo
         table.update_algorithm = params["update_algorithm_" + table.name]
         table.insert_algorithm = params["insert_algorithm_" + table.name]
       end
+      
+      columns_to_replace = []
+      table.columns_with_unknown_type.each do |uCol|
+        newType = params["coltype_" + table.name + "_" + uCol.name]
+        columns_to_replace << {"col" => uCol, "type" => newType}
+      end
+      
+      columns_to_replace.each do |hsh|
+        oldColumn = hsh["col"]
+        newType = hsh["type"]
+        newColumn = ColumnInfo.create_column(oldColumn.name, newType);
+        newColumn.is_lookup_key = oldColumn.is_lookup_key
+        table.replace_column(oldColumn, newColumn)
+      end
     end
   end
 
