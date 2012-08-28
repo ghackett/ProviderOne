@@ -1,5 +1,5 @@
 <opt>
-  <database filename="my_database.sqlite" package="com.groupme.providerone.sample" content_authority="&quot;com.groupme.providerone.sample&quot;" version="24" project_name="Sample" copyright_msg="Copyright (C) 2011 GroupMe, Inc.">
+  <database filename="my_database.sqlite" package="com.groupme.providerone.sample" content_authority="&quot;com.groupme.providerone.sample&quot;" version="25" project_name="Sample" copyright_msg="Copyright (C) 2011 GroupMe, Inc.">
     <table name="my_table" update_algorithm="CONFLICT_FAIL" insert_algorithm="CONFLICT_FAIL" lookup_key="my_string" />
     <table name="my_view" lookup_key="my_string" />
   </database>

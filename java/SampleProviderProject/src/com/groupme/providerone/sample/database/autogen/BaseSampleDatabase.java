@@ -19,8 +19,6 @@ import com.groupme.providerone.sample.database.tables.MyViewInfo;
 
 
 public abstract class BaseSampleDatabase extends SQLiteOpenHelper {
-	
-	public static final Uri VACUUM_URI = Uri.withAppendedPath(SampleProvider.getBaseContentUri(), SampleProvider.PATH_VACUUM);
 
     public static boolean deleteAllDatabaseRecords() {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
@@ -37,7 +35,7 @@ public abstract class BaseSampleDatabase extends SQLiteOpenHelper {
 
     public static boolean vacuumDatabase() {
     	try {
-    		SampleProvider.getAppContext().getContentResolver().update(VACUUM_URI, null, null, null);
+    		SampleProvider.getAppContext().getContentResolver().update(Uri.withAppendedPath(SampleProvider.getBaseContentUri(), SampleProvider.PATH_VACUUM), null, null, null);
     		return true;
     	} catch (Throwable t) {
     		t.printStackTrace();
@@ -46,7 +44,7 @@ public abstract class BaseSampleDatabase extends SQLiteOpenHelper {
     }
 
     public static final String DB_NAME = "my_database.sqlite";
-    public static final int DB_VERSION = 24;
+    public static final int DB_VERSION = 25;
 
 	public static final String IDX_CREATE_SAMPLE_IDX = "CREATE INDEX \"sample_idx\" ON \"my_table\" (\"my_double\")";
 	public static final String IDX_DROP_SAMPLE_IDX = "DROP INDEX IF EXISTS \"sample_idx\"";

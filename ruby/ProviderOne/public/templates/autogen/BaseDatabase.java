@@ -13,8 +13,6 @@ import {PackageName}.database.{ProjectName}Provider;
 {TableInfoImports}
 
 public abstract class Base{ProjectName}Database extends SQLiteOpenHelper {
-	
-	public static final Uri VACUUM_URI = Uri.withAppendedPath({ProjectName}Provider.getBaseContentUri(), {ProjectName}Provider.PATH_VACUUM);
 
     public static boolean deleteAllDatabaseRecords() {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
@@ -30,7 +28,7 @@ public abstract class Base{ProjectName}Database extends SQLiteOpenHelper {
 
     public static boolean vacuumDatabase() {
     	try {
-    		{ProjectName}Provider.getAppContext().getContentResolver().update(VACUUM_URI, null, null, null);
+    		{ProjectName}Provider.getAppContext().getContentResolver().update(Uri.withAppendedPath({ProjectName}Provider.getBaseContentUri(), {ProjectName}Provider.PATH_VACUUM), null, null, null);
     		return true;
     	} catch (Throwable t) {
     		t.printStackTrace();
