@@ -22,17 +22,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
 
-public abstract class PersistentObject implements Parcelable {
+public abstract class SamplePersistentObject implements Parcelable {
 
 	public static final String NULL = "null";
 	
-    public static ContentProviderResult[] applyBatchSave(ArrayList<PersistentObject> objects) throws RemoteException, OperationApplicationException {
+    public static ContentProviderResult[] applyBatchSave(ArrayList<SamplePersistentObject> objects) throws RemoteException, OperationApplicationException {
         return SampleProvider.getAppContext().getContentResolver().applyBatch(SampleProvider.getContentAuthority(), getSaveProviderOperations(objects));
     }
 
-    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(ArrayList<PersistentObject> objects) {
+    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(ArrayList<SamplePersistentObject> objects) {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>(objects.size());
-        for (PersistentObject obj : objects)
+        for (SamplePersistentObject obj : objects)
             ops.add(obj.getSaveProviderOperation());
         return ops;
     }
@@ -92,7 +92,7 @@ public abstract class PersistentObject implements Parcelable {
     protected boolean mIsNew;
 	protected boolean mIsMarkedForDelete = false;
 
-    public PersistentObject() {
+    public SamplePersistentObject() {
         super();
         mIsNew = true;
     }

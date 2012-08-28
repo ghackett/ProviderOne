@@ -77,7 +77,7 @@ class HomeController < ApplicationController
       z.put_next_entry("java/database/autogen/util/SelectionBuilder.java")
       z.write(@dbinfo.process_file_content(File.read("public/templates/utils/SelectionBuilder.java")))
 
-      z.put_next_entry("java/database/autogen/PersistentObject.java")
+      z.put_next_entry("java/database/autogen/#{@dbinfo.project_name}PersistentObject.java")
       z.write(@dbinfo.process_file_content(File.read("public/templates/autogen/PersistentObject.java")))
 
       z.put_next_entry("java/database/autogen/Base#{@dbinfo.project_name}Database.java")

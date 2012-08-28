@@ -15,11 +15,11 @@ import android.os.Parcel;
 import android.text.TextUtils;
 
 import {PackageName}.database.{ProjectName}Provider;
-import {PackageName}.database.autogen.PersistentObject;
+import {PackageName}.database.autogen.{ProjectName}PersistentObject;
 import {PackageName}.database.objects.{CapCamelTableName};
 import {PackageName}.database.tables.{CapCamelTableName}Info;
 
-public abstract class Base{CapCamelTableName} extends PersistentObject {
+public abstract class Base{CapCamelTableName} extends {ProjectName}PersistentObject {
 
 	public static final boolean IS_EDITABLE = {IsEditableValue};
 

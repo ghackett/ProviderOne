@@ -19,11 +19,11 @@ import android.os.Parcel;
 import android.text.TextUtils;
 
 import com.groupme.providerone.sample.database.SampleProvider;
-import com.groupme.providerone.sample.database.autogen.PersistentObject;
+import com.groupme.providerone.sample.database.autogen.SamplePersistentObject;
 import com.groupme.providerone.sample.database.objects.MyView;
 import com.groupme.providerone.sample.database.tables.MyViewInfo;
 
-public abstract class BaseMyView extends PersistentObject {
+public abstract class BaseMyView extends SamplePersistentObject {
 
 	public static final boolean IS_EDITABLE = false;
 

@@ -21,11 +21,11 @@ import android.os.Parcel;
 import android.text.TextUtils;
 
 import com.groupme.providerone.sample.database.SampleProvider;
-import com.groupme.providerone.sample.database.autogen.PersistentObject;
+import com.groupme.providerone.sample.database.autogen.SamplePersistentObject;
 import com.groupme.providerone.sample.database.objects.MyTable;
 import com.groupme.providerone.sample.database.tables.MyTableInfo;
 
-public abstract class BaseMyTable extends PersistentObject {
+public abstract class BaseMyTable extends SamplePersistentObject {
 
 	public static final boolean IS_EDITABLE = true;
 

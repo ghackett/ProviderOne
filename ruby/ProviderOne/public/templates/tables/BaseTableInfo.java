@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import {PackageName}.database.{ProjectName}Provider;
-import {PackageName}.database.autogen.PersistentObject;
+import {PackageName}.database.autogen.{ProjectName}PersistentObject;
 import {PackageName}.database.tables.{CapCamelTableName}Info;
 
 public class Base{CapCamelTableName}Info  {
@@ -89,7 +89,7 @@ public class Base{CapCamelTableName}Info  {
 
 
 
-    public static class ColumnHelper extends PersistentObject.ColumnHelper {
+    public static class ColumnHelper extends {ProjectName}PersistentObject.ColumnHelper {
 {ColumnHelperContent}
     }
 
