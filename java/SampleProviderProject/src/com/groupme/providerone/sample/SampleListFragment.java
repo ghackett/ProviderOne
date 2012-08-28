@@ -13,7 +13,10 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.groupme.providerone.sample.database.SampleDatabase;
 import com.groupme.providerone.sample.database.autogen.SamplePersistentObject;
 import com.groupme.providerone.sample.database.objects.MyTable;
 import com.groupme.providerone.sample.database.tables.MyTableInfo;
@@ -100,6 +103,9 @@ public class SampleListFragment extends ListFragment implements LoaderCallbacks<
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            
+            boolean didVacuum = SampleDatabase.vacuumDatabase();
+            Log.e("DBTask", "db vacuum was succesful = " + didVacuum);
             return null;
         }
     }

@@ -143,7 +143,7 @@ class DatabaseInfo
     table_provider_deletes_invalid = ""
     table_provider_updates_invalid = ""
 
-    match_count = 65535
+    match_count = 65534
     @tables.each_value do |tbl|
       table_info_imports += "import #{@package}.database.tables.#{tbl.cap_camel_name}Info;\n"
       table_provider_match_defs += tbl.get_provider_match_defs(match_count)

@@ -26,12 +26,14 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
     public static final String PATH_SUM = "/sum";
     public static final String PATH_LOOKUP = "/lookup/*";
     public static final String PATH_ID = "/id/*";
+	public static final String PATH_VACUUM = "vacuum";
 
     public static final String RAW_PATH_COUNT = "count";
     public static final String RAW_PATH_SUM = "sum";
     public static final String RAW_PATH_LOOKUP = "lookup";
     public static final String RAW_PATH_ID = "id";
 
+	public static final int VACUUM = 0xffff;
 {TableProviderMatchDefs}
     private static Uri sBaseContentUri = null;
     private static Context sApplicationContext = null;
@@ -75,7 +77,7 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
         final String authority = getContentAuthority();
 
         buildPriorityCustomUriMatcher(matcher, authority);
-
+		matcher.addURI(authority, PATH_VACUUM, VACUUM);
 {UriMatcherBuildProc}
         buildSecondaryCustomUriMatcher(matcher, authority);
     }
@@ -96,6 +98,8 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
             return result;
 
         switch(match) {
+			case VACUUM:
+				return null;
 {UriMatchTypeCases}
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -194,6 +198,12 @@ public abstract class Base{ProjectName}Provider extends ContentProvider {
 
 		switch(match) {
 {UriUpdateInvalidMatches}
+		}
+		
+		if (match == VACUUM) {
+			mDatabase.getWritableDatabase().execSQL("VACUUM;");
+			notifyUri(uri, match);
+			return 1;
 		}
 
         final SelectionBuilder builder = buildSimpleSelection(uri, match);

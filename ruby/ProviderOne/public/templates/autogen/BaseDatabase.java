@@ -7,11 +7,14 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 import {PackageName}.database.{ProjectName}Provider;
 {TableInfoImports}
 
 public abstract class Base{ProjectName}Database extends SQLiteOpenHelper {
+	
+	public static final Uri VACUUM_URI = Uri.withAppendedPath({ProjectName}Provider.getBaseContentUri(), {ProjectName}Provider.PATH_VACUUM);
 
     public static boolean deleteAllDatabaseRecords() {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
@@ -23,6 +26,16 @@ public abstract class Base{ProjectName}Database extends SQLiteOpenHelper {
             return false;
         }
         return true;
+    }
+
+    public static boolean vacuumDatabase() {
+    	try {
+    		{ProjectName}Provider.getAppContext().getContentResolver().update(VACUUM_URI, null, null, null);
+    		return true;
+    	} catch (Throwable t) {
+    		t.printStackTrace();
+    		return false;
+    	}
     }
 
     public static final String DB_NAME = "{DbFileName}";
