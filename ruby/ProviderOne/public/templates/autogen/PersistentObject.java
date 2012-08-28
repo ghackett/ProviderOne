@@ -2,6 +2,7 @@
 package {PackageName}.database.autogen;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,11 +23,15 @@ public abstract class {ProjectName}PersistentObject implements Parcelable {
 
 	public static final String NULL = "null";
 	
-    public static ContentProviderResult[] applyBatchSave(ArrayList<{ProjectName}PersistentObject> objects) throws RemoteException, OperationApplicationException {
-        return {ProjectName}Provider.getAppContext().getContentResolver().applyBatch({ProjectName}Provider.getContentAuthority(), getSaveProviderOperations(objects));
+    public static ContentProviderResult[] applyBatchSave(Collection<{ProjectName}PersistentObject> objects) throws RemoteException, OperationApplicationException {
+		return applyBatchSave(getSaveProviderOperations(objects));
     }
 
-    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(ArrayList<{ProjectName}PersistentObject> objects) {
+    public static ContentProviderResult[] applyBatchSave(ArrayList<ContentProviderOperation> providerOps) throws RemoteException, OperationApplicationException {
+        return {ProjectName}Provider.getAppContext().getContentResolver().applyBatch({ProjectName}Provider.getContentAuthority(), providerOps);
+    }
+
+    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(Collection<{ProjectName}PersistentObject> objects) {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>(objects.size());
         for ({ProjectName}PersistentObject obj : objects)
             ops.add(obj.getSaveProviderOperation());

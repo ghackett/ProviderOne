@@ -6,6 +6,7 @@
 package com.groupme.providerone.sample.database.autogen;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,11 +27,15 @@ public abstract class SamplePersistentObject implements Parcelable {
 
 	public static final String NULL = "null";
 	
-    public static ContentProviderResult[] applyBatchSave(ArrayList<SamplePersistentObject> objects) throws RemoteException, OperationApplicationException {
-        return SampleProvider.getAppContext().getContentResolver().applyBatch(SampleProvider.getContentAuthority(), getSaveProviderOperations(objects));
+    public static ContentProviderResult[] applyBatchSave(Collection<SamplePersistentObject> objects) throws RemoteException, OperationApplicationException {
+		return applyBatchSave(getSaveProviderOperations(objects));
     }
 
-    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(ArrayList<SamplePersistentObject> objects) {
+    public static ContentProviderResult[] applyBatchSave(ArrayList<ContentProviderOperation> providerOps) throws RemoteException, OperationApplicationException {
+        return SampleProvider.getAppContext().getContentResolver().applyBatch(SampleProvider.getContentAuthority(), providerOps);
+    }
+
+    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(Collection<SamplePersistentObject> objects) {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>(objects.size());
         for (SamplePersistentObject obj : objects)
             ops.add(obj.getSaveProviderOperation());
