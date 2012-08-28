@@ -571,7 +571,7 @@ public abstract class BaseMyTable extends SamplePersistentObject {
     public void setId(Long id) {
         mId = id;
         mIdSet = true;
-        mIsNew = id != null;
+        mIsNew = id == null;
     }
 
     public Boolean getMyBoolean() {
