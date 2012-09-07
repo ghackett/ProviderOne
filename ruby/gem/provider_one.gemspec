@@ -1,3 +1,5 @@
+require 'rake'
+
 Gem::Specification.new do |s|
   s.name        = 'provider_one'
   s.version     = '0.0.0'
@@ -13,7 +15,7 @@ Gem::Specification.new do |s|
   
   s.authors     = ["Geoff Hackett"]
   s.email       = 'ghackett@gmail.com'
-  s.files       = ["lib/provider_one.rb"]
+  s.files       = FileList["lib/provider_one.rb", "lib/**/*.*"].to_a
   s.homepage    =
     'http://rubygems.org/gems/provider_one'
 end
