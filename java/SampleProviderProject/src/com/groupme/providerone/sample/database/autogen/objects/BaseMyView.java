@@ -235,17 +235,23 @@ public abstract class BaseMyView extends SamplePersistentObject {
 //_id doesnt get hydrated from json
 		if (obj.has(MyViewInfo.Columns.MY_BOOLEAN)) {
 		    try {
-		        mMyBoolean = obj.getBoolean(MyViewInfo.Columns.MY_BOOLEAN);
+				if (obj.isNull(MyViewInfo.Columns.MY_BOOLEAN)) {
+					mMyBoolean = null;
+				} else {
+					mMyBoolean = obj.getBoolean(MyViewInfo.Columns.MY_BOOLEAN);
+				}
 		    } catch (JSONException e) {
-		        mMyBoolean = false;
+		        mMyBoolean = null;
 		    }
 		    mMyBooleanSet = true;
 		}
 		if (obj.has(MyViewInfo.Columns.MY_STRING)) {
 		    try {
-		        mMyString = obj.getString(MyViewInfo.Columns.MY_STRING);
-				if (NULL.equalsIgnoreCase(mMyString))
+				if (obj.isNull(MyViewInfo.Columns.MY_STRING)) {
 					mMyString = null;
+				} else {
+					mMyString = obj.getString(MyViewInfo.Columns.MY_STRING);
+				}
 		    } catch (JSONException e) {
 		        mMyString = null;
 		    }
