@@ -75,16 +75,16 @@ public abstract class BaseMyTable extends SamplePersistentObject {
         return findAllByUri(MyTableInfo.CONTENT_URI, helper, selection, selectionArgs, sortOrder);
     }
 
-    public static MyTable findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere(MyTableInfo.ALL_COLUMNS_HELPER, selection, selectionArgs);
+    public static MyTable findOneWhere(String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(MyTableInfo.ALL_COLUMNS_HELPER, selection, selectionArgs, orderBy);
     }
 
-    public static MyTable findOneWhere(String[] projection, String selection, String[] selectionArgs) {
-        return findOneWhere(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection), selection, selectionArgs);
+    public static MyTable findOneWhere(String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection), selection, selectionArgs, orderBy);
     }
 
-    public static MyTable findOneWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs) {
-        return findOneByUri(MyTableInfo.CONTENT_URI, helper, selection, selectionArgs, null);
+    public static MyTable findOneWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs, String orderBy) {
+        return findOneByUri(MyTableInfo.CONTENT_URI, helper, selection, selectionArgs, orderBy);
     }
 
     public static int deleteWhere(String where, String[] selectionArgs) {

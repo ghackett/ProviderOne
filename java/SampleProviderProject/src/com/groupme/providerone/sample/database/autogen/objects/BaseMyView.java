@@ -73,16 +73,16 @@ public abstract class BaseMyView extends SamplePersistentObject {
         return findAllByUri(MyViewInfo.CONTENT_URI, helper, selection, selectionArgs, sortOrder);
     }
 
-    public static MyView findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere(MyViewInfo.ALL_COLUMNS_HELPER, selection, selectionArgs);
+    public static MyView findOneWhere(String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(MyViewInfo.ALL_COLUMNS_HELPER, selection, selectionArgs, orderBy);
     }
 
-    public static MyView findOneWhere(String[] projection, String selection, String[] selectionArgs) {
-        return findOneWhere(projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection), selection, selectionArgs);
+    public static MyView findOneWhere(String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection), selection, selectionArgs, orderBy);
     }
 
-    public static MyView findOneWhere(MyViewInfo.ColumnHelper helper, String selection, String[] selectionArgs) {
-        return findOneByUri(MyViewInfo.CONTENT_URI, helper, selection, selectionArgs, null);
+    public static MyView findOneWhere(MyViewInfo.ColumnHelper helper, String selection, String[] selectionArgs, String orderBy) {
+        return findOneByUri(MyViewInfo.CONTENT_URI, helper, selection, selectionArgs, orderBy);
     }
 
     public static MyView findOneById(long id) {

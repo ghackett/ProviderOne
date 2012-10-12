@@ -69,16 +69,16 @@ public abstract class Base{CapCamelTableName} extends {ProjectName}PersistentObj
         return findAllByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, sortOrder);
     }
 
-    public static {CapCamelTableName} findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere({CapCamelTableName}Info.ALL_COLUMNS_HELPER, selection, selectionArgs);
+    public static {CapCamelTableName} findOneWhere(String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere({CapCamelTableName}Info.ALL_COLUMNS_HELPER, selection, selectionArgs, orderBy);
     }
 
-    public static {CapCamelTableName} findOneWhere(String[] projection, String selection, String[] selectionArgs) {
-        return findOneWhere(projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs);
+    public static {CapCamelTableName} findOneWhere(String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs, orderBy);
     }
 
-    public static {CapCamelTableName} findOneWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs) {
-        return findOneByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, null);
+    public static {CapCamelTableName} findOneWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs, String orderBy) {
+        return findOneByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, orderBy);
     }
 {EditableStart}
     public static int deleteWhere(String where, String[] selectionArgs) {
