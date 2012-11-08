@@ -115,7 +115,7 @@ class DatabaseInfo
       index_defs += "\tpublic static final String IDX_CREATE_#{idx.cap_name} = \"#{idx.create_stmt}\";\n"
       index_defs += "\tpublic static final String IDX_DROP_#{idx.cap_name} = \"#{idx.drop_stmt}\";\n"
       index_exes += "\t\tdb.execSQL(IDX_DROP_#{idx.cap_name});\n"
-      index_exes += "\t\tdb.execSQL(IDX_CREATE_#{idx.cap_name});\n"
+      index_exes += "\t\ttry {\n\t\t\tdb.execSQL(IDX_CREATE_#{idx.cap_name});\n\t\t} catch (SQLiteException e) {\n\t\t\te.printStackTrace();\n\t\t\tdb.execSQL(\"DELETE FROM #{idx.table_name};\");\n\t\t\tdb.execSQL(IDX_CREATE_#{idx.cap_name});\n\t\t}\n"
     end
 
     file_content = file_content.gsub("{TableInfoImports}", table_info_imports);
