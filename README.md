@@ -16,6 +16,16 @@ Take the pain out of dealing with databases in Android by generating fully funct
 - Loaders (NEW!)
 - Table & View auto-updating (both column adds and removals (NEW!) are supported but be careful when changing types and constraints)
 
+## Installation
+
+1) Setup ruby on rails
+   - Mac: TBD
+   - Windows: http://railsinstaller.org
+2) cd ProviderOne/ruby/ProviderOne
+3) bundle install
+4) rails server
+5) http://localhost:3000
+
 ## How does it work?
 
 1) Build your database in your favorite sqlite editor (make sure every table has an auto-incrementing primary key called _id).
