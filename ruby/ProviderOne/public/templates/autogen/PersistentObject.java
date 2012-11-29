@@ -23,7 +23,7 @@ public abstract class {ProjectName}PersistentObject implements Parcelable {
 
 	public static final String NULL = "null";
 	
-    public static ContentProviderResult[] applyBatchSave(Collection<{ProjectName}PersistentObject> objects) throws RemoteException, OperationApplicationException {
+    public static ContentProviderResult[] applyBatchSave(Collection<? extends {ProjectName}PersistentObject> objects) throws RemoteException, OperationApplicationException {
 		return applyBatchSave(getSaveProviderOperations(objects));
     }
 
@@ -31,7 +31,7 @@ public abstract class {ProjectName}PersistentObject implements Parcelable {
         return {ProjectName}Provider.getAppContext().getContentResolver().applyBatch({ProjectName}Provider.getContentAuthority(), providerOps);
     }
 
-    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(Collection<{ProjectName}PersistentObject> objects) {
+    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(Collection<? extends {ProjectName}PersistentObject> objects) {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>(objects.size());
         for ({ProjectName}PersistentObject obj : objects)
             ops.add(obj.getSaveProviderOperation());
