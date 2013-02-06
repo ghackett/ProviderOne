@@ -23,7 +23,7 @@ public abstract class Base{CapCamelTableName} extends {ProjectName}PersistentObj
 
 	public static final boolean IS_EDITABLE = {IsEditableValue};
 
-    public static {CapCamelTableName} fromCursor(Cursor cursor, {CapCamelTableName}.ColumnHelper helper) {
+    public static {CapCamelTableName} fromCursor(Cursor cursor, {CapCamelTableName}Info.ColumnHelper helper) {
         {CapCamelTableName} obj = new {CapCamelTableName}();
         obj.hydrate(cursor, helper);
         return obj;
