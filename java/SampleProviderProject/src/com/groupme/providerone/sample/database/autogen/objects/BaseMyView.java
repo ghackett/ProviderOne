@@ -19,11 +19,11 @@ import android.os.Parcel;
 import android.text.TextUtils;
 
 import com.groupme.providerone.sample.database.SampleProvider;
-import com.groupme.providerone.sample.database.autogen.PersistentObject;
+import com.groupme.providerone.sample.database.autogen.SamplePersistentObject;
 import com.groupme.providerone.sample.database.objects.MyView;
 import com.groupme.providerone.sample.database.tables.MyViewInfo;
 
-public abstract class BaseMyView extends PersistentObject {
+public abstract class BaseMyView extends SamplePersistentObject {
 
 	public static final boolean IS_EDITABLE = false;
 
@@ -73,16 +73,16 @@ public abstract class BaseMyView extends PersistentObject {
         return findAllByUri(MyViewInfo.CONTENT_URI, helper, selection, selectionArgs, sortOrder);
     }
 
-    public static MyView findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere(MyViewInfo.ALL_COLUMNS_HELPER, selection, selectionArgs);
+    public static MyView findOneWhere(String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(MyViewInfo.ALL_COLUMNS_HELPER, selection, selectionArgs, orderBy);
     }
 
-    public static MyView findOneWhere(String[] projection, String selection, String[] selectionArgs) {
-        return findOneWhere(projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection), selection, selectionArgs);
+    public static MyView findOneWhere(String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(projection == null ? MyViewInfo.ALL_COLUMNS_HELPER : new MyViewInfo.ColumnHelper(projection), selection, selectionArgs, orderBy);
     }
 
-    public static MyView findOneWhere(MyViewInfo.ColumnHelper helper, String selection, String[] selectionArgs) {
-        return findOneByUri(MyViewInfo.CONTENT_URI, helper, selection, selectionArgs, null);
+    public static MyView findOneWhere(MyViewInfo.ColumnHelper helper, String selection, String[] selectionArgs, String orderBy) {
+        return findOneByUri(MyViewInfo.CONTENT_URI, helper, selection, selectionArgs, orderBy);
     }
 
     public static MyView findOneById(long id) {
@@ -235,17 +235,23 @@ public abstract class BaseMyView extends PersistentObject {
 //_id doesnt get hydrated from json
 		if (obj.has(MyViewInfo.Columns.MY_BOOLEAN)) {
 		    try {
-		        mMyBoolean = obj.getBoolean(MyViewInfo.Columns.MY_BOOLEAN);
+				if (obj.isNull(MyViewInfo.Columns.MY_BOOLEAN)) {
+					mMyBoolean = null;
+				} else {
+					mMyBoolean = obj.getBoolean(MyViewInfo.Columns.MY_BOOLEAN);
+				}
 		    } catch (JSONException e) {
-		        mMyBoolean = false;
+		        mMyBoolean = null;
 		    }
 		    mMyBooleanSet = true;
 		}
 		if (obj.has(MyViewInfo.Columns.MY_STRING)) {
 		    try {
-		        mMyString = obj.getString(MyViewInfo.Columns.MY_STRING);
-				if (NULL.equalsIgnoreCase(mMyString))
+				if (obj.isNull(MyViewInfo.Columns.MY_STRING)) {
 					mMyString = null;
+				} else {
+					mMyString = obj.getString(MyViewInfo.Columns.MY_STRING);
+				}
 		    } catch (JSONException e) {
 		        mMyString = null;
 		    }
@@ -352,6 +358,13 @@ public abstract class BaseMyView extends PersistentObject {
         return result;
     }
 
+	public Uri getIdLookupUri() {
+		if (isNew() || !mIdSet)
+			return null;
+		else
+			return MyViewInfo.buildIdLookupUri(mId);
+	}
+
     public Long getId() {
         return mId;
     }
@@ -359,7 +372,7 @@ public abstract class BaseMyView extends PersistentObject {
     public void setId(Long id) {
         mId = id;
         mIdSet = true;
-        mIsNew = id != null;
+        mIsNew = id == null;
     }
 
     public Boolean getMyBoolean() {

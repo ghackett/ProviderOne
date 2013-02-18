@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.groupme.providerone.sample.database.SampleProvider;
-import com.groupme.providerone.sample.database.autogen.PersistentObject;
+import com.groupme.providerone.sample.database.autogen.SamplePersistentObject;
 import com.groupme.providerone.sample.database.tables.MyViewInfo;
 
 public class BaseMyViewInfo  {
@@ -64,7 +64,7 @@ public class BaseMyViewInfo  {
 
 
 
-    public static class ColumnHelper extends PersistentObject.ColumnHelper {
+    public static class ColumnHelper extends SamplePersistentObject.ColumnHelper {
 		public int col__id = -1;
 		public int col_my_boolean = -1;
 		public int col_my_string = -1;

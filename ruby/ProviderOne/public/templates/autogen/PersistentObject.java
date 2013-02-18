@@ -2,6 +2,7 @@
 package {PackageName}.database.autogen;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,17 +19,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
 
-public abstract class PersistentObject implements Parcelable {
+public abstract class {ProjectName}PersistentObject implements Parcelable {
 
 	public static final String NULL = "null";
 	
-    public static ContentProviderResult[] applyBatchSave(ArrayList<PersistentObject> objects) throws RemoteException, OperationApplicationException {
-        return {ProjectName}Provider.getAppContext().getContentResolver().applyBatch({ProjectName}Provider.getContentAuthority(), getSaveProviderOperations(objects));
+    public static ContentProviderResult[] applyBatchSave(Collection<? extends {ProjectName}PersistentObject> objects) throws RemoteException, OperationApplicationException {
+		return applyBatchSave(getSaveProviderOperations(objects));
     }
 
-    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(ArrayList<PersistentObject> objects) {
+    public static ContentProviderResult[] applyBatchSave(ArrayList<ContentProviderOperation> providerOps) throws RemoteException, OperationApplicationException {
+        return {ProjectName}Provider.getAppContext().getContentResolver().applyBatch({ProjectName}Provider.getContentAuthority(), providerOps);
+    }
+
+    public static ArrayList<ContentProviderOperation> getSaveProviderOperations(Collection<? extends {ProjectName}PersistentObject> objects) {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>(objects.size());
-        for (PersistentObject obj : objects)
+        for ({ProjectName}PersistentObject obj : objects)
             ops.add(obj.getSaveProviderOperation());
         return ops;
     }
@@ -88,7 +93,7 @@ public abstract class PersistentObject implements Parcelable {
     protected boolean mIsNew;
 	protected boolean mIsMarkedForDelete = false;
 
-    public PersistentObject() {
+    public {ProjectName}PersistentObject() {
         super();
         mIsNew = true;
     }
@@ -123,6 +128,7 @@ public abstract class PersistentObject implements Parcelable {
     abstract public boolean reload();
     abstract public boolean reload(String[] projection);
     abstract public boolean reload(ColumnHelper helper);
+	abstract public Uri getIdLookupUri();
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

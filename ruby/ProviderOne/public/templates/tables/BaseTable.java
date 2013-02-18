@@ -15,15 +15,15 @@ import android.os.Parcel;
 import android.text.TextUtils;
 
 import {PackageName}.database.{ProjectName}Provider;
-import {PackageName}.database.autogen.PersistentObject;
+import {PackageName}.database.autogen.{ProjectName}PersistentObject;
 import {PackageName}.database.objects.{CapCamelTableName};
 import {PackageName}.database.tables.{CapCamelTableName}Info;
 
-public abstract class Base{CapCamelTableName} extends PersistentObject {
+public abstract class Base{CapCamelTableName} extends {ProjectName}PersistentObject {
 
 	public static final boolean IS_EDITABLE = {IsEditableValue};
 
-    public static {CapCamelTableName} fromCursor(Cursor cursor, {CapCamelTableName}.ColumnHelper helper) {
+    public static {CapCamelTableName} fromCursor(Cursor cursor, {CapCamelTableName}Info.ColumnHelper helper) {
         {CapCamelTableName} obj = new {CapCamelTableName}();
         obj.hydrate(cursor, helper);
         return obj;
@@ -69,16 +69,16 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         return findAllByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, sortOrder);
     }
 
-    public static {CapCamelTableName} findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere({CapCamelTableName}Info.ALL_COLUMNS_HELPER, selection, selectionArgs);
+    public static {CapCamelTableName} findOneWhere(String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere({CapCamelTableName}Info.ALL_COLUMNS_HELPER, selection, selectionArgs, orderBy);
     }
 
-    public static {CapCamelTableName} findOneWhere(String[] projection, String selection, String[] selectionArgs) {
-        return findOneWhere(projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs);
+    public static {CapCamelTableName} findOneWhere(String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(projection == null ? {CapCamelTableName}Info.ALL_COLUMNS_HELPER : new {CapCamelTableName}Info.ColumnHelper(projection), selection, selectionArgs, orderBy);
     }
 
-    public static {CapCamelTableName} findOneWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs) {
-        return findOneByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, null);
+    public static {CapCamelTableName} findOneWhere({CapCamelTableName}Info.ColumnHelper helper, String selection, String[] selectionArgs, String orderBy) {
+        return findOneByUri({CapCamelTableName}Info.CONTENT_URI, helper, selection, selectionArgs, orderBy);
     }
 {EditableStart}
     public static int deleteWhere(String where, String[] selectionArgs) {
@@ -343,6 +343,13 @@ public abstract class Base{CapCamelTableName} extends PersistentObject {
         }
         return result;
     }
+
+	public Uri getIdLookupUri() {
+		if (isNew() || !mIdSet)
+			return null;
+		else
+			return {CapCamelTableName}Info.buildIdLookupUri(mId);
+	}
 
 {BaseTableMethods}
 

@@ -13,8 +13,11 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.groupme.providerone.sample.database.autogen.PersistentObject;
+import com.groupme.providerone.sample.database.SampleDatabase;
+import com.groupme.providerone.sample.database.autogen.SamplePersistentObject;
 import com.groupme.providerone.sample.database.objects.MyTable;
 import com.groupme.providerone.sample.database.tables.MyTableInfo;
 
@@ -77,7 +80,7 @@ public class SampleListFragment extends ListFragment implements LoaderCallbacks<
         @Override
         protected Void doInBackground(Void... params) {
             MyTable.deleteWhere(null, null);
-            ArrayList<PersistentObject> batchOps = new ArrayList<PersistentObject>();
+            ArrayList<SamplePersistentObject> batchOps = new ArrayList<SamplePersistentObject>();
             for (int i = 0; i<100; i++) {
                 MyTable table = new MyTable();
                 table.setMyString("test_lookup_" + i);
@@ -92,7 +95,7 @@ public class SampleListFragment extends ListFragment implements LoaderCallbacks<
 //                publishProgress("Loaded record with myString = " + table2.getMyString() + " and got id " + table2.getId() + " and int value " + table2.getMyInt() + "\n");
             }
             try {
-                PersistentObject.applyBatchSave(batchOps);
+            	SamplePersistentObject.applyBatchSave(batchOps);
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -100,6 +103,9 @@ public class SampleListFragment extends ListFragment implements LoaderCallbacks<
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            
+            boolean didVacuum = SampleDatabase.vacuumDatabase();
+            Log.e("DBTask", "db vacuum was succesful = " + didVacuum);
             return null;
         }
     }

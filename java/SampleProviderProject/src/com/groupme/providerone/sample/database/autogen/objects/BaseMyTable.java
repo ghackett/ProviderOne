@@ -21,11 +21,11 @@ import android.os.Parcel;
 import android.text.TextUtils;
 
 import com.groupme.providerone.sample.database.SampleProvider;
-import com.groupme.providerone.sample.database.autogen.PersistentObject;
+import com.groupme.providerone.sample.database.autogen.SamplePersistentObject;
 import com.groupme.providerone.sample.database.objects.MyTable;
 import com.groupme.providerone.sample.database.tables.MyTableInfo;
 
-public abstract class BaseMyTable extends PersistentObject {
+public abstract class BaseMyTable extends SamplePersistentObject {
 
 	public static final boolean IS_EDITABLE = true;
 
@@ -75,16 +75,16 @@ public abstract class BaseMyTable extends PersistentObject {
         return findAllByUri(MyTableInfo.CONTENT_URI, helper, selection, selectionArgs, sortOrder);
     }
 
-    public static MyTable findOneWhere(String selection, String[] selectionArgs) {
-        return findOneWhere(MyTableInfo.ALL_COLUMNS_HELPER, selection, selectionArgs);
+    public static MyTable findOneWhere(String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(MyTableInfo.ALL_COLUMNS_HELPER, selection, selectionArgs, orderBy);
     }
 
-    public static MyTable findOneWhere(String[] projection, String selection, String[] selectionArgs) {
-        return findOneWhere(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection), selection, selectionArgs);
+    public static MyTable findOneWhere(String[] projection, String selection, String[] selectionArgs, String orderBy) {
+        return findOneWhere(projection == null ? MyTableInfo.ALL_COLUMNS_HELPER : new MyTableInfo.ColumnHelper(projection), selection, selectionArgs, orderBy);
     }
 
-    public static MyTable findOneWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs) {
-        return findOneByUri(MyTableInfo.CONTENT_URI, helper, selection, selectionArgs, null);
+    public static MyTable findOneWhere(MyTableInfo.ColumnHelper helper, String selection, String[] selectionArgs, String orderBy) {
+        return findOneByUri(MyTableInfo.CONTENT_URI, helper, selection, selectionArgs, orderBy);
     }
 
     public static int deleteWhere(String where, String[] selectionArgs) {
@@ -317,15 +317,23 @@ public abstract class BaseMyTable extends PersistentObject {
 //_id doesnt get hydrated from json
 		if (obj.has(MyTableInfo.Columns.MY_BOOLEAN)) {
 		    try {
-		        mMyBoolean = obj.getBoolean(MyTableInfo.Columns.MY_BOOLEAN);
+				if (obj.isNull(MyTableInfo.Columns.MY_BOOLEAN)) {
+					mMyBoolean = null;
+				} else {
+					mMyBoolean = obj.getBoolean(MyTableInfo.Columns.MY_BOOLEAN);
+				}
 		    } catch (JSONException e) {
-		        mMyBoolean = false;
+		        mMyBoolean = null;
 		    }
 		    mMyBooleanSet = true;
 		}
 		if (obj.has(MyTableInfo.Columns.MY_DOUBLE)) {
 		    try {
-		        mMyDouble = obj.getDouble(MyTableInfo.Columns.MY_DOUBLE);
+				if (obj.isNull(MyTableInfo.Columns.MY_DOUBLE)) {
+					mMyDouble = null;
+				} else {
+		        	mMyDouble = obj.getDouble(MyTableInfo.Columns.MY_DOUBLE);
+				}
 		    } catch (JSONException e) {
 		        mMyDouble = null;
 		    }
@@ -341,7 +349,11 @@ public abstract class BaseMyTable extends PersistentObject {
 		}
 		if (obj.has(MyTableInfo.Columns.MY_INT)) {
 		    try {
-		        mMyInt = obj.getInt(MyTableInfo.Columns.MY_INT);
+				if (obj.isNull(MyTableInfo.Columns.MY_INT)) {
+					mMyInt = null;
+				} else {
+		        	mMyInt = obj.getInt(MyTableInfo.Columns.MY_INT);
+				}
 		    } catch (JSONException e) {
 		        mMyInt = null;
 		    }
@@ -349,20 +361,28 @@ public abstract class BaseMyTable extends PersistentObject {
 		}
 		if (obj.has(MyTableInfo.Columns.MY_LONG)) {
 		    try {
-		        mMyLong = obj.getLong(MyTableInfo.Columns.MY_LONG);
+				if (obj.isNull(MyTableInfo.Columns.MY_LONG)) {
+					mMyLong = null;
+				} else {
+		        	mMyLong = obj.getLong(MyTableInfo.Columns.MY_LONG);
+				}
 		    } catch (JSONException e) {
 		        mMyLong = null;
 		    }
 		    mMyLongSet = true;
 		}
 		if (obj.has(MyTableInfo.Columns.MY_CHAR)) {
-			String myChar = null;
 		    try {
-		        myChar = obj.getString(MyTableInfo.Columns.MY_CHAR);
-				if (myChar == null || myChar.length() == 0 || NULL.equalsIgnoreCase(myChar))
-					mMyChar = null;
-				else
-					mMyChar = myChar.charAt(0);
+				if (obj.isNull(MyTableInfo.Columns.MY_CHAR)) {
+		        	mMyChar = null;
+				} else {
+					String myChar = obj.getString(MyTableInfo.Columns.MY_CHAR);
+					if (myChar == null || myChar.length() == 0)
+						mMyChar = null;
+					else
+						mMyChar = myChar.charAt(0);
+			        
+				}
 		    } catch (JSONException e) {
 		        mMyChar = null;
 		    }
@@ -370,9 +390,11 @@ public abstract class BaseMyTable extends PersistentObject {
 		}
 		if (obj.has(MyTableInfo.Columns.MY_STRING)) {
 		    try {
-		        mMyString = obj.getString(MyTableInfo.Columns.MY_STRING);
-				if (NULL.equalsIgnoreCase(mMyString))
+				if (obj.isNull(MyTableInfo.Columns.MY_STRING)) {
 					mMyString = null;
+				} else {
+					mMyString = obj.getString(MyTableInfo.Columns.MY_STRING);
+				}
 		    } catch (JSONException e) {
 		        mMyString = null;
 		    }
@@ -381,7 +403,11 @@ public abstract class BaseMyTable extends PersistentObject {
 //Can't hydrate a BLOB from JSON
 		if (obj.has(MyTableInfo.Columns.MY_TIME)) {
 		    try {
-		        mMyTime = obj.getLong(MyTableInfo.Columns.MY_TIME);
+				if (obj.isNull(MyTableInfo.Columns.MY_TIME)) {
+					mMyTime = null;
+				} else {
+		        	mMyTime = obj.getLong(MyTableInfo.Columns.MY_TIME);
+				}
 		    } catch (JSONException e) {
 		        mMyTime = null;
 		    }
@@ -557,6 +583,13 @@ public abstract class BaseMyTable extends PersistentObject {
         return result;
     }
 
+	public Uri getIdLookupUri() {
+		if (isNew() || !mIdSet)
+			return null;
+		else
+			return MyTableInfo.buildIdLookupUri(mId);
+	}
+
     public Long getId() {
         return mId;
     }
@@ -564,7 +597,7 @@ public abstract class BaseMyTable extends PersistentObject {
     public void setId(Long id) {
         mId = id;
         mIdSet = true;
-        mIsNew = id != null;
+        mIsNew = id == null;
     }
 
     public Boolean getMyBoolean() {

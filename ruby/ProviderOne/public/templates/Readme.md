@@ -15,8 +15,8 @@
 - Copy only the new Object and TableInfo files from the java/database/objects and java/database/tables folders in this package to /src/{PackageNameFolder}/database/objects and /src/{PackageNameFolder}/database/tables respectively. Be careful not to overwrite any of your old files in those folders if you've modified them.
 
 ## Android Support Library
-- The databse/autogen/adapters folder contains some useful CursorAdapters for each object. These adapters subclass the new android.support.v4.widget.CursorAdapter, so you'll need to include the Android Support Library in your project for them to work or compile. 
-- If you don't need any list adapters for your project, you can safely delete the adapters package.
+- The databse/autogen/adapters and databse/autogen/loaders folders contains some useful CursorAdapters and AsyncTaskLoaders for each object. These adapters subclass the new android.support.v4.widget.CursorAdapter and the Loaders subclass android.support.v4.content.AsyncTaskLoader, so you'll need to include the Android Support Library in your project for them to work or compile. 
+- If you don't need any list adapters or loaders for your project, you can safely delete the adapters and loaders packages.
 
 
 ## The following objects are now at your disposal

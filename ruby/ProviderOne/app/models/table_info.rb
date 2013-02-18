@@ -1,6 +1,6 @@
 class TableInfo
 
-  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm, :lower_name, :drop_stmt, :cap_name, :valid_lookup_columns, :is_editable
+  attr_accessor :name, :create_stmt, :columns, :camel_name, :cap_camel_name, :update_algorithm, :insert_algorithm, :lower_name, :drop_stmt, :cap_name, :valid_lookup_columns, :is_editable, :columns_with_unknown_type
 
   def initialize(tablename, sql, tableinfo, editable)
     @name = tablename
@@ -14,6 +14,7 @@ class TableInfo
     end
     @columns = [];
     @valid_lookup_columns = [];
+    @columns_with_unknown_type = [];
     @camel_name = @name.camelize
     @camel_name[0] = @camel_name.first.downcase
     @cap_camel_name = @name.camelize
@@ -31,8 +32,23 @@ class TableInfo
       if (col.is_valid_lookup_key)
         @valid_lookup_columns << col
       end
+      if (col.is_type_unknown)
+        @columns_with_unknown_type << col
+      end
     end
 
+  end
+  
+  def replace_column(oldColumn, newColumn)
+    if (@columns.delete(oldColumn) != nil)
+      @columns << newColumn
+    end
+    if (@valid_lookup_columns.delete(oldColumn) != nil)
+      @valid_lookup_columns << newColumn
+    end
+    if (@columns_with_unknown_type.delete(oldColumn) != nil)
+      @columns_with_unknown_type << newColumn
+    end
   end
 
   def set_lookup_column(col_name)
@@ -89,9 +105,11 @@ class TableInfo
   def process_lookup_content(content)
     lookup_col = get_lookup_column
     if (lookup_col.name == "_id")
-      idxStart = content.index("{LookupStart}")-1
-      idxEnd = content.index("{LookupEnd}") + 11
-      content = content[0..idxStart] + content[idxEnd...content.length]
+      while content.index("{LookupStart}") != nil
+        idxStart = content.index("{LookupStart}")-1
+        idxEnd = content.index("{LookupEnd}") + 11
+        content = content[0..idxStart] + content[idxEnd...content.length]
+      end
     else
       content = content.gsub("{LookupStart}", "")
       content = content.gsub("{LookupEnd}", "")
@@ -226,9 +244,7 @@ class TableInfo
     defs += "\t\t\tcase #{@cap_name}: {\n"
     defs += "\t\t\t\tlong id = db.insertWithOnConflict(#{@cap_camel_name}Info.TABLE_NAME, null, values, #{@cap_camel_name}Info.INSERT_ALGORITHM);\n"
     defs += "\t\t\t\tUri newUri = #{@cap_camel_name}Info.buildIdLookupUri(id);\n"
-    defs += "\t\t\t\tContentResolver cr = getAppContext().getContentResolver();\n"
-    defs += "\t\t\t\tcr.notifyChange(newUri, null);\n"
-    defs += "\t\t\t\tonNotityChanges(cr, newUri, match);\n"
+    defs += "\t\t\t\tnotifyUri(newUri, match);\n"
     defs += "\t\t\t\treturn newUri;\n"
     defs += "\t\t\t}\n"
     return defs
@@ -367,6 +383,9 @@ class TableInfo
     else
       tbl = {"name" => @name, "lookup_key" => get_lookup_column.name}
     end
+    columns_with_unknown_type.each do |uCol|
+      tbl["coltype_#{uCol.name}"] = uCol.type
+    end
     return tbl
   end
 
@@ -377,6 +396,23 @@ class TableInfo
         @insert_algorithm = hash['insert_algorithm']
       end
       set_lookup_column(hash['lookup_key'])
+      
+      columns_to_replace = []
+      columns_with_unknown_type.each do |uCol|  
+        newType = hash["coltype_#{uCol.name}"]
+        if (newType != nil)
+          columns_to_replace << {"col" => uCol, "type" => newType}
+        end
+      end
+      
+      columns_to_replace.each do |hsh|
+        oldColumn = hsh["col"]
+        newType = hsh["type"]
+        newColumn = ColumnInfo.create_column(oldColumn.name, newType);
+        newColumn.is_lookup_key = oldColumn.is_lookup_key
+        replace_column(oldColumn, newColumn)
+      end
+      
     end
   end
 end

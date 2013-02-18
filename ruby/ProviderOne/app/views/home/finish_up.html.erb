@@ -10,6 +10,9 @@
         <input type="hidden" name="lookup_key_<%=table.name%>" value="<%=table.get_lookup_column.name%>"/>
         <input type="hidden" name="insert_algorithm_<%=table.name%>" value="<%=table.insert_algorithm%>"/>
         <input type="hidden" name="update_algorithm_<%=table.name%>" value="<%=table.update_algorithm%>"/>
+		<%table.columns_with_unknown_type.each do |column|%>
+			<input type="hidden" name="coltype_<%=table.name%>_<%=column.name%>" value="<%=column.type%>">
+		<%end%>
     <%end%>
     <%= submit_tag "Download ProviderOne Package", :disable_with => "Done" %>
 <% end -%>

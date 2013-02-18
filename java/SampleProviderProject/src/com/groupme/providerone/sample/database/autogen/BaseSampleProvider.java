@@ -32,22 +32,24 @@ public abstract class BaseSampleProvider extends ContentProvider {
     public static final String PATH_SUM = "/sum";
     public static final String PATH_LOOKUP = "/lookup/*";
     public static final String PATH_ID = "/id/*";
+	public static final String PATH_VACUUM = "vacuum";
 
     public static final String RAW_PATH_COUNT = "count";
     public static final String RAW_PATH_SUM = "sum";
     public static final String RAW_PATH_LOOKUP = "lookup";
     public static final String RAW_PATH_ID = "id";
 
-	public static final int MY_TABLE = 0xffff;
-	public static final int MY_TABLE_COUNT = 0xfffe;
-	public static final int MY_TABLE_SUM = 0xfffd;
-	public static final int MY_TABLE_ID = 0xfffc;
-	public static final int MY_TABLE_LOOKUP = 0xfffb;
-	public static final int MY_VIEW = 0xfffa;
-	public static final int MY_VIEW_COUNT = 0xfff9;
-	public static final int MY_VIEW_SUM = 0xfff8;
-	public static final int MY_VIEW_ID = 0xfff7;
-	public static final int MY_VIEW_LOOKUP = 0xfff6;
+	public static final int VACUUM = 0xffff;
+	public static final int MY_TABLE = 0xfffe;
+	public static final int MY_TABLE_COUNT = 0xfffd;
+	public static final int MY_TABLE_SUM = 0xfffc;
+	public static final int MY_TABLE_ID = 0xfffb;
+	public static final int MY_TABLE_LOOKUP = 0xfffa;
+	public static final int MY_VIEW = 0xfff9;
+	public static final int MY_VIEW_COUNT = 0xfff8;
+	public static final int MY_VIEW_SUM = 0xfff7;
+	public static final int MY_VIEW_ID = 0xfff6;
+	public static final int MY_VIEW_LOOKUP = 0xfff5;
 
     private static Uri sBaseContentUri = null;
     private static Context sApplicationContext = null;
@@ -91,7 +93,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
         final String authority = getContentAuthority();
 
         buildPriorityCustomUriMatcher(matcher, authority);
-
+		matcher.addURI(authority, PATH_VACUUM, VACUUM);
 		matcher.addURI(authority, MyTableInfo.PATH, MY_TABLE);
 		matcher.addURI(authority, MyTableInfo.PATH + PATH_COUNT, MY_TABLE_COUNT);
 		matcher.addURI(authority, MyTableInfo.PATH + PATH_SUM, MY_TABLE_SUM);
@@ -122,6 +124,8 @@ public abstract class BaseSampleProvider extends ContentProvider {
             return result;
 
         switch(match) {
+			case VACUUM:
+				return null;
 			case MY_TABLE:
 			case MY_TABLE_COUNT:
 			case MY_TABLE_SUM:
@@ -164,6 +168,17 @@ public abstract class BaseSampleProvider extends ContentProvider {
         return result;
     }
 
+    private void notifyUri(Uri notifyUri, int match) {
+    	notifyUri(null, notifyUri, match);
+    }
+    
+    private void notifyUri(ContentResolver resolver, Uri notifyUri, int match) {
+   		if (resolver == null)
+   			resolver = getAppContext().getContentResolver();
+   		resolver.notifyChange(notifyUri, null);
+   		onNotityChanges(resolver, notifyUri, match);
+    }
+
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         final int match = getUriMatcher().match(uri);
@@ -187,10 +202,8 @@ public abstract class BaseSampleProvider extends ContentProvider {
 
         final SelectionBuilder builder = buildSimpleSelection(uri, match);
         int delResult = builder.where(selection, selectionArgs).delete(mDatabase.getWritableDatabase());
-        ContentResolver cr = getAppContext().getContentResolver(); 
-        cr.notifyChange(uri, null);
-        onNotityChanges(cr, uri, match);
-        return delResult;
+        notifyUri(uri, match);
+		return delResult;
     }
 
     @Override
@@ -205,9 +218,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
 			case MY_TABLE: {
 				long id = db.insertWithOnConflict(MyTableInfo.TABLE_NAME, null, values, MyTableInfo.INSERT_ALGORITHM);
 				Uri newUri = MyTableInfo.buildIdLookupUri(id);
-				ContentResolver cr = getAppContext().getContentResolver();
-				cr.notifyChange(newUri, null);
-				onNotityChanges(cr, newUri, match);
+				notifyUri(newUri, match);
 				return newUri;
 			}
 
@@ -260,6 +271,12 @@ public abstract class BaseSampleProvider extends ContentProvider {
 				throw new UnsupportedOperationException("Can't update a sqlite view. (MyView)");
 
 		}
+		
+		if (match == VACUUM) {
+			mDatabase.getWritableDatabase().execSQL("VACUUM;");
+			notifyUri(uri, match);
+			return 1;
+		}
 
         final SelectionBuilder builder = buildSimpleSelection(uri, match);
         int algorithm = SQLiteDatabase.CONFLICT_FAIL;
@@ -281,9 +298,7 @@ public abstract class BaseSampleProvider extends ContentProvider {
 				    algorithm = SQLiteDatabase.CONFLICT_FAIL;
         }
         int updateResult = builder.where(selection, selectionArgs).updateWithOnConflict(mDatabase, values, algorithm);
-        ContentResolver cr = getAppContext().getContentResolver(); 
-        cr.notifyChange(uri, null);
-        onNotityChanges(cr, uri, match);
+        notifyUri(uri, match);
         return updateResult;
     }
 
@@ -319,5 +334,4 @@ public abstract class BaseSampleProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
     }
-
 }

@@ -77,7 +77,7 @@ class HomeController < ApplicationController
       z.put_next_entry("java/database/autogen/util/SelectionBuilder.java")
       z.write(@dbinfo.process_file_content(File.read("public/templates/utils/SelectionBuilder.java")))
 
-      z.put_next_entry("java/database/autogen/PersistentObject.java")
+      z.put_next_entry("java/database/autogen/#{@dbinfo.project_name}PersistentObject.java")
       z.write(@dbinfo.process_file_content(File.read("public/templates/autogen/PersistentObject.java")))
 
       z.put_next_entry("java/database/autogen/Base#{@dbinfo.project_name}Database.java")
@@ -111,6 +111,8 @@ class HomeController < ApplicationController
         z.put_next_entry("java/database/autogen/adapters/#{tbl.cap_camel_name}Adapter.java")
         z.write(tbl.process_file_content(File.read("public/templates/tables/TableAdapter.java"), @dbinfo))
 
+        z.put_next_entry("java/database/autogen/loaders/#{tbl.cap_camel_name}Loader.java")
+        z.write(tbl.process_file_content(tbl.process_lookup_content(File.read("public/templates/tables/TableLoader.java")), @dbinfo))
       end
     end
 

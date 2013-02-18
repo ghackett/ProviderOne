@@ -1,6 +1,6 @@
 class ColumnInfo
 
-  attr_accessor :name, :type, :is_lookup_key, :camel_name, :cap_camel_name, :cap_name, :lower_name, :java_type, :is_valid_lookup_key
+  attr_accessor :name, :type, :is_lookup_key, :camel_name, :cap_camel_name, :cap_name, :lower_name, :java_type, :is_valid_lookup_key, :is_type_unknown
 
   def initialize(name, type)
     @name = name;
@@ -12,6 +12,7 @@ class ColumnInfo
     @lower_name = @name.downcase
     @is_lookup_key = false
     @is_valid_lookup_key = true
+    @is_type_unknown = false
   end
 
   def process_file_content(file_content)
@@ -104,9 +105,13 @@ class ColumnInfo
   #end
 
   def self.get_column(col_info)
-    name = col_info['name'].downcase
-    type = col_info['type'].downcase
-
+    return ColumnInfo.create_column(col_info['name'], col_info['type'])
+  end
+  
+  def self.create_column(name, type)
+    name = name.downcase
+    type = type.downcase
+    
     if name == "_id"
       return IdColumn.new(name, type);
     end
@@ -131,7 +136,9 @@ class ColumnInfo
       when "datetime", "date", "timestamp"
         return DateTimeColumn.new(name, type)
     end
-    return TextColumn.new(name, type)
+    fallbackCol = TextColumn.new(name, "string")
+    fallbackCol.is_type_unknown = true
+    return fallbackCol
   end
 
 end

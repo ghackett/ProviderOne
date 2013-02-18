@@ -5,6 +5,6 @@
     public void set{CapCamelName}({JavaType} {CamelName}) {
         m{CapCamelName} = {CamelName};
         m{CapCamelName}Set = true;
-        mIsNew = {CamelName} != null;
+        mIsNew = {CamelName} == null;
     }
 

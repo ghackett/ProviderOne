@@ -12,8 +12,19 @@ Take the pain out of dealing with databases in Android by generating fully funct
 
 - Tables
 - Indices
-- Views (NEW!)
+- Views
+- Loaders (NEW!)
 - Table & View auto-updating (both column adds and removals (NEW!) are supported but be careful when changing types and constraints)
+
+## Installation
+
+1) Setup ruby on rails
+   - Mac: TBD
+   - Windows: http://railsinstaller.org
+2) cd ProviderOne/ruby/ProviderOne
+3) bundle install
+4) rails server
+5) http://localhost:3000
 
 ## How does it work?
 
@@ -26,6 +37,9 @@ Take the pain out of dealing with databases in Android by generating fully funct
 3) Answer a few simple questions about your project and database (you can pick a 2nd lookup key besides _id for each table or view)
 
 4) Download all your generated Android code and copy it into your project, saving you hours (possibly days) of tedious database work. 
+
+  -- Replace your ProviderOneConfig.xml file from the zip file
+  -- Replace your autogen folder only if upgrading
 
   --if updating your schema (as opposed to generating a brand new one) you should only copy the autogen folder into your project to avoid overwriting any of your custom subclasses.
 
@@ -40,7 +54,8 @@ IT'S JUST THAT EASY!
 - A TableInfo class (autogen.tables pkg) for each table/view that contains the column and uri definitions for the table (think of it as one of the subclasses in a Contract, only separated out into individual files for easier management and readability).
 - An empty TableInfo subclass (tables pkg) for each table/view so you can add your own Uri (and possibly column) definitions.
 - An ORM object class for each table/view (autogen.objects pkg) and empty subclass (objects pkg) that make data retrieval a breeze.
-- An abstract list adapter for each table (relies on the android support package) so you don't even have to see the word Cursor if you don't want to.
+- An abstract list adapter for each table/view (relies on the android support package) so you don't even have to see the word Cursor if you don't want to.
+- An AsyncTaskLoader (also relies on android support package) for each table/view to make it easy for your fragments to load a single ORM object
 
 ## But aren't ORM objects notoriously slow in Android? Especially when used in lists?
 

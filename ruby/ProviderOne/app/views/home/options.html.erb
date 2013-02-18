@@ -53,6 +53,12 @@
               <%= select_tag "update_algorithm_" + table.name, options_from_array_for_select(insert_update_algorithms, table.update_algorithm)%>
 
 			<%end%>
+			
+			<%table.columns_with_unknown_type.each do |column|%>
+				<br/>
+				<%= column.name%> type: 
+				<%= select_tag "coltype_" + table.name + "_" + column.name, options_from_array_for_select(valid_column_types, column.type)%>
+			<%end%>
           </p>
       <%end%>
 

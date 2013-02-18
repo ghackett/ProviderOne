@@ -82,7 +82,8 @@ class DatabaseInfo
     @tables.each_value do |tbl|
       object_list += "- #{tbl.cap_camel_name}\n"
       object_list += "- #{tbl.cap_camel_name}Info\n"
-      object_list += "- #{tbl.cap_camel_name}Adapter\n\n"
+      object_list += "- #{tbl.cap_camel_name}Adapter\n"
+      object_list += "- #{tbl.cap_camel_name}Loader\n\n"
     end
 
     file_content = file_content.gsub("{ObjectList}", object_list);
@@ -105,14 +106,16 @@ class DatabaseInfo
       table_info_imports += "import #{@package}.database.tables.#{tbl.cap_camel_name}Info;\n"
       table_creates += "\t\t#{tbl.cap_camel_name}Info.createTable(db);\n"
       table_upgrades += "\t\t#{tbl.cap_camel_name}Info.upgradeTable(db, oldVersion, newVersion);\n"
-      batch_delete_ops += "\t\tops.add(ContentProviderOperation.newDelete(#{tbl.cap_camel_name}Info.CONTENT_URI).build());\n"
+      if (tbl.is_editable)
+        batch_delete_ops += "\t\tops.add(ContentProviderOperation.newDelete(#{tbl.cap_camel_name}Info.CONTENT_URI).build());\n"
+      end
     end
 
     @indecies.each do |idx|
       index_defs += "\tpublic static final String IDX_CREATE_#{idx.cap_name} = \"#{idx.create_stmt}\";\n"
       index_defs += "\tpublic static final String IDX_DROP_#{idx.cap_name} = \"#{idx.drop_stmt}\";\n"
       index_exes += "\t\tdb.execSQL(IDX_DROP_#{idx.cap_name});\n"
-      index_exes += "\t\tdb.execSQL(IDX_CREATE_#{idx.cap_name});\n"
+      index_exes += "\t\ttry {\n\t\t\tdb.execSQL(IDX_CREATE_#{idx.cap_name});\n\t\t} catch (SQLiteException e) {\n\t\t\te.printStackTrace();\n\t\t\tdb.execSQL(\"DELETE FROM #{idx.table_name};\");\n\t\t\tdb.execSQL(IDX_CREATE_#{idx.cap_name});\n\t\t}\n"
     end
 
     file_content = file_content.gsub("{TableInfoImports}", table_info_imports);
@@ -140,7 +143,7 @@ class DatabaseInfo
     table_provider_deletes_invalid = ""
     table_provider_updates_invalid = ""
 
-    match_count = 65535
+    match_count = 65534
     @tables.each_value do |tbl|
       table_info_imports += "import #{@package}.database.tables.#{tbl.cap_camel_name}Info;\n"
       table_provider_match_defs += tbl.get_provider_match_defs(match_count)
@@ -271,6 +274,20 @@ class DatabaseInfo
       if (table.is_editable)
         table.update_algorithm = params["update_algorithm_" + table.name]
         table.insert_algorithm = params["insert_algorithm_" + table.name]
+      end
+      
+      columns_to_replace = []
+      table.columns_with_unknown_type.each do |uCol|
+        newType = params["coltype_" + table.name + "_" + uCol.name]
+        columns_to_replace << {"col" => uCol, "type" => newType}
+      end
+      
+      columns_to_replace.each do |hsh|
+        oldColumn = hsh["col"]
+        newType = hsh["type"]
+        newColumn = ColumnInfo.create_column(oldColumn.name, newType);
+        newColumn.is_lookup_key = oldColumn.is_lookup_key
+        table.replace_column(oldColumn, newColumn)
       end
     end
   end
